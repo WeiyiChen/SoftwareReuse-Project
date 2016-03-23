@@ -13,7 +13,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 
-public class ClientWindow {
+public class LoginWindow {
 
 	private JFrame frame;
 	private JTextField textField;
@@ -26,7 +26,7 @@ public class ClientWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClientWindow window = new ClientWindow();
+					LoginWindow window = new LoginWindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class ClientWindow {
 	/**
 	 * Create the application.
 	 */
-	public ClientWindow() {
+	public LoginWindow() {
 		initialize();
 	}
 
