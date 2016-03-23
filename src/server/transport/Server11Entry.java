@@ -1,4 +1,4 @@
-package server;
+package server.transport;
 
 import java.io.IOException;
 

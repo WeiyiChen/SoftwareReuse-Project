@@ -1,4 +1,4 @@
-package client;
+package client.transport;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
