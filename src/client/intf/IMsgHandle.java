@@ -7,6 +7,6 @@ public interface IMsgHandle {
 	void sendMessage(String msg, String user);
 	void sendMessage(String msg);
 	
-	Map<String, List<String>> getMessage();
+	Map<String, Object> getMessage();
 
 }
