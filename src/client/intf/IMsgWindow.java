@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface IMsgWindow {
 	void sendMsg();
-	void receiveMsg(Map<String, List<String>> msgs);
+	void receiveMsg(Map<String, Object> msgs);
 }
