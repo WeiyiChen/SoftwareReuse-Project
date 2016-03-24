@@ -11,10 +11,13 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class MsgHandleWindow extends JFrame {
+public class MsgWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private JButton btnSend;
+	private JLabel lblUser;
+	private JLabel lblUserToShow;
 
 	/**
 	 * Launch the application.
@@ -23,7 +26,7 @@ public class MsgHandleWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MsgHandleWindow frame = new MsgHandleWindow();
+					MsgWindow frame = new MsgWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +38,7 @@ public class MsgHandleWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MsgHandleWindow() {
+	public MsgWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 457, 345);
 		contentPane = new JPanel();
@@ -52,17 +55,17 @@ public class MsgHandleWindow extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnSend = new JButton("Send");
+		btnSend = new JButton("Send");
 		btnSend.setBounds(280, 271, 100, 29);
 		contentPane.add(btnSend);
 		
-		JLabel lblUser = new JLabel("User");
+		lblUser = new JLabel("User");
 		lblUser.setBounds(128, 26, 33, 16);
 		contentPane.add(lblUser);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(173, 26, 120, 16);
-		contentPane.add(lblNewLabel);
+		lblUserToShow = new JLabel("New label");
+		lblUserToShow.setBounds(173, 26, 120, 16);
+		contentPane.add(lblUserToShow);
 	}
 
 }
