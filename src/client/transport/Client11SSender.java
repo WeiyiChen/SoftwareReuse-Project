@@ -22,28 +22,17 @@ public class Client11SSender  extends Thread {
 			String message = null;
 			while (true) {
 				message = input.readLine();
+				// 向服务器端发送信息
+				writer.println(message);
+				writer.flush();
 				// 当输入bye客户端退出
 				if (message.equals("bye")) {
 					break;
 				}
-				// 向服务器端发送信息
-				writer.println(message);
-				writer.flush();
 			}
 		} catch (IOException e) {
 			System.out.println("clientReciever");
 			e.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (writer != null) {
-				writer.close();
-			}
-		}
+		} 
 	}
 }

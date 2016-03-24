@@ -21,6 +21,9 @@ public class Client11SReciever extends Thread {
 			while (true) {
 				message = reader.readLine();
 				System.out.println(message);
+				if(message.equals("bye")){
+					break;
+				}
 			}
 		} catch (IOException e) {
 			if (!socket.isClosed()) {
