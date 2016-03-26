@@ -8,22 +8,19 @@ import java.net.Socket;
 import java.util.List;
 
 class Server11S extends Thread {
-	private Socket socket;
-	private List<Socket> socketList;
-	private int count;
-
-	public Server11S(int count, Socket socket, List<Socket> socketList) {
-		this.count = count;
-		this.socket = socket;
-		this.socketList = socketList;
+	private SocketPlus socketP;
+	private List<SocketPlus> socketWSList;
+	
+	public Server11S(SocketPlus socketP, List<SocketPlus> socketList) {
+		this.socketP = socketP;
+		this.socketWSList = socketList;
 	}
 
 	public void run() {
 		BufferedReader reader = null;
 		PrintWriter writer = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(
-					socket.getInputStream()));
+			reader = socketP.getBufferedReader();
 
 			String message = null;
 			while (true) {
@@ -33,21 +30,17 @@ class Server11S extends Thread {
 					break;
 				}
 				if (message.equals("bye")) {
-					writer = new PrintWriter(socket.getOutputStream());
-					writer.println("bye");
-					writer.flush();
+					socketP.sendText("bye");
 					break;
 				}
 
-				// 向所有的客户端发送接收到信息，实现群聊
-				for (int i = 0; i < socketList.size(); i++) {
-					writer = new PrintWriter(socketList.get(i)
-							.getOutputStream());
-					writer.println(count + " say: " + message);
-					writer.flush();
+				// send information to all user
+				for (int i = 0; i < socketWSList.size(); i++) {
+					socketWSList.get(i).sendText("say: " + message);
 				}
 
 			}
+			socketWSList.remove(socketP);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

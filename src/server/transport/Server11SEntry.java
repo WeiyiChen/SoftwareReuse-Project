@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server11SEntry {
-	
+
 	private ServerSocket serverSocket;
+
 	/**
 	 * Description
 	 * 
@@ -16,20 +17,20 @@ public class Server11SEntry {
 	 */
 	public void startWork() throws IOException {
 		serverSocket = new ServerSocket(2345);
-		List<Socket> socketList = new ArrayList<Socket>();
+		List<SocketPlus> socketList = new ArrayList<SocketPlus>();
 		Socket socket = null;
-		int count = 0;
 		while (true) {
 			socket = serverSocket.accept();
-			count++;
-			System.out.println(count + " clinet connected to the server!");
-			// 将每一个连接到该服务器的客户端，加到List中
-			socketList.add(socket);
-			// 每一个连接到服务器的客户端，服务器开启一个新的线程来处理
-			new Server11S(count, socket, socketList).start();
+			SocketPlus socketWS = new SocketPlus(socket);
+			System.out.println("Unknown clinet connected to the server!"
+					+ socket.getLocalAddress().toString());
+			// add the socket to all socket list
+			socketList.add(socketWS);
+			// allocate a server for new socket
+			new Server11S(socketWS, socketList).start();
 		}
 	}
-	
+
 	@Override
 	public void finalize() {
 		try {
