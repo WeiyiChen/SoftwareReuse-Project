@@ -8,19 +8,19 @@ import java.net.Socket;
 import java.util.List;
 
 class Server11S extends Thread {
-	private SocketPlus socketP;
-	private List<SocketPlus> socketWSList;
+	private SocketController socketController;
+	private List<SocketController> socketControllerList;
 	
-	public Server11S(SocketPlus socketP, List<SocketPlus> socketList) {
-		this.socketP = socketP;
-		this.socketWSList = socketList;
+	public Server11S(SocketController socketP, List<SocketController> socketList) {
+		this.socketController = socketP;
+		this.socketControllerList = socketList;
 	}
 
 	public void run() {
 		BufferedReader reader = null;
 		PrintWriter writer = null;
 		try {
-			reader = socketP.getBufferedReader();
+			reader = socketController.getBufferedReader();
 
 			String message = null;
 			while (true) {
@@ -30,17 +30,17 @@ class Server11S extends Thread {
 					break;
 				}
 				if (message.equals("bye")) {
-					socketP.sendText("bye");
+					socketController.sendText("bye");
 					break;
 				}
 
 				// send information to all user
-				for (int i = 0; i < socketWSList.size(); i++) {
-					socketWSList.get(i).sendText("say: " + message);
+				for (int i = 0; i < socketControllerList.size(); i++) {
+					socketControllerList.get(i).sendText("say: " + message);
 				}
 
 			}
-			socketWSList.remove(socketP);
+			socketControllerList.remove(socketController);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

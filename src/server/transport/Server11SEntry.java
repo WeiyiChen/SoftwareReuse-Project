@@ -17,11 +17,11 @@ public class Server11SEntry {
 	 */
 	public void startWork() throws IOException {
 		serverSocket = new ServerSocket(2345);
-		List<SocketPlus> socketList = new ArrayList<SocketPlus>();
+		List<SocketController> socketList = new ArrayList<SocketController>();
 		Socket socket = null;
 		while (true) {
 			socket = serverSocket.accept();
-			SocketPlus socketWS = new SocketPlus(socket);
+			SocketController socketWS = new SocketController(socket);
 			System.out.println("Unknown clinet connected to the server!"
 					+ socket.getLocalAddress().toString());
 			// add the socket to all socket list

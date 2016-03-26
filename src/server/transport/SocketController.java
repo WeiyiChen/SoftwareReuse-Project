@@ -6,12 +6,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class SocketPlus {
+public class SocketController {
 	private Socket socket;
 	private BufferedReader br;
 	private PrintWriter pw;
 	
-	public SocketPlus(Socket socket){
+	
+	
+	public SocketController(Socket socket){
 		this.socket =  socket;
 		try{
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
