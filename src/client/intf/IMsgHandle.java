@@ -7,6 +7,7 @@ public interface IMsgHandle {
 	void sendMessage(Object msg, String targetUser);
 	void sendMessage(Object msg);
 	
-	Object getMessage();
+//	Object getMessage();
+	void receiveAndUpdateMsg(Object msg);
 	
 }
