@@ -1,38 +1,41 @@
 package client.ui;
 
 import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JTextPane;
-import java.awt.BorderLayout;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
-import javax.swing.JTextField;
-import java.awt.Color;
-import javax.swing.JSplitPane;
-import javax.swing.JPasswordField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
-public class LoginWindow {
+import client.intf.ILogInWindow;
+
+public class LoginWindow implements ILogInWindow{
 
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginWindow window = new LoginWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					LoginWindow window = new LoginWindow();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+	
+	public void setVisible(boolean flag){
+		frame.setVisible(flag);
 	}
 
 	/**
@@ -71,5 +74,14 @@ public class LoginWindow {
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setBounds(36, 111, 61, 16);
 		frame.getContentPane().add(lblPassword);
+	}
+
+	@Override
+	public List<String> getUsrPwd() {
+		String usr = textField.getText();
+		String pwd = passwordField.getText();
+		List<String> result = new ArrayList<String>();
+		
+		return null;
 	}
 }
