@@ -6,34 +6,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import client.intf.IMsgWindow;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class MsgWindow extends JFrame {
+public class MsgWindow extends JFrame implements IMsgWindow{
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JButton btnSend;
 	private JLabel lblUser;
 	private JLabel lblUserToShow;
-
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MsgWindow frame = new MsgWindow();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	JTextArea textArea;
 
 	/**
 	 * Create the frame.
@@ -46,7 +34,7 @@ public class MsgWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setBounds(66, 69, 314, 175);
 		contentPane.add(textArea);
@@ -68,5 +56,51 @@ public class MsgWindow extends JFrame {
 		lblUserToShow.setBounds(173, 26, 120, 16);
 		contentPane.add(lblUserToShow);
 	}
+	
+	@Override
+	public void setUsr(String usr){
+		lblUserToShow.setText(usr);
+	}
 
+	@Override
+	public void appendMsgRecord(String singleLineMsg) {
+		// TODO Auto-generated method stub
+		textArea.append(singleLineMsg + "\n");
+	}
+	
+	@Override
+	public void sendMsg(){
+		
+	}
+
+
+	@Override
+	public void showMsgWindow() {
+		// TODO Auto-generated method stub
+		setVisible(true);
+	}
+
+	@Override
+	public void closeMsgWindow() {
+		// TODO Auto-generated method stub
+		dispose();
+	}
+	
+	
+
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					MsgWindow frame = new MsgWindow();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 }

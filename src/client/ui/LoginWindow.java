@@ -14,10 +14,9 @@ import javax.swing.JTextField;
 import client.ctl.LogInCheck;
 import client.ctl.WindowJump;
 import client.intf.ILogInCheck;
-import client.intf.ILogInWindow;
 import client.intf.IWindowJump;
 
-public class LoginWindow implements ILogInWindow{
+public class LoginWindow{
 
 	private JFrame frame;
 	private JTextField textField;
@@ -100,15 +99,7 @@ public class LoginWindow implements ILogInWindow{
 		});
 	}
 
-	@Override
-	public List<String> getUsrPwd() {
-		String usr = textField.getText();
-		String pwd = passwordField.getText();
-		List<String> result = new ArrayList<String>();
-		result.add(usr);
-		result.add(pwd);
-		return null;
-	}
+	
 	
 //	/**
 //	 * Launch the application.

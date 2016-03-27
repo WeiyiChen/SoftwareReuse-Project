@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface IMsgHandle {
-	void sendMessage(String msg, String targetUser);
-	void sendMessage(String msg);
+	void sendMessage(Object msg, String targetUser);
+	void sendMessage(Object msg);
 	
-	Map<String, Object> getMessage();
-
+	Object getMessage();
+	
 }

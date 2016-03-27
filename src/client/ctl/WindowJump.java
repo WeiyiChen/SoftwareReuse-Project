@@ -2,6 +2,7 @@ package client.ctl;
 
 import java.awt.EventQueue;
 
+import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
 import client.ui.MsgWindow;
 
@@ -12,8 +13,8 @@ public class WindowJump implements IWindowJump {
 		// TODO Auto-generated method stub
 		EventQueue.invokeLater(new Runnable(){
 			public void run(){
-				MsgWindow msgWindow = new MsgWindow();
-				msgWindow.setVisible(true);
+				IMsgWindow imw = new MsgWindow();
+				imw.showMsgWindow();
 			}
 		});
 	}
