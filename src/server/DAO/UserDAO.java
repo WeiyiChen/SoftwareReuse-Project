@@ -9,7 +9,14 @@ public class UserDAO {
 	public  static JSONArray jsonDatabase = new JSONArray();
 	
 	public String getPassword(String user) {
-		List<JSONObject> jsonObject = new ArrayList<JSONObject>();
+		for(int i = 0; i < jsonDatabase.length(); i ++){
+			JSONObject jsonObj = jsonDataBase.getJSONObject(i);
+			String jsonUser = jsonObj.getString("User");
+			if(jsonUser == user){
+				String password = jsonObj.getString("Password");
+			}
+			return password;
+		}
 		
 	}
 	
