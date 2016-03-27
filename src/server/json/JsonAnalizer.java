@@ -16,6 +16,10 @@ public class JsonAnalizer {
 	public static String getUser(String jsonString){
 		return getValue(jsonString, JsonBuilderBase.user);
 	}
+	
+	public static String getPassword(String jsonString){
+		return getValue(jsonString, JsonBuilderBase.password);
+	}
 
 	protected static String getValue(String jsonString, String key) {
 		try {
