@@ -44,8 +44,8 @@ public class LogInCheck implements ILogInCheck{
 		});
 		t.start();
 		try {
-			for(int i = 0; i < 5; i++){
-				TimeUnit.SECONDS.sleep(1);
+			for(int i = 0; i < 50; i++){
+				TimeUnit.MILLISECONDS.sleep(100);
 				if(result)
 					break;
 			}
