@@ -9,10 +9,6 @@ public class JsonBuilderServer extends JsonBuilderBase {
 	
 	public static final String serverError = "ServerError";
 	
-	public static String getReloginRequestJson(){
-		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.relogin);
-	}
-	
 	public static String getMessageBusyError(){
 		return getTypeContentJson(JsonBuilderServer.serverError, JsonBuilderServer.messageBusyOneSecond);
 	}

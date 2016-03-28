@@ -2,9 +2,7 @@ package server.transport;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.List;
 
 import base.JsonBuilderBase;
@@ -40,6 +38,9 @@ class Server11S extends Thread {
 				}
 				if(result.equals(JsonBuilderServer.getNeedReloginError())){
 					result = JsonBuilderServer.getReloginRequestJson();
+				}
+				if(result.equals(JsonBuilderServer.getMessageBusyError())){
+					continue;
 				}
 				this.sendMessage(result);
 

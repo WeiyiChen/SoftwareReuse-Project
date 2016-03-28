@@ -41,6 +41,10 @@ public class MessageController {
 		if (remainMessageCount <= 0) {
 			return JsonBuilderServer.getNeedReloginError();
 		}
+		if(!JsonAnalizerServer.getUser(jsonString).equals(UserID)){
+			//how can this happens, I don't know.
+			return JsonBuilderServer.getNeedReloginError();
+		}
 		--remainMessageCount;
 		Timer t = new Timer();
 		timers.add(t);

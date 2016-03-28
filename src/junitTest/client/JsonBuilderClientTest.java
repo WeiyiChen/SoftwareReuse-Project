@@ -1,12 +1,9 @@
 package junitTest.client;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import client.ctl.JsonBuilderClient;
-import base.JsonBuilderBase;
 
 public class JsonBuilderClientTest {
 

@@ -57,6 +57,10 @@ public class JsonBuilderBase {
 		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.loginFailed);
 	}
 
+	public static String getReloginRequestJson() {
+		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.relogin);
+	}
+
 	public JsonBuilderBase() {
 		super();
 	}
