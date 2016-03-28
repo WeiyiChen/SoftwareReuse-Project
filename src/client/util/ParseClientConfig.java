@@ -16,6 +16,8 @@ import nu.xom.ParsingException;
 import nu.xom.Serializer;
 
 public class ParseClientConfig {
+	private static ClientConfig clientConfig;
+	
 	public static void format(OutputStream os, Document doc){
 		try {
 			Serializer serializer = new Serializer(os, "ISO-8859-1");
@@ -51,15 +53,14 @@ public class ParseClientConfig {
 		}
 	}
 	
-	
-	public static Object getConfig(String fileName) {
+	public static Object rebuildConfig(String fileName){
 		try {
 			Document doc = new Builder().build(new BufferedInputStream(
 					new FileInputStream("ClientConfig.xml")));
 			Element root = doc.getRootElement();
 			String ip = root.getFirstChildElement("ip").getValue();
 			String port = root.getFirstChildElement("port").getValue();
-			ClientConfig clientConfig = new ClientConfig(ip, port);
+			clientConfig = new ClientConfig(ip, port);
 			return clientConfig;
 		} catch (ParsingException | IOException e) {
 			// TODO Auto-generated catch block
@@ -67,5 +68,14 @@ public class ParseClientConfig {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static Object getConfig(String fileName) {
+		if(clientConfig == null){
+			return rebuildConfig(fileName);
+		}
+		else{
+			return clientConfig;
+		}
 	}
 }

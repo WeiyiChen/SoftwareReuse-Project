@@ -6,4 +6,5 @@ public interface IMsgWindow {
 	void sendMsg();
 	void showMsgWindow();
 	void closeMsgWindow();
+	IMsgHandle getMsgHandle();
 }
