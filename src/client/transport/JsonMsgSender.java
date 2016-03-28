@@ -16,6 +16,7 @@ public class JsonMsgSender implements IMsgSender {
 			writer = new PrintWriter(socket.getOutputStream());
 			String jsonString = (String)msg;
 			writer.println(jsonString);
+			writer.flush();
 			return true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

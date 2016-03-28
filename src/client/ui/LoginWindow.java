@@ -2,6 +2,7 @@ package client.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +88,14 @@ public class LoginWindow{
 				}
 				lblTip.setText("");
 				ILogInCheck logInCheck = new LogInCheck();
-				if(logInCheck.check(usr, pwd)){
+				boolean logInResult = false;
+				try {
+					logInResult = logInCheck.check(usr, pwd);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if(logInResult){
 					IWindowJump windowJump = new WindowJump();
 					windowJump.startMsgWindow();
 					frame.dispose();
