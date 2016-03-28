@@ -67,14 +67,16 @@ public class LogInCheck implements ILogInCheck{
 			while(true){
 				msg = reader.readLine();
 				if(msg != null){
-					return msg;
+					System.out.println("receive login result");
+					System.out.println(msg);
+					break;
 				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return msg;
 		
 	}
 	
