@@ -97,7 +97,7 @@ public class LoginWindow{
 				}
 				if(logInResult){
 					IWindowJump windowJump = new WindowJump();
-					windowJump.startMsgWindow();
+					windowJump.startMsgWindow(usr);
 					frame.dispose();
 				}
 				else{

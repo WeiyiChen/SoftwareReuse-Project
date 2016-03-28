@@ -13,13 +13,14 @@ import client.ui.MsgWindow;
 public class WindowJump implements IWindowJump {
 
 	@Override
-	public void startMsgWindow() {
+	public void startMsgWindow(String usr) {
 		// TODO Auto-generated method stub
 		
 		EventQueue.invokeLater(new Runnable(){
 			public void run(){
 				IMsgWindow imw = new MsgWindow();
 				imw.showMsgWindow();
+				imw.setUsr(usr);
 				try {
 					new Client11SReciever(ClientSocket.getSocket(),imw.getMsgHandle()).start();
 				} catch (UnknownHostException e) {
