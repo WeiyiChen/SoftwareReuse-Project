@@ -1,9 +1,9 @@
 package client.intf;
 
-import java.util.List;
-import java.util.Map;
-
 public interface IMsgWindow {
+	void setUsr(String usr);
+	void appendMsgRecord(String singleLineMsg);
 	void sendMsg();
-	void receiveMsg(Map<String, Object> msgs);
+	void showMsgWindow();
+	void closeMsgWindow();
 }

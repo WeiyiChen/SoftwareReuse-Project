@@ -1,38 +1,32 @@
 package client.ui;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JTextPane;
-import java.awt.BorderLayout;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
-import javax.swing.JTextField;
-import java.awt.Color;
-import javax.swing.JSplitPane;
-import javax.swing.JPasswordField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
-public class LoginWindow {
+import client.ctl.LogInCheck;
+import client.ctl.WindowJump;
+import client.intf.ILogInCheck;
+import client.intf.IWindowJump;
+
+public class LoginWindow{
 
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private JLabel lblTip;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginWindow window = new LoginWindow();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+
+	
+	public void setVisible(boolean flag){
+		frame.setVisible(flag);
 	}
 
 	/**
@@ -61,7 +55,7 @@ public class LoginWindow {
 		frame.getContentPane().add(passwordField);
 		
 		JButton btnLogIn = new JButton("Log In");
-		btnLogIn.setBounds(82, 174, 106, 29);
+		btnLogIn.setBounds(83, 186, 106, 29);
 		frame.getContentPane().add(btnLogIn);
 		
 		JLabel lblAccount = new JLabel("Account");
@@ -71,5 +65,56 @@ public class LoginWindow {
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setBounds(36, 111, 61, 16);
 		frame.getContentPane().add(lblPassword);
+		
+		lblTip = new JLabel("");
+		lblTip.setBounds(83, 146, 106, 16);
+		frame.getContentPane().add(lblTip);
+		
+		btnLogIn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				String usr = textField.getText();
+				String pwd = passwordField.getText();
+				
+//				// test the result of getText()
+//				if(pwd.equals("")){
+//					System.out.println("\"\"");
+//				}
+//				System.out.println(pwd);
+//				lblTip.setText(usr+pwd);
+				if(pwd.equals("")||usr.equals("")){
+					lblTip.setText("Illegal Input!");
+					return;
+				}
+				lblTip.setText("");
+				ILogInCheck logInCheck = new LogInCheck();
+				if(logInCheck.check(usr, pwd)){
+					IWindowJump windowJump = new WindowJump();
+					windowJump.startMsgWindow();
+					frame.dispose();
+				}
+				else{
+					lblTip.setText("Error input!");
+				}
+			}
+		});
 	}
+
+	
+	
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					LoginWindow window = new LoginWindow();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+	
 }
