@@ -1,6 +1,7 @@
 package server.DAO;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -10,20 +11,20 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 
-public class UserDAO {
-	private String dirPath = "./data";
-	private String filePath = "./data/users.json";
+public class UserDAO extends FileDAO {
+	protected String fileName = "users.json";
 	
 	private Map<String, String> userMap = new HashMap<String, String>();
 		
 	public UserDAO(){
-		checkOrCreateJsonFile();
-		getUsersAndPassword();
+		super();
+		checkOrCreateFile();
+		read();
 	}
 	
 	@Override
 	public void finalize(){
-		saveUsers();
+		save();
 	}
 	
 	public String getPassword(String user) {
@@ -39,24 +40,17 @@ public class UserDAO {
 			return false;
 		}
 		userMap.put(user, password);
-		saveUsers();
+		save();
 		return true;
 	}
 	
-	private String getBasicUserString() {
-		String basicUserString = "";
-		try {
-			JSONStringer js = new JSONStringer();
-			basicUserString = js.object().key("qyd").value("1252865")
-					.key("cwy").value("1252874").endObject().toString();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return basicUserString;
+	public boolean save(){
+		JSONObject jsonObj= new JSONObject(userMap);
+		return FileAccess.fileOverWrite(getPathName(), jsonObj.toString());
 	}
 	
-	private void getUsersAndPassword(){
-		String jsonString = FileAccess.readFile(filePath);
+	private void read(){
+		String jsonString = FileAccess.readFile(getPathName());
 		if(jsonString.equals("")){
 			return;
 		}
@@ -75,28 +69,27 @@ public class UserDAO {
 
 	}
 	
-	public void checkOrCreateJsonFile(){
-		
+	@Override
+	protected String getBasicString() {
+		String basicUserString = "";
 		try {
-			File dataFolder = new File(dirPath);
-			if (!dataFolder.exists() || !dataFolder.isDirectory()) {
-				dataFolder.mkdir();
-			}
-			File dataFile = new File(filePath);
-			if(!dataFile.exists() || !dataFile.isFile()){
-				dataFile.createNewFile();
-				FileAccess.fileOverWrite(filePath, getBasicUserString());
-			}
-		} catch (Exception e) {
-
+			JSONStringer js = new JSONStringer();
+			basicUserString = js.object().key("qyd").value("1252865")
+					.key("cwy").value("1252874").endObject().toString();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		
-		
+		return basicUserString;
+	}
+
+	@Override
+	public void checkOrCreateFile(){
+		super.checkOrMk();
+	}
+
+	@Override
+	public String getFileName() {
+		return fileName;
 	}
 	
-	public boolean saveUsers(){
-		JSONObject jsonObj= new JSONObject(userMap);
-		System.out.println("save:"+jsonObj.toString());
-		return FileAccess.fileOverWrite(filePath, jsonObj.toString());
-	}
 }
