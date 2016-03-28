@@ -13,7 +13,7 @@ public class JsonAnalizerServer extends JsonAnalizerBase {
 	}
 	
 	public static String getPassword(String jsonString){
-		return getValue(jsonString, JsonBuilderBase.password);
+		return getValue(jsonString, JsonBuilderBase.content);
 	}
 
 }

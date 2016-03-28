@@ -10,7 +10,7 @@ import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
 
 public class MessageController {
-	private int maxMessagePerLogin = 500;
+	private int maxMessagePerLogin = 10;
 	private int maxMessagePerSecond = 5;
 
 	private String UserID;
