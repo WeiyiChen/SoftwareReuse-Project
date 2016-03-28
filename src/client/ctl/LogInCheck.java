@@ -23,14 +23,8 @@ public class LogInCheck implements ILogInCheck{
 		String jsonStr = JsonBuilderClient.getMessageJson(usrName, pwd);
 		IMsgSender msgSender = new JsonMsgSender();
 		msgSender.send(ClientSocket.getSocket(), jsonStr);
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
-		new Thread(new Runnable(){
+		Thread t = new Thread(new Runnable(){
 
 			@Override
 			public void run() {
@@ -47,7 +41,15 @@ public class LogInCheck implements ILogInCheck{
 				}
 			}
 			
-		}).start();
+		});
+		t.start();
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		t.stop();
 		return result;
 	}
 	
