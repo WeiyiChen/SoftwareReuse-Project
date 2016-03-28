@@ -44,7 +44,12 @@ public class LogInCheck implements ILogInCheck{
 		});
 		t.start();
 		try {
-			TimeUnit.SECONDS.sleep(1);
+			for(int i = 0; i < 5; i++){
+				TimeUnit.SECONDS.sleep(1);
+				if(result)
+					break;
+			}
+			
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
