@@ -1,5 +1,5 @@
 package client.intf;
 
 public interface IWindowJump {
-	void startMsgWindow();
+	void startMsgWindow(String usr);
 }
