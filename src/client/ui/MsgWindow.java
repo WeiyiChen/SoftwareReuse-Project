@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import client.ctl.JsonBuilderClient;
 import client.ctl.MsgHandle;
 import client.intf.IMsgHandle;
 import client.intf.IMsgWindow;
@@ -27,6 +28,7 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 	private JScrollPane sp;
 	private JLabel lblTip;
 	private IMsgHandle imh;
+	private String usr;
 	
 	/**
 	 * Create the frame.
@@ -77,10 +79,13 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 			}
 			
 		});
+		
+		usr = "";
 	}
 	
 	@Override
 	public void setUsr(String usr){
+		this.usr = usr;
 		lblUserToShow.setText(usr);
 	}
 
@@ -98,8 +103,9 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 			lblTip.setText("Empty!");
 			return;
 		}
+		String jsonStr = JsonBuilderClient.getMessageJson(usr, msgStr);
 //		imh = new MsgHandle(this);
-		imh.sendMessage(msgStr);
+		imh.sendMessage(jsonStr);
 	}
 
 
