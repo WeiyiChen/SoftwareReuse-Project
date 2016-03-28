@@ -106,6 +106,7 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		String jsonStr = JsonBuilderClient.getMessageJson(usr, msgStr);
 //		imh = new MsgHandle(this);
 		imh.sendMessage(jsonStr);
+		textField.setText("");
 	}
 
 
