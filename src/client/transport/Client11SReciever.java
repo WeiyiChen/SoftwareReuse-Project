@@ -5,13 +5,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import client.intf.IMsgHandle;
+
 public class Client11SReciever extends Thread {
 	private Socket socket;
+	private IMsgHandle imh;
 
 	public Client11SReciever(Socket socket) {
 		this.socket = socket;
 	}
 
+	public Client11SReciever(Socket socket, IMsgHandle imh){
+		this.socket = socket;
+		this.imh = imh;
+	}
 	public void run() {
 		BufferedReader reader = null;
 		try {
@@ -20,7 +27,10 @@ public class Client11SReciever extends Thread {
 			String message = null;
 			while (true) {
 				message = reader.readLine();
-				System.out.println(message);
+//				System.out.println(message);
+				if(imh != null){
+					imh.receiveAndUpdateMsg(message);
+				}
 				if(message.equals("bye")){
 					break;
 				}

@@ -114,6 +114,12 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		// TODO Auto-generated method stub
 		dispose();
 	}
+
+	@Override
+	public IMsgHandle getMsgHandle() {
+		// TODO Auto-generated method stub
+		return imh;
+	}
 	
 	
 
