@@ -20,7 +20,7 @@ public class LogInCheck implements ILogInCheck{
 	public boolean check(String usrName, String pwd) throws UnknownHostException, IOException {
 		// TODO Auto-generated method stub
 		result = false;
-		String jsonStr = JsonBuilderClient.getMessageJson(usrName, pwd);
+		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, pwd);
 		IMsgSender msgSender = new JsonMsgSender();
 		msgSender.send(ClientSocket.getSocket(), jsonStr);
 		
