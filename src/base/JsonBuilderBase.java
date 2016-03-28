@@ -3,8 +3,6 @@ package base;
 import org.json.JSONException;
 import org.json.JSONStringer;
 
-import server.json.JsonBuilderServer;
-
 public class JsonBuilderBase {
 	//schema
 	public static final String type = "Type";
@@ -24,8 +22,8 @@ public class JsonBuilderBase {
 	protected static String getTypeContentJson(String type, String content) {
 		try {
 			String jsonStringer = new JSONStringer().object()
-					.key(JsonBuilderServer.type).value(type)
-					.key(JsonBuilderServer.content).value(content).
+					.key(JsonBuilderBase.type).value(type)
+					.key(JsonBuilderBase.content).value(content).
 					endObject().toString();
 			return jsonStringer;
 		} catch (JSONException je) {
@@ -39,9 +37,9 @@ public class JsonBuilderBase {
 			String content) {
 				try {
 					String jsonStringer = new JSONStringer().object()
-							.key(JsonBuilderServer.type).value(type)
-							.key(JsonBuilderServer.user).value(user)
-							.key(JsonBuilderServer.content).value(content).
+							.key(JsonBuilderBase.type).value(type)
+							.key(JsonBuilderBase.user).value(user)
+							.key(JsonBuilderBase.content).value(content).
 							endObject().toString();
 					return jsonStringer;
 				} catch (JSONException je) {
@@ -50,6 +48,14 @@ public class JsonBuilderBase {
 				}
 				return "{\"Type\":\"Error\"}";
 			}
+
+	public static String getLoginSucceedJson() {
+		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.loginSucceed);
+	}
+
+	public static String getLoginFailedJson() {
+		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.loginFailed);
+	}
 
 	public JsonBuilderBase() {
 		super();

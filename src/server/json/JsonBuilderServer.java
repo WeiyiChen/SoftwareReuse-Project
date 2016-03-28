@@ -9,14 +9,6 @@ public class JsonBuilderServer extends JsonBuilderBase {
 	
 	public static final String serverError = "ServerError";
 	
-	public static String getLoginSucceedJson() {
-		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.loginSucceed);
-	}
-
-	public static String getLoginFailedJson() {
-		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.loginFailed);
-	}
-	
 	public static String getReloginRequestJson(){
 		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.relogin);
 	}
@@ -26,7 +18,7 @@ public class JsonBuilderServer extends JsonBuilderBase {
 	}
 	
 	public static String getNeedReloginError(){
-		return getTypeContentJson(JsonBuilderServer.serverError, JsonBuilderServer.relogin);
+		return getTypeContentJson(JsonBuilderServer.serverError, JsonBuilderBase.relogin);
 	}
 	
 	public static String getTypeNoFoundError(){

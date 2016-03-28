@@ -3,8 +3,6 @@ package server.ctrl;
 import server.DAO.UserDAO;
 import server.intf.IPasswordController;
 import server.json.JsonAnalizerServer;
-import server.json.JsonBuilderServer;
-import sun.usagetracker.UsageTrackerClient;
 
 
 public class PasswordController implements IPasswordController{

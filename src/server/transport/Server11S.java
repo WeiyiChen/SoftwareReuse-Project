@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 
+import base.JsonBuilderBase;
 import server.ctrl.MessageController;
 import server.json.JsonAnalizerServer;
-import server.json.JsonBuilderServer;
 
 class Server11S extends Thread {
 	private SocketController socketController;
@@ -19,6 +19,7 @@ class Server11S extends Thread {
 	public Server11S(SocketController socketP, List<SocketController> socketList) {
 		this.socketController = socketP;
 		this.socketControllerList = socketList;
+		this.messageController = new MessageController();
 	}
 
 	public void run() {
@@ -39,7 +40,7 @@ class Server11S extends Thread {
 					break;
 				}
 				if (JsonAnalizerServer.getMessageType(result).equals(
-						JsonBuilderServer.message)) {
+						JsonBuilderBase.message)) {
 					// send information to all user
 					for (int i = 0; i < socketControllerList.size(); i++) {
 						socketControllerList.get(i).sendText(result);

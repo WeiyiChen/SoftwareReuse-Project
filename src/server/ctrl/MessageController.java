@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import base.JsonBuilderBase;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
 
@@ -24,10 +25,10 @@ public class MessageController {
 
 	public String dealWithMessage(String jsonString) {
 		String type = JsonAnalizerServer.getMessageType(jsonString);
-		if (type.equals(JsonBuilderServer.message)) {
+		if (type.equals(JsonBuilderBase.message)) {
 			return this.dealWithTextMessage(jsonString);
 		}
-		if (type.equals(JsonBuilderServer.password)) {
+		if (type.equals(JsonBuilderBase.password)) {
 			return this.dealWithPassword(jsonString);
 		}
 		return JsonBuilderServer.getTypeNoFoundError();
