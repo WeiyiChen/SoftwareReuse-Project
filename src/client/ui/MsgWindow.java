@@ -1,9 +1,13 @@
 package client.ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -20,9 +24,10 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 	private JLabel lblUser;
 	private JLabel lblUserToShow;
 	private JTextArea textArea;
+	private JScrollPane sp;
 	private JLabel lblTip;
 	private IMsgHandle imh;
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -37,8 +42,9 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		
 		textArea = new JTextArea();
 		textArea.setEditable(false);
-		textArea.setBounds(66, 69, 374, 175);
-		contentPane.add(textArea);
+		sp = new JScrollPane(textArea);
+		sp.setBounds(66, 69, 374, 175);
+		contentPane.add(sp);
 		
 		textField = new JTextField();
 		textField.setBounds(66, 274, 199, 26);
@@ -61,6 +67,16 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		lblTip.setBounds(267, 279, 61, 16);
 		contentPane.add(lblTip);
 		imh = new MsgHandle(this);
+		
+		btnSend.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				sendMsg();
+			}
+			
+		});
 	}
 	
 	@Override
