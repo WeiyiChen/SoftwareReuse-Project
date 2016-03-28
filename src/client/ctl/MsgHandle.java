@@ -3,11 +3,13 @@ package client.ctl;
 import java.io.IOException;
 
 import client.intf.IAddMsgToUI;
+import client.intf.ILoginWindow;
 import client.intf.IMsgHandle;
 import client.intf.IMsgSender;
 import client.intf.IMsgWindow;
 import client.transport.ClientSocket;
 import client.transport.JsonMsgSender;
+import client.ui.LoginWindow;
 
 public class MsgHandle implements IMsgHandle{
 	private IMsgWindow imw;
@@ -59,6 +61,13 @@ public class MsgHandle implements IMsgHandle{
 			if(msg instanceof java.lang.String){
 //				iAddMsgToUi = new AddStrMsgToUI();
 				iAddMsgToUi = new AddJsonMsgToUI();
+				String jsonStr = (String)msg;
+				if(jsonStr.equals(JsonBuilderClient.getReloginRequestJson())){
+					imw.closeMsgWindow();
+					ILoginWindow ilw = new LoginWindow();
+					ilw.setTip("redo login!");
+					ilw.showLoginWindow();
+				}
 				iAddMsgToUi.addMsg(imw, msg);
 			}
 			else{

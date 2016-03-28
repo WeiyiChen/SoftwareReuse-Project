@@ -15,9 +15,10 @@ import javax.swing.JTextField;
 import client.ctl.LogInCheck;
 import client.ctl.WindowJump;
 import client.intf.ILogInCheck;
+import client.intf.ILoginWindow;
 import client.intf.IWindowJump;
 
-public class LoginWindow{
+public class LoginWindow implements ILoginWindow{
 
 	private JFrame frame;
 	private JTextField textField;
@@ -105,6 +106,25 @@ public class LoginWindow{
 				}
 			}
 		});
+	}
+
+	@Override
+	public void setTip(String tip) {
+		// TODO Auto-generated method stub
+		lblTip.setText(tip);
+		
+	}
+
+	@Override
+	public void showLoginWindow() {
+		// TODO Auto-generated method stub
+		frame.setVisible(true);
+	}
+
+	@Override
+	public void closeMsgWindow() {
+		// TODO Auto-generated method stub
+		frame.dispose();
 	}
 
 	

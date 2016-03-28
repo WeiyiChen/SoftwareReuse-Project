@@ -2,7 +2,9 @@ package client.ui;
 
 import java.awt.EventQueue;
 
-public class LoginWindowEntry {
+import client.intf.ILoginWindow;
+
+public class ClientStart {
 	/**
 	 * Launch the application.
 	 */
@@ -10,8 +12,8 @@ public class LoginWindowEntry {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginWindow window = new LoginWindow();
-					window.setVisible(true);
+					ILoginWindow window = new LoginWindow();
+					window.showLoginWindow();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
