@@ -22,7 +22,8 @@ public class MsgHandle implements IMsgHandle{
 		IAddMsgToUI iAddMsgToUi;
 		try{
 			if(msg instanceof java.lang.String){
-				iAddMsgToUi = new AddStrMsgToUI();
+//				iAddMsgToUi = new AddStrMsgToUI();
+				iAddMsgToUi = new AddJsonMsgToUI();
 				iAddMsgToUi.addMsg(imw, msg);
 			}
 			else{
@@ -42,7 +43,8 @@ public class MsgHandle implements IMsgHandle{
 		IAddMsgToUI iAddMsgToUi;
 		try{
 			if(msg instanceof java.lang.String){
-				iAddMsgToUi = new AddStrMsgToUI();
+//				iAddMsgToUi = new AddStrMsgToUI();
+				iAddMsgToUi = new AddJsonMsgToUI();
 				iAddMsgToUi.addMsg(imw, msg);
 			}
 			else{

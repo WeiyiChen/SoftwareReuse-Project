@@ -18,6 +18,10 @@ public class JsonAnalizerBase {
 		}
 	}
 
+	public static String getUser(String jsonString) {
+		return getValue(jsonString, JsonBuilderBase.user);
+	}
+
 	public JsonAnalizerBase() {
 		super();
 	}
