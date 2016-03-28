@@ -33,20 +33,20 @@ public class MsgHandle implements IMsgHandle{
 			e1.printStackTrace();
 			result = false;
 		}
-		IAddMsgToUI iAddMsgToUi;
-		try{
-			if(msg instanceof java.lang.String){
+//		IAddMsgToUI iAddMsgToUi;
+//		try{
+//			if(msg instanceof java.lang.String){
+////				iAddMsgToUi = new AddStrMsgToUI();
+//				iAddMsgToUi = new AddJsonMsgToUI();
+//				iAddMsgToUi.addMsg(imw, msg);
+//			}
+//			else{
 //				iAddMsgToUi = new AddStrMsgToUI();
-				iAddMsgToUi = new AddJsonMsgToUI();
-				iAddMsgToUi.addMsg(imw, msg);
-			}
-			else{
-				iAddMsgToUi = new AddStrMsgToUI();
-				iAddMsgToUi.addMsg(imw, msg.toString());
-			}
-		}catch(ClassCastException e){
-			e.printStackTrace();
-		}
+//				iAddMsgToUi.addMsg(imw, msg.toString());
+//			}
+//		}catch(ClassCastException e){
+//			e.printStackTrace();
+//		}
 		
 	}
 	

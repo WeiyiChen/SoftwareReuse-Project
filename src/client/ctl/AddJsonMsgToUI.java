@@ -11,8 +11,8 @@ public class AddJsonMsgToUI implements IAddMsgToUI{
 		String jsonString = (String)msg;
 		String sender = JsonAnalizerClient.getUser(jsonString);
 		String content = JsonAnalizerClient.getMessageContent(jsonString);
-		imw.appendMsgRecord(sender + " :" + "\n");
-		imw.appendMsgRecord(content + "\n");
+		imw.appendMsgRecord(sender + " :");
+		imw.appendMsgRecord(content);
 	}
 
 }
