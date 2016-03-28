@@ -10,8 +10,8 @@ public class PasswordController implements IPasswordController{
 	@Override
 	public boolean passwordCheck(String jsonString) {
 		// TODO Auto-generated method stub
-		String user = JsonBuilderAnalizer.getUser();
-		String password = JsonBuilderAnalizer.getPassword();
+		String user = JsonAnalizer.getUser(jsonString);
+		String password = JsonAnalizer.getPassword(jsonString);
 		return false;
 	}
 

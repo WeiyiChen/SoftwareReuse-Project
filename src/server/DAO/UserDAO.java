@@ -1,4 +1,4 @@
-ipackage server.DAO;
+package server.DAO;
 
 import java.io.BufferedReader;
 import java.io.File;
