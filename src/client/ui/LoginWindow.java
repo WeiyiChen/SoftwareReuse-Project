@@ -72,6 +72,7 @@ public class LoginWindow implements ILoginWindow {
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String usr = textField.getText();
+				
 				String pwd = passwordField.getText();
 
 				// // test the result of getText()

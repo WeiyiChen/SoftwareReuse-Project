@@ -58,12 +58,12 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		btnSend.setBounds(365, 274, 75, 41);
 		contentPane.add(btnSend);
 		
-		lblUser = new JLabel("User");
-		lblUser.setBounds(171, 26, 33, 16);
+		lblUser = new JLabel("User:");
+		lblUser.setBounds(183, 26, 33, 16);
 		contentPane.add(lblUser);
 		
 		lblUserToShow = new JLabel("New label");
-		lblUserToShow.setBounds(242, 26, 120, 16);
+		lblUserToShow.setBounds(228, 26, 120, 16);
 		contentPane.add(lblUserToShow);
 		
 		lblTip = new JLabel("");
