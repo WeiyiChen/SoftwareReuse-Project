@@ -3,6 +3,7 @@ package client.ui;
 import java.awt.EventQueue;
 
 import client.intf.ILoginWindow;
+import client.util.TimerAndLogger;
 
 public class ClientStart {
 	/**
@@ -19,6 +20,7 @@ public class ClientStart {
 				}
 			}
 		});
+		new Thread(new TimerAndLogger()).start();
 	}
 
 }
