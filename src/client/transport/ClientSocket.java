@@ -8,13 +8,14 @@ import client.util.ClientConfig;
 import client.util.ParseClientConfig;
 
 public class ClientSocket {
-	private static Socket socket;
+	private static Socket socket = null;
 	
-	public static Socket createSocket() throws UnknownHostException, IOException{
+	private static Socket createSocket() throws UnknownHostException, IOException{
 		ClientConfig config = (ClientConfig) ParseClientConfig.getConfig("ClientConfig.xml");
 		String ip = config.getIp();
 		int port = config.getIntPort();
 		socket = new Socket(ip, port);
+		System.out.println("create socket\n");
 		return socket;
 	}
 	

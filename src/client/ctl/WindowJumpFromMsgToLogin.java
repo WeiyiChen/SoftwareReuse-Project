@@ -4,6 +4,7 @@ import client.intf.IClientWindow;
 import client.intf.ILoginWindow;
 import client.intf.IMsgWindow;
 import client.intf.IWidnowJump;
+import client.transport.Client11SReciever;
 import client.util.ClientLogger;
 
 public class WindowJumpFromMsgToLogin implements IWidnowJump {
@@ -21,6 +22,7 @@ public class WindowJumpFromMsgToLogin implements IWidnowJump {
 			
 			imw.toCloseWindow();
 			ClientLogger.setIsLogin(false);
+			Client11SReciever.exit();
 		}catch(ClassCastException e1){
 			e1.printStackTrace();
 		}catch(Exception e2){

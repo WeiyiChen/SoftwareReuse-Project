@@ -8,9 +8,14 @@ import java.net.Socket;
 import client.intf.IMsgHandle;
 
 public class Client11SReciever extends Thread {
+	private static boolean isExit = false;
 	private Socket socket;
 	private IMsgHandle imh;
 
+	public static void exit(){
+		isExit = true;
+	}
+	
 	public Client11SReciever(Socket socket) {
 		this.socket = socket;
 	}
@@ -34,19 +39,24 @@ public class Client11SReciever extends Thread {
 				if(message.equals("bye")){
 					break;
 				}
+				if(isExit){
+					isExit = false;
+					break;
+				}
 			}
+			
 		} catch (IOException e) {
 			if (!socket.isClosed()) {
 				e.printStackTrace();
 			}
 		} finally {
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				if (reader != null) {
+//					reader.close();
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 		}
 	}
 }

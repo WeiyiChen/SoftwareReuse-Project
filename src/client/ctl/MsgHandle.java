@@ -49,11 +49,21 @@ public class MsgHandle implements IMsgHandle{
 				
 				String jsonStr = (String)msg;
 				if(jsonStr.equals(JsonBuilderClient.getReloginRequestJson())){
-					imw.toCloseWindow();
-					ILoginWindow ilw = new LoginWindow();
-					ilw.setTip("redo login!");
-					ilw.toShowWindow();
-					ClientLogger.setIsLogin(false);
+					new WindowJumpFromMsgToLogin().jump(imw, new LoginWindow());
+//					imw.toCloseWindow();
+//					ILoginWindow ilw = new LoginWindow();
+//					ilw.setTip("redo login!");
+//					ilw.toShowWindow();
+//					ClientLogger.setIsLogin(false);
+//					new Thread(new Runnable(){
+//
+//						@Override
+//						public void run() {
+//							// TODO Auto-generated method stub
+//							new WindowJumpFromMsgToLogin().jump(imw, new LoginWindow());
+//						}
+//						
+//					});
 				}
 				else{
 					iAddMsgToUi = new AddJsonMsgToUI();
