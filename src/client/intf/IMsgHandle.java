@@ -1,8 +1,5 @@
 package client.intf;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * A controller for send message and receive message
  * @author Dai

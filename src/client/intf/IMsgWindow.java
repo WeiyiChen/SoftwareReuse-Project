@@ -5,7 +5,7 @@ package client.intf;
  * @author Dai
  *
  */
-public interface IMsgWindow {
+public interface IMsgWindow extends IClientWindow{
 	
 	/**
 	 * message window can display which user is use the window
@@ -24,15 +24,15 @@ public interface IMsgWindow {
 	 */
 	void sendMsg();
 	
-	/**
-	 * to make the message window visible
-	 */
-	void showMsgWindow();
-	
-	/**
-	 * to close the message window
-	 */
-	void closeMsgWindow();
+//	/**
+//	 * to make the message window visible
+//	 */
+//	void toShowWindow();
+//	
+//	/**
+//	 * to close the message window
+//	 */
+//	void toCloseWindow();
 	
 	/**
 	 * to get a message handler (A controller for send message and receive message)

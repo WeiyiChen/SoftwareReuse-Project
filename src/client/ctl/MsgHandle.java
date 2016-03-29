@@ -27,11 +27,12 @@ public class MsgHandle implements IMsgHandle{
 	@Override
 	public void sendMessage(Object msg) {
 		// TODO Auto-generated method stub
-		boolean result;
+		boolean result = false;
 		IMsgSender msgSender = new JsonMsgSender();
 		result = msgSender.send(msg);
-		ClientLogger.increaseSendNum();
-		
+		if(result){
+			ClientLogger.increaseSendNum();
+		}	
 	}
 	
 	
@@ -45,16 +46,17 @@ public class MsgHandle implements IMsgHandle{
 		try{
 			if(msg instanceof java.lang.String){
 //				iAddMsgToUi = new AddStrMsgToUI();
-				iAddMsgToUi = new AddJsonMsgToUI();
+				
 				String jsonStr = (String)msg;
 				if(jsonStr.equals(JsonBuilderClient.getReloginRequestJson())){
-					imw.closeMsgWindow();
+					imw.toCloseWindow();
 					ILoginWindow ilw = new LoginWindow();
 					ilw.setTip("redo login!");
-					ilw.showLoginWindow();
+					ilw.toShowWindow();
 					ClientLogger.setIsLogin(false);
 				}
 				else{
+					iAddMsgToUi = new AddJsonMsgToUI();
 					iAddMsgToUi.addMsg(imw, msg);
 				}
 				

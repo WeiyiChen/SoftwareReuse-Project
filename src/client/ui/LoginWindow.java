@@ -11,7 +11,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import client.ctl.LogInCheck;
-import client.ctl.WindowJump;
+import client.ctl.JumpToMsgWindowOld;
 import client.intf.ILogInCheck;
 import client.intf.ILoginWindow;
 import client.intf.IJump2MsgWindow;
@@ -95,7 +95,7 @@ public class LoginWindow implements ILoginWindow {
 				}
 				try {
 					if (logInResult) {
-						IJump2MsgWindow windowJump = new WindowJump();
+						IJump2MsgWindow windowJump = new JumpToMsgWindowOld();
 						windowJump.startMsgWindow(usr);
 						frame.dispose();
 
@@ -125,13 +125,13 @@ public class LoginWindow implements ILoginWindow {
 	}
 
 	@Override
-	public void showLoginWindow() {
+	public void toShowWindow() {
 		// TODO Auto-generated method stub
 		frame.setVisible(true);
 	}
 
 	@Override
-	public void closeMsgWindow() {
+	public void toCloseWindow() {
 		// TODO Auto-generated method stub
 		frame.dispose();
 	}

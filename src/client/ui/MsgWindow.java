@@ -113,13 +113,13 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 
 
 	@Override
-	public void showMsgWindow() {
+	public void toShowWindow() {
 		// TODO Auto-generated method stub
 		setVisible(true);
 	}
 
 	@Override
-	public void closeMsgWindow() {
+	public void toCloseWindow() {
 		// TODO Auto-generated method stub
 		dispose();
 	}
