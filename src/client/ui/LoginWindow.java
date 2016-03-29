@@ -10,11 +10,14 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import client.ctl.LogInCheck;
 import client.ctl.JumpToMsgWindowOld;
+import client.ctl.LogInCheck;
+import client.ctl.WindowJumpFromLoginToMsg;
+import client.intf.IJump2MsgWindow;
 import client.intf.ILogInCheck;
 import client.intf.ILoginWindow;
-import client.intf.IJump2MsgWindow;
+import client.intf.IMsgWindow;
+import client.intf.IWindowJump;
 import client.util.ClientLogger;
 
 public class LoginWindow implements ILoginWindow {
@@ -96,8 +99,13 @@ public class LoginWindow implements ILoginWindow {
 				}
 				try {
 					if (logInResult) {
-						IJump2MsgWindow windowJump = new JumpToMsgWindowOld();
-						windowJump.startMsgWindow(usr);
+//						IJump2MsgWindow windowJump = new JumpToMsgWindowOld();
+//						windowJump.startMsgWindow(usr);
+						
+						IWindowJump windowJump = new WindowJumpFromLoginToMsg();
+						IMsgWindow ims = new MsgWindow();
+						windowJump.jump(null, ims);
+						ims.setUsr(usr);
 						frame.dispose();
 
 						ClientLogger.updateUsr(usr);
@@ -106,6 +114,7 @@ public class LoginWindow implements ILoginWindow {
 						ClientLogger.resetSendNum();
 						ClientLogger.resetReceiveNum();
 						ClientLogger.setIsLogin(true);
+//						
 
 					} else {
 						ClientLogger.writeLoginFailed(usr);

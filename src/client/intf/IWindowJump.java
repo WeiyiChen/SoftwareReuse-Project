@@ -5,7 +5,7 @@ package client.intf;
  * @author Dai
  *
  */
-public interface IWidnowJump {
+public interface IWindowJump {
 	/**
 	 * jump from window to another
 	 * @param from

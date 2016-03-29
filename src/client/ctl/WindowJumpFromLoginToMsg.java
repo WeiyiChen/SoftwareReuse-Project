@@ -4,11 +4,11 @@ import java.net.UnknownHostException;
 
 import client.intf.IClientWindow;
 import client.intf.IMsgWindow;
-import client.intf.IWidnowJump;
+import client.intf.IWindowJump;
 import client.transport.Client11SReciever;
 import client.transport.ClientSocket;
 
-public class WindowJumpFromLoginToMsg implements IWidnowJump {
+public class WindowJumpFromLoginToMsg implements IWindowJump {
 
 	/**
 	 * notice: login window hasn't been closed.
@@ -20,7 +20,7 @@ public class WindowJumpFromLoginToMsg implements IWidnowJump {
 		try{
 			IMsgWindow imw = (IMsgWindow)to;
 			imw.toShowWindow();
-			new Client11SReciever(ClientSocket.getSocket(), imw.getMsgHandle());
+			new Client11SReciever(ClientSocket.getSocket(), imw.getMsgHandle()).start();
 			result = true;
 		}catch(ClassCastException e1){
 			e1.printStackTrace();
