@@ -9,10 +9,11 @@ import client.intf.IMsgSender;
 public class JsonMsgSender implements IMsgSender {
 
 	@Override
-	public boolean send(Socket socket, Object msg) {
-		// TODO Auto-generated method stub
+	public boolean send(Object msg) {
+		// TODO Auto-generated method stub		
 		PrintWriter writer;
 		try {
+			Socket socket = ClientSocket.getSocket();
 			writer = new PrintWriter(socket.getOutputStream());
 			String jsonString = (String)msg;
 			writer.println(jsonString);

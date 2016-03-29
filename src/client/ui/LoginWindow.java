@@ -14,7 +14,7 @@ import client.ctl.LogInCheck;
 import client.ctl.WindowJump;
 import client.intf.ILogInCheck;
 import client.intf.ILoginWindow;
-import client.intf.IWindowJump;
+import client.intf.IJump2MsgWindow;
 import client.util.ClientLogger;
 
 public class LoginWindow implements ILoginWindow {
@@ -95,7 +95,7 @@ public class LoginWindow implements ILoginWindow {
 				}
 				try {
 					if (logInResult) {
-						IWindowJump windowJump = new WindowJump();
+						IJump2MsgWindow windowJump = new WindowJump();
 						windowJump.startMsgWindow(usr);
 						frame.dispose();
 

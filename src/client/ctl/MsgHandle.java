@@ -29,29 +29,8 @@ public class MsgHandle implements IMsgHandle{
 		// TODO Auto-generated method stub
 		boolean result;
 		IMsgSender msgSender = new JsonMsgSender();
-		try {
-			result = msgSender.send(ClientSocket.getSocket(), msg);
-			ClientLogger.increaseSendNum();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			ClientLogger.setIsConnect(false);
-			e1.printStackTrace();
-			result = false;
-		}
-//		IAddMsgToUI iAddMsgToUi;
-//		try{
-//			if(msg instanceof java.lang.String){
-////				iAddMsgToUi = new AddStrMsgToUI();
-//				iAddMsgToUi = new AddJsonMsgToUI();
-//				iAddMsgToUi.addMsg(imw, msg);
-//			}
-//			else{
-//				iAddMsgToUi = new AddStrMsgToUI();
-//				iAddMsgToUi.addMsg(imw, msg.toString());
-//			}
-//		}catch(ClassCastException e){
-//			e.printStackTrace();
-//		}
+		result = msgSender.send(msg);
+		ClientLogger.increaseSendNum();
 		
 	}
 	
