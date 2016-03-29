@@ -26,7 +26,7 @@ public class Server11Entry extends Thread {
 			while (continueToRun) {
 				socket = serverSocket.accept();
 				SocketController socketWS = new SocketController(socket);
-				System.out.println("Unknown clinet connected to the server!"
+				System.out.println("Clinet connected to the server!"
 						+ socket.getLocalAddress().toString());
 				// add the socket to all socket list
 				socketList.add(socketWS);

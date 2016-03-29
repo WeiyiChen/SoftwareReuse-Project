@@ -1,11 +1,6 @@
 package junitTest.server;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
-import org.junit.Test;
-
-import server.DAO.UserDAO;
 
 public class UserDAOTest {
 

@@ -30,6 +30,7 @@ class Server11Entity extends Thread {
 			String message = null;
 			while (continueToWork) {
 				message = reader.readLine();
+				System.out.println("receive: "+message);
 				if (message == null) { break;}
 				String result = messageController.dealWithMessage(message);
 				if (message.equals("bye")) {
@@ -42,6 +43,7 @@ class Server11Entity extends Thread {
 				if(result.equals(JsonBuilderServer.getMessageBusyError())){
 					continue;
 				}
+				System.out.println("send:    "+result);
 				this.sendMessage(result);
 				messageController.addSendRecord();
 			}

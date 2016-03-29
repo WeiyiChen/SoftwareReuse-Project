@@ -1,7 +1,5 @@
 package junitTest.server;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import client.ctl.JsonBuilderClient;
