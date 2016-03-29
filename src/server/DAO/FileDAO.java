@@ -30,7 +30,6 @@ public abstract class FileDAO <T>{
 	
 	private void checkOrMkFile(){
 		try {
-			String fileName = getFileName();
 			File dataFile = new File(getPathName());
 			if(!dataFile.exists() || !dataFile.isFile()){
 				dataFile.createNewFile();

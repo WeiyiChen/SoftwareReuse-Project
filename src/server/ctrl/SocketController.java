@@ -1,4 +1,4 @@
-package server.transport;
+package server.ctrl;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -8,18 +8,21 @@ import java.util.List;
 import base.JsonBuilderBase;
 import server.ctrl.MessageController;
 import server.ctrl.RecordController;
+import server.ctrl.SocketController;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
 
-class Server11S extends Thread {
+class Server11Entity extends Thread {
 	private SocketController socketController;
 	private MessageController messageController;
 	private List<SocketController> socketControllerList;
+	private boolean continueToWork;
 
-	public Server11S(SocketController socketP, List<SocketController> socketList) {
+	public Server11Entity(SocketController socketP, List<SocketController> socketList) {
 		this.socketController = socketP;
 		this.socketControllerList = socketList;
 		this.messageController = new MessageController();
+		continueToWork = true;
 	}
 
 	public void run() {
@@ -29,7 +32,7 @@ class Server11S extends Thread {
 			reader = socketController.getBufferedReader();
 
 			String message = null;
-			while (true) {
+			while (continueToWork) {
 				message = reader.readLine();
 				if (message == null) { break;}
 				String result = messageController.dealWithMessage(message);
@@ -47,11 +50,18 @@ class Server11S extends Thread {
 				messageController.addSendRecord();
 			}
 			socketControllerList.remove(socketController);
+			if(!continueToWork){
+				this.sendMessage("bye");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void quit(){
+		messageController.quit();
+	}
+	
 	private void sendMessage(String text) {
 		// send message to this client or all client
 		if (JsonAnalizerServer.getMessageType(text).equals(
