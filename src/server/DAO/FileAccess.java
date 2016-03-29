@@ -67,15 +67,13 @@ public class FileAccess {
 		} catch (FileNotFoundException e) {
 			succeed = false;
 			e.printStackTrace();
-		} catch (IOException e) {
-			succeed = false;
-			e.printStackTrace();
-		}
+		} 
 		return succeed;
 	}
 
-	public void append(String content) {
+	public boolean append(String content) {
 		pwa.println(content);
+		return !pwa.checkError();
 	}
 	
 	public void closeFile(){

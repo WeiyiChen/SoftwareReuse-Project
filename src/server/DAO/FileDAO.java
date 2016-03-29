@@ -3,7 +3,7 @@ package server.DAO;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class FileDAO {
+public abstract class FileDAO <T>{
 
 	protected String dirPath = "./data";
 	
@@ -40,9 +40,9 @@ public abstract class FileDAO {
 		}
 	}
 	
-	public abstract boolean save();
+	public abstract boolean save(T obj);
 	
-	public abstract void read();
+	public abstract T read();
 	
 	protected abstract void checkOrCreateFile();
 	
