@@ -14,6 +14,8 @@ public class ClientLogger {
 	private static int sendNum;
 	private static int receiveNum;
 	private static BufferedWriter logWriter;
+	private static int loginSucceedCount = 0;
+	private static int loginFailedCount = 0;
 	
 	
 	public static boolean getIsConnect() {
@@ -72,7 +74,7 @@ public class ClientLogger {
 		out.close();
 		updateUsr(usr);
 		logWriter.write(new Date().toString() + "\n");
-		logWriter.write("login successfully!\n");
+		logWriter.write("login successfully!\n\n");
 		logWriter.flush();
 	}
 	
@@ -80,7 +82,7 @@ public class ClientLogger {
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("log.txt", true)));
 		out.write(new Date().toString() + "\n");
-		out.write(usr + " login failed!\n");
+		out.write(usr + " login failed!\n\n");
 		out.flush();
 		out.close();
 	}
@@ -95,9 +97,30 @@ public class ClientLogger {
 		logWriter.write(new Date().toString() + "\n");
 		logWriter.write("send message : " + sendNum + "\n");
 		logWriter.write("receive message : " + receiveNum + "\n");
+		logWriter.write("\n");
 		logWriter.flush();
+		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("logincountlog.txt", true)));
+		out.write(new Date().toString() + "\n");
+		out.write("login succeed count : " + loginSucceedCount + "\n");
+		out.write("login fail cout : " + loginFailedCount + "\n");
+		out.write("\n");
+		out.flush();
+		out.close();
+	}
+	public static void resetLoginSucceedCount(){
+		loginSucceedCount = 0;
+	}
+	public static void increaseLoginSucceedCount(){
+		loginSucceedCount++;
+	}
+	public static void resetLoginFailedCount(){
+		loginFailedCount = 0;
 	}
 	
+	public static void increaseLoginFailedCount(){
+		loginFailedCount++;
+	}
 	public static void closeLogWriter() throws IOException{
 		if(logWriter != null){
 			logWriter.close();

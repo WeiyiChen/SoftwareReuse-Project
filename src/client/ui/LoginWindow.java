@@ -102,12 +102,14 @@ public class LoginWindow implements ILoginWindow {
 
 						ClientLogger.updateUsr(usr);
 						ClientLogger.writeLoginSuccessful(usr);
+						ClientLogger.increaseLoginSucceedCount();
 						ClientLogger.resetSendNum();
 						ClientLogger.resetReceiveNum();
 						ClientLogger.setIsLogin(true);
 
 					} else {
 						ClientLogger.writeLoginFailed(usr);
+						ClientLogger.increaseLoginFailedCount();
 						lblTip.setText("Error input!");
 					}
 				} catch (IOException e1) {
