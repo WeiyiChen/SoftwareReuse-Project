@@ -3,6 +3,11 @@ package client.util;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * log per minute in a thread
+ * @author Dai
+ *
+ */
 public class TimerAndLogger implements Runnable {
 
 	@Override

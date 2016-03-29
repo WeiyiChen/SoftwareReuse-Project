@@ -36,7 +36,7 @@ public interface IMsgWindow extends IClientWindow{
 	
 	/**
 	 * to get a message handler (A controller for send message and receive message)
-	 * @return
+	 * @return - A controller for send message and receive message
 	 */
 	IMsgHandle getMsgHandle();
 	

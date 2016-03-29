@@ -12,11 +12,20 @@ import client.intf.IMsgSender;
 import client.transport.ClientSocket;
 import client.transport.JsonMsgSender;
 
+/**
+ * check if the usr and password is correct
+ * @author Dai
+ *
+ */
 public class LogInCheck implements ILogInCheck{
 	
 	private static boolean result = false;
 	private static boolean isReceived = false;
 
+	/**
+	 * After send login message, create a new thread to receive login result
+	 * the longest wait time is 1000ms
+	 */
 	@Override
 	public boolean check(String usrName, String pwd) throws UnknownHostException, IOException {
 		// TODO Auto-generated method stub
@@ -44,7 +53,7 @@ public class LogInCheck implements ILogInCheck{
 		});
 		t.start();
 		try {
-			for(int i = 0; i < 70; i++){
+			for(int i = 0; i < 100; i++){
 				TimeUnit.MILLISECONDS.sleep(10);
 				if(isReceived)
 					break;

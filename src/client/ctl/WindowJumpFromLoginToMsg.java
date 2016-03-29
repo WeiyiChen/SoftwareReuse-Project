@@ -8,6 +8,11 @@ import client.intf.IWindowJump;
 import client.transport.Client11SReciever;
 import client.transport.ClientSocket;
 
+/**
+ * jump from login window to message window
+ * @author Dai
+ *
+ */
 public class WindowJumpFromLoginToMsg implements IWindowJump {
 
 	/**

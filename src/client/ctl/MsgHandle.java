@@ -12,6 +12,11 @@ import client.transport.JsonMsgSender;
 import client.ui.LoginWindow;
 import client.util.ClientLogger;
 
+/**
+ * 
+ * @author Dai
+ *
+ */
 public class MsgHandle implements IMsgHandle{
 	private IMsgWindow imw;
 	

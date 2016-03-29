@@ -7,6 +7,12 @@ import client.intf.IWindowJump;
 import client.transport.Client11SReciever;
 import client.util.ClientLogger;
 
+/**
+ * jump from message window to login window
+ * used when need relogin
+ * @author Dai
+ *
+ */
 public class WindowJumpFromMsgToLogin implements IWindowJump {
 
 	@Override
