@@ -22,7 +22,7 @@ public class LogInCheck implements ILogInCheck{
 		result = false;
 		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, pwd);
 		IMsgSender msgSender = new JsonMsgSender();
-		msgSender.send(ClientSocket.getSocket(), jsonStr);
+		msgSender.send(jsonStr);
 		
 		Thread t = new Thread(new Runnable(){
 

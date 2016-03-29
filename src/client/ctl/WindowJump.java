@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import client.intf.IMsgWindow;
-import client.intf.IWindowJump;
+import client.intf.IJump2MsgWindow;
 import client.transport.Client11SReciever;
 import client.transport.ClientSocket;
 import client.ui.MsgWindow;
 
-public class WindowJump implements IWindowJump {
+public class WindowJump implements IJump2MsgWindow {
 
 	@Override
 	public void startMsgWindow(String usr) {
