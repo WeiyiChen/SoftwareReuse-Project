@@ -10,9 +10,7 @@ public class SocketController {
 	private Socket socket;
 	private BufferedReader br;
 	private PrintWriter pw;
-	
-	
-	
+
 	public SocketController(Socket socket){
 		this.socket =  socket;
 		try{

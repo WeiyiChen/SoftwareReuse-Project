@@ -13,7 +13,7 @@ public class JsonBuilderClientTest {
 
 	@Test
 	public void testGetPasswordJson() {
-		System.out.println(JsonBuilderClient.getPasswordJson("qyd", "1234"));
+		System.out.println(JsonBuilderClient.getPasswordJson("qyd", "1252865"));
 	}
 
 	@Test

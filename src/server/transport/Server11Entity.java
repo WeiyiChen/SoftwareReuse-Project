@@ -27,7 +27,6 @@ class Server11Entity extends Thread {
 		BufferedReader reader = null;
 		try {
 			reader = socketController.getBufferedReader();
-
 			String message = null;
 			while (continueToWork) {
 				message = reader.readLine();
@@ -57,6 +56,10 @@ class Server11Entity extends Thread {
 
 	public void quit(){
 		messageController.quit();
+		try {
+			socketController.quit();
+		} catch (IOException e) {
+		}
 	}
 	
 	private void sendMessage(String text) {
