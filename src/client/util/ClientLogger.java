@@ -66,6 +66,7 @@ public class ClientLogger {
 	public static void writeLoginSuccessful(String usr) throws IOException{
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("log.txt", true)));
+		out.write(new Date().toString() + "\n");
 		out.write(usr + " login successfully!\n");
 		out.flush();
 		out.close();
@@ -78,6 +79,7 @@ public class ClientLogger {
 	public static void writeLoginFailed(String usr) throws IOException{
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("log.txt", true)));
+		out.write(new Date().toString() + "\n");
 		out.write(usr + " login failed!\n");
 		out.flush();
 		out.close();

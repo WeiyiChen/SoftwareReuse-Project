@@ -22,5 +22,4 @@ public class ClientStart {
 		});
 		new Thread(new TimerAndLogger()).start();
 	}
-
 }

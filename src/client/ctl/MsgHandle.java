@@ -10,6 +10,7 @@ import client.intf.IMsgWindow;
 import client.transport.ClientSocket;
 import client.transport.JsonMsgSender;
 import client.ui.LoginWindow;
+import client.util.ClientLogger;
 
 public class MsgHandle implements IMsgHandle{
 	private IMsgWindow imw;
@@ -30,8 +31,10 @@ public class MsgHandle implements IMsgHandle{
 		IMsgSender msgSender = new JsonMsgSender();
 		try {
 			result = msgSender.send(ClientSocket.getSocket(), msg);
+			ClientLogger.increaseSendNum();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
+			ClientLogger.setIsConnect(false);
 			e1.printStackTrace();
 			result = false;
 		}
@@ -56,6 +59,9 @@ public class MsgHandle implements IMsgHandle{
 	@Override
 	public void receiveAndUpdateMsg(Object msg) {
 		// TODO Auto-generated method stub
+		
+		// relogin message is also count as a message
+		ClientLogger.increaseReceiveNum();
 		IAddMsgToUI iAddMsgToUi;
 		try{
 			if(msg instanceof java.lang.String){
@@ -67,8 +73,12 @@ public class MsgHandle implements IMsgHandle{
 					ILoginWindow ilw = new LoginWindow();
 					ilw.setTip("redo login!");
 					ilw.showLoginWindow();
+					ClientLogger.setIsLogin(false);
 				}
-				iAddMsgToUi.addMsg(imw, msg);
+				else{
+					iAddMsgToUi.addMsg(imw, msg);
+				}
+				
 			}
 			else{
 				iAddMsgToUi = new AddStrMsgToUI();
