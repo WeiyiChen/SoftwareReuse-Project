@@ -3,6 +3,11 @@ package client.ctl;
 import client.intf.IAddMsgToUI;
 import client.intf.IMsgWindow;
 
+/**
+ * update the UI with message type simple String
+ * @author Dai
+ *
+ */
 public class AddStrMsgToUI implements IAddMsgToUI{
 
 	@Override

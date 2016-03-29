@@ -1,8 +1,9 @@
-package client.ui;
+package client;
 
 import java.awt.EventQueue;
 
 import client.intf.ILoginWindow;
+import client.ui.LoginWindow;
 import client.util.TimerAndLogger;
 
 public class ClientStart {

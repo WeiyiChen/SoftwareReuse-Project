@@ -1,5 +1,11 @@
 package client.util;
 
+/**
+ * the configure for client, include ip, port
+ * 
+ * @author Dai
+ *
+ */
 public class ClientConfig {
 	private String ip = "1.1.1.1";
 	private String port = "0000";

@@ -10,6 +10,13 @@ import client.transport.Client11SReciever;
 import client.transport.ClientSocket;
 import client.ui.MsgWindow;
 
+
+/**
+ * used to jump to message window when the user log in successfully
+ * @author Dai
+ *
+ */
+@Deprecated
 public class JumpToMsgWindowOld implements IJump2MsgWindow {
 
 	@Override

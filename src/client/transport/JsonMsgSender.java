@@ -6,6 +6,11 @@ import java.net.Socket;
 
 import client.intf.IMsgSender;
 
+/**
+ * Send json type message by socket
+ * @author Dai
+ *
+ */
 public class JsonMsgSender implements IMsgSender {
 
 	@Override
