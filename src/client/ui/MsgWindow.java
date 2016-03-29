@@ -1,5 +1,6 @@
 package client.ui;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import client.ctl.JsonBuilderClient;
@@ -20,7 +20,7 @@ import client.intf.IMsgWindow;
 public class MsgWindow extends JFrame implements IMsgWindow{
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextArea textField;
 	private JButton btnSend;
 	private JLabel lblUser;
 	private JLabel lblUserToShow;
@@ -48,21 +48,22 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		sp.setBounds(66, 69, 374, 175);
 		contentPane.add(sp);
 		
-		textField = new JTextField();
-		textField.setBounds(66, 274, 199, 26);
-		contentPane.add(textField);
+		textField = new JTextArea();
+		JScrollPane tmpSp = new JScrollPane(textField);
+		tmpSp.setBounds(66, 274, 250, 41);
+		contentPane.add(tmpSp);
 		textField.setColumns(10);
 		
 		btnSend = new JButton("Send");
-		btnSend.setBounds(340, 274, 100, 29);
+		btnSend.setBounds(365, 274, 75, 41);
 		contentPane.add(btnSend);
 		
-		lblUser = new JLabel("User");
-		lblUser.setBounds(171, 26, 33, 16);
+		lblUser = new JLabel("User:");
+		lblUser.setBounds(183, 26, 33, 16);
 		contentPane.add(lblUser);
 		
 		lblUserToShow = new JLabel("New label");
-		lblUserToShow.setBounds(242, 26, 120, 16);
+		lblUserToShow.setBounds(228, 26, 120, 16);
 		contentPane.add(lblUserToShow);
 		
 		lblTip = new JLabel("");
@@ -93,6 +94,7 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 	public void appendMsgRecord(String singleLineMsg) {
 		// TODO Auto-generated method stub
 		textArea.append(singleLineMsg + "\n");
+		sp.getViewport().setViewPosition(new Point(0, sp.getVerticalScrollBar().getMaximum()));
 	}
 	
 	@Override
@@ -111,13 +113,13 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 
 
 	@Override
-	public void showMsgWindow() {
+	public void toShowWindow() {
 		// TODO Auto-generated method stub
 		setVisible(true);
 	}
 
 	@Override
-	public void closeMsgWindow() {
+	public void toCloseWindow() {
 		// TODO Auto-generated method stub
 		dispose();
 	}

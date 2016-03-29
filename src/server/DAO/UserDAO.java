@@ -1,7 +1,5 @@
 package server.DAO;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,11 +9,9 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 
-public class UserDAO extends FileDAO {
+public class UserDAO extends FileDAO <Map<String,String>>{
 	protected String fileName = "users.json";
-	
-	private Map<String, String> userMap = new HashMap<String, String>();
-		
+			
 	public UserDAO(){
 		super();
 		checkOrCreateFile();
@@ -23,49 +19,32 @@ public class UserDAO extends FileDAO {
 	}
 	
 	@Override
-	public void finalize(){
-		save();
-	}
-	
-	public String getPassword(String user) {
-		String pwd = userMap.get(user);
-		if(pwd == null){
-			pwd = "";
-		}
-		return pwd;
-	}
-	
-	public boolean addUser(String user, String password) {
-		if(userMap.containsKey(user)){
-			return false;
-		}
-		userMap.put(user, password);
-		save();
-		return true;
-	}
-	
-	public boolean save(){
+	public boolean save(Map<String,String> userMap){
 		JSONObject jsonObj= new JSONObject(userMap);
 		return FileAccess.fileOverWrite(getPathName(), jsonObj.toString());
 	}
 	
-	private void read(){
+	@Override
+	public Map<String,String> read(){
 		String jsonString = FileAccess.readFile(getPathName());
 		if(jsonString.equals("")){
-			return;
+			return null;
 		}
 		try {
 			JSONObject jsonObj = new JSONObject(jsonString);
 			@SuppressWarnings("unchecked")
 			Iterator<String> it = jsonObj.keys();
-			userMap.clear();
+			Map<String,String> userMap = new HashMap<String,String>();
 			while(it.hasNext()){
 				String key = it.next();
 				userMap.put(key, jsonObj.getString(key));
+				//System.out.println(key + ":" + jsonObj.getString(key));
 			}
+			return userMap;
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		return null;
 
 	}
 	

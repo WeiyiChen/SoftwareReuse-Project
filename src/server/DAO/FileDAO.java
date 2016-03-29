@@ -3,7 +3,7 @@ package server.DAO;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class FileDAO {
+public abstract class FileDAO <T>{
 
 	protected String dirPath = "./data";
 	
@@ -16,6 +16,7 @@ public abstract class FileDAO {
 	}
 	
 	protected void checkOrMk(){
+		System.out.println("checking file:" + getPathName());
 		this.chechOrMkDir();
 		this.checkOrMkFile();
 	}
@@ -30,15 +31,19 @@ public abstract class FileDAO {
 	private void checkOrMkFile(){
 		try {
 			String fileName = getFileName();
-			File dataFile = new File(fileName);
+			File dataFile = new File(getPathName());
 			if(!dataFile.exists() || !dataFile.isFile()){
 				dataFile.createNewFile();
-				FileAccess.fileOverWrite(fileName, getBasicString());
+				FileAccess.fileOverWrite(getPathName(), getBasicString());
 			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
 	}
+	
+	public abstract boolean save(T obj);
+	
+	public abstract T read();
 	
 	protected abstract void checkOrCreateFile();
 	

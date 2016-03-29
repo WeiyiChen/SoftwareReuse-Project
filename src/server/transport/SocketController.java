@@ -35,4 +35,10 @@ public class SocketController {
 		pw.println(strToSend);
 		pw.flush();
 	}
+	
+	public void quit() throws IOException{
+		br.close();
+		pw.close();
+		socket.close();
+	}
 }

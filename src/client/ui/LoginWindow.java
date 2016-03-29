@@ -3,8 +3,6 @@ package client.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,21 +11,20 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import client.ctl.LogInCheck;
-import client.ctl.WindowJump;
+import client.ctl.JumpToMsgWindowOld;
 import client.intf.ILogInCheck;
 import client.intf.ILoginWindow;
-import client.intf.IWindowJump;
+import client.intf.IJump2MsgWindow;
+import client.util.ClientLogger;
 
-public class LoginWindow implements ILoginWindow{
+public class LoginWindow implements ILoginWindow {
 
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JLabel lblTip;
 
-
-	
-	public void setVisible(boolean flag){
+	public void setVisible(boolean flag) {
 		frame.setVisible(flag);
 	}
 
@@ -46,44 +43,45 @@ public class LoginWindow implements ILoginWindow{
 		frame.setBounds(100, 100, 290, 286);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		textField = new JTextField();
 		textField.setBounds(99, 56, 130, 26);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
-		
+
 		passwordField = new JPasswordField();
 		passwordField.setBounds(99, 106, 130, 26);
 		frame.getContentPane().add(passwordField);
-		
+
 		JButton btnLogIn = new JButton("Log In");
 		btnLogIn.setBounds(83, 186, 106, 29);
 		frame.getContentPane().add(btnLogIn);
-		
+
 		JLabel lblAccount = new JLabel("Account");
 		lblAccount.setBounds(36, 61, 61, 16);
 		frame.getContentPane().add(lblAccount);
-		
+
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setBounds(36, 111, 61, 16);
 		frame.getContentPane().add(lblPassword);
-		
+
 		lblTip = new JLabel("");
 		lblTip.setBounds(83, 146, 106, 16);
 		frame.getContentPane().add(lblTip);
-		
-		btnLogIn.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+
+		btnLogIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				String usr = textField.getText();
-				String pwd = passwordField.getText();
 				
-//				// test the result of getText()
-//				if(pwd.equals("")){
-//					System.out.println("\"\"");
-//				}
-//				System.out.println(pwd);
-//				lblTip.setText(usr+pwd);
-				if(pwd.equals("")||usr.equals("")){
+				String pwd = passwordField.getText();
+
+				// // test the result of getText()
+				// if(pwd.equals("")){
+				// System.out.println("\"\"");
+				// }
+				// System.out.println(pwd);
+				// lblTip.setText(usr+pwd);
+				if (pwd.equals("") || usr.equals("")) {
 					lblTip.setText("Illegal Input!");
 					return;
 				}
@@ -96,13 +94,27 @@ public class LoginWindow implements ILoginWindow{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				if(logInResult){
-					IWindowJump windowJump = new WindowJump();
-					windowJump.startMsgWindow(usr);
-					frame.dispose();
-				}
-				else{
-					lblTip.setText("Error input!");
+				try {
+					if (logInResult) {
+						IJump2MsgWindow windowJump = new JumpToMsgWindowOld();
+						windowJump.startMsgWindow(usr);
+						frame.dispose();
+
+						ClientLogger.updateUsr(usr);
+						ClientLogger.writeLoginSuccessful(usr);
+						ClientLogger.increaseLoginSucceedCount();
+						ClientLogger.resetSendNum();
+						ClientLogger.resetReceiveNum();
+						ClientLogger.setIsLogin(true);
+
+					} else {
+						ClientLogger.writeLoginFailed(usr);
+						ClientLogger.increaseLoginFailedCount();
+						lblTip.setText("Error input!");
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -112,37 +124,35 @@ public class LoginWindow implements ILoginWindow{
 	public void setTip(String tip) {
 		// TODO Auto-generated method stub
 		lblTip.setText(tip);
-		
+
 	}
 
 	@Override
-	public void showLoginWindow() {
+	public void toShowWindow() {
 		// TODO Auto-generated method stub
 		frame.setVisible(true);
 	}
 
 	@Override
-	public void closeMsgWindow() {
+	public void toCloseWindow() {
 		// TODO Auto-generated method stub
 		frame.dispose();
 	}
 
-	
-	
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					LoginWindow window = new LoginWindow();
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-	
+	// /**
+	// * Launch the application.
+	// */
+	// public static void main(String[] args) {
+	// EventQueue.invokeLater(new Runnable() {
+	// public void run() {
+	// try {
+	// LoginWindow window = new LoginWindow();
+	// window.frame.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// });
+	// }
+
 }

@@ -1,8 +1,24 @@
 package client.intf;
-
-public interface ILoginWindow {
+/**
+ * The UI for login window
+ * @author Dai
+ *
+ */
+public interface ILoginWindow extends IClientWindow{
+	/**
+	 * 
+	 * @param tip - set tip for tip area in the window
+	 */
 	void setTip(String tip);
-	void showLoginWindow();
-	void closeMsgWindow();
+	
+//	/**
+//	 * to make login window visible
+//	 */
+//	void toShowWindow();
+//	
+//	/**
+//	 * to close login window
+//	 */
+//	void toCloseWindow();
 	
 }

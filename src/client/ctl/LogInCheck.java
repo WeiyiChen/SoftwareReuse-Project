@@ -15,6 +15,7 @@ import client.transport.JsonMsgSender;
 public class LogInCheck implements ILogInCheck{
 	
 	private static boolean result = false;
+	private static boolean isReceived = false;
 
 	@Override
 	public boolean check(String usrName, String pwd) throws UnknownHostException, IOException {
@@ -22,7 +23,7 @@ public class LogInCheck implements ILogInCheck{
 		result = false;
 		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, pwd);
 		IMsgSender msgSender = new JsonMsgSender();
-		msgSender.send(ClientSocket.getSocket(), jsonStr);
+		msgSender.send(jsonStr);
 		
 		Thread t = new Thread(new Runnable(){
 
@@ -30,10 +31,9 @@ public class LogInCheck implements ILogInCheck{
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
-					String resultStr = receiveLogInResult(ClientSocket.getSocket());
-					if(resultStr!= null && resultStr.equals(JsonBuilderClient.getLoginSucceedJson())){
-						result = true;
-					}
+					isReceived = false;
+					result = receiveLogInResult(ClientSocket.getSocket());
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					result = false;
@@ -44,39 +44,53 @@ public class LogInCheck implements ILogInCheck{
 		});
 		t.start();
 		try {
-			for(int i = 0; i < 50; i++){
-				TimeUnit.MILLISECONDS.sleep(100);
-				if(result)
+			for(int i = 0; i < 70; i++){
+				TimeUnit.MILLISECONDS.sleep(10);
+				if(isReceived)
 					break;
 			}
 			
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		t.stop();
+//		isReceived = false;
 		return result;
 	}
 	
-	private String receiveLogInResult(Socket socket){
+	private boolean receiveLogInResult(Socket socket){
 		BufferedReader reader = null;
 		String msg = null;
-		
+//		boolean result = false;
 		try {
 			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			while(true){
 				msg = reader.readLine();
 				if(msg != null){
+					isReceived = true;
 					System.out.println("receive login result");
 					System.out.println(msg);
-					break;
+					if(msg.equals(JsonBuilderClient.getLoginSucceedJson())){
+						return true;
+					}
+					else if(msg.equals(JsonBuilderClient.getLoginFailedJson())){
+						return false;
+					}
+					else{
+						System.err.println("unknown login result");
+						break;
+					}
+					
+//					break;
 				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return msg;
+		return false;
 		
 	}
 	

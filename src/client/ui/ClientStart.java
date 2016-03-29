@@ -3,6 +3,7 @@ package client.ui;
 import java.awt.EventQueue;
 
 import client.intf.ILoginWindow;
+import client.util.TimerAndLogger;
 
 public class ClientStart {
 	/**
@@ -13,12 +14,12 @@ public class ClientStart {
 			public void run() {
 				try {
 					ILoginWindow window = new LoginWindow();
-					window.showLoginWindow();
+					window.toShowWindow();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		new Thread(new TimerAndLogger()).start();
 	}
-
 }

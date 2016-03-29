@@ -7,6 +7,7 @@ import java.util.List;
 
 import base.JsonBuilderBase;
 import server.ctrl.MessageController;
+import server.ctrl.RecordController;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
 
@@ -43,7 +44,7 @@ class Server11S extends Thread {
 					continue;
 				}
 				this.sendMessage(result);
-
+				messageController.addSendRecord();
 			}
 			socketControllerList.remove(socketController);
 		} catch (IOException e) {

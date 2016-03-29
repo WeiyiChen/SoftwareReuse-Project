@@ -10,6 +10,7 @@ import client.intf.IMsgWindow;
 import client.transport.ClientSocket;
 import client.transport.JsonMsgSender;
 import client.ui.LoginWindow;
+import client.util.ClientLogger;
 
 public class MsgHandle implements IMsgHandle{
 	private IMsgWindow imw;
@@ -26,49 +27,49 @@ public class MsgHandle implements IMsgHandle{
 	@Override
 	public void sendMessage(Object msg) {
 		// TODO Auto-generated method stub
-		boolean result;
+		boolean result = false;
 		IMsgSender msgSender = new JsonMsgSender();
-		try {
-			result = msgSender.send(ClientSocket.getSocket(), msg);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			result = false;
-		}
-//		IAddMsgToUI iAddMsgToUi;
-//		try{
-//			if(msg instanceof java.lang.String){
-////				iAddMsgToUi = new AddStrMsgToUI();
-//				iAddMsgToUi = new AddJsonMsgToUI();
-//				iAddMsgToUi.addMsg(imw, msg);
-//			}
-//			else{
-//				iAddMsgToUi = new AddStrMsgToUI();
-//				iAddMsgToUi.addMsg(imw, msg.toString());
-//			}
-//		}catch(ClassCastException e){
-//			e.printStackTrace();
-//		}
-		
+		result = msgSender.send(msg);
+		if(result){
+			ClientLogger.increaseSendNum();
+		}	
 	}
 	
 	
 	@Override
 	public void receiveAndUpdateMsg(Object msg) {
 		// TODO Auto-generated method stub
+		
+		// relogin message is also count as a message
+		ClientLogger.increaseReceiveNum();
 		IAddMsgToUI iAddMsgToUi;
 		try{
 			if(msg instanceof java.lang.String){
 //				iAddMsgToUi = new AddStrMsgToUI();
-				iAddMsgToUi = new AddJsonMsgToUI();
+				
 				String jsonStr = (String)msg;
 				if(jsonStr.equals(JsonBuilderClient.getReloginRequestJson())){
-					imw.closeMsgWindow();
-					ILoginWindow ilw = new LoginWindow();
-					ilw.setTip("redo login!");
-					ilw.showLoginWindow();
+					new WindowJumpFromMsgToLogin().jump(imw, new LoginWindow());
+//					imw.toCloseWindow();
+//					ILoginWindow ilw = new LoginWindow();
+//					ilw.setTip("redo login!");
+//					ilw.toShowWindow();
+//					ClientLogger.setIsLogin(false);
+//					new Thread(new Runnable(){
+//
+//						@Override
+//						public void run() {
+//							// TODO Auto-generated method stub
+//							new WindowJumpFromMsgToLogin().jump(imw, new LoginWindow());
+//						}
+//						
+//					});
 				}
-				iAddMsgToUi.addMsg(imw, msg);
+				else{
+					iAddMsgToUi = new AddJsonMsgToUI();
+					iAddMsgToUi.addMsg(imw, msg);
+				}
+				
 			}
 			else{
 				iAddMsgToUi = new AddStrMsgToUI();

@@ -1,11 +1,43 @@
 package client.intf;
 
-public interface IMsgWindow {
+/**
+ * The UI for message window
+ * @author Dai
+ *
+ */
+public interface IMsgWindow extends IClientWindow{
+	
+	/**
+	 * message window can display which user is use the window
+	 * @param usr
+	 */
 	void setUsr(String usr);
+	
+	/**
+	 * to add a line in the message record area
+	 * @param singleLineMsg
+	 */
 	void appendMsgRecord(String singleLineMsg);
+	
+	/**
+	 * to trigger send message in the message window
+	 */
 	void sendMsg();
-	void showMsgWindow();
-	void closeMsgWindow();
+	
+//	/**
+//	 * to make the message window visible
+//	 */
+//	void toShowWindow();
+//	
+//	/**
+//	 * to close the message window
+//	 */
+//	void toCloseWindow();
+	
+	/**
+	 * to get a message handler (A controller for send message and receive message)
+	 * @return
+	 */
 	IMsgHandle getMsgHandle();
 	
 }

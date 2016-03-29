@@ -16,7 +16,8 @@ public class MessageController {
 	private String UserID;
 	private int remainMessageCount;
 	private List<Timer> timers = new ArrayList<Timer>();
-	private PasswordController pwdCtrl = new PasswordController();
+	static private PasswordController passwordController = new PasswordController();
+	static private RecordController recordController = new RecordController();
 
 	public MessageController() {
 		UserID = "";
@@ -36,15 +37,20 @@ public class MessageController {
 
 	private String dealWithTextMessage(String jsonString) {
 		if (timers.size() >= this.maxMessagePerSecond) {
+			recordController.ignoredNumberAdd();
 			return JsonBuilderServer.getMessageBusyError();
 		}
 		if (remainMessageCount <= 0) {
+			recordController.ignoredNumberAdd();
 			return JsonBuilderServer.getNeedReloginError();
 		}
 		if(!JsonAnalizerServer.getUser(jsonString).equals(UserID)){
+			recordController.logfailedNumberAdd();
 			//how can this happens, I don't know.
+			remainMessageCount = 0;
 			return JsonBuilderServer.getNeedReloginError();
 		}
+		recordController.receivedNumberAdd();
 		--remainMessageCount;
 		Timer t = new Timer();
 		timers.add(t);
@@ -58,11 +64,22 @@ public class MessageController {
 	}
 
 	private String dealWithPassword(String jsonString) {
-		if (pwdCtrl.passwordCheck(jsonString)) {
+		if (passwordController.passwordCheck(jsonString)) {
 			this.remainMessageCount = this.maxMessagePerLogin;
 			this.UserID = JsonAnalizerServer.getUser(jsonString);
+			recordController.logsucceedNumberAdd();
 			return JsonBuilderServer.getLoginSucceedJson();
 		}
+		recordController.logfailedNumberAdd();
 		return JsonBuilderServer.getLoginFailedJson();
+	}
+	
+	public void addSendRecord(){
+		recordController.forwardedNumberAdd();
+	}
+	
+	public void quit(){
+		recordController.quit();
+		passwordController.quit();
 	}
 }
