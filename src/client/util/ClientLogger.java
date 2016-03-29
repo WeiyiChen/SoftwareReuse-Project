@@ -7,6 +7,16 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Date;
 
+/**
+ * log the client information
+ * client will save information in at least three files
+ * log.txt save the log in result.
+ * logincountlog.txt save the login count every minute
+ * $usr + log.txt save the message count about $usr (for example: the user is dai, then
+ * dailog.txt will save the message count every minute)
+ * @author Dai
+ *
+ */
 public class ClientLogger {
 	private static boolean isConnect;
 	private static boolean isLogin;

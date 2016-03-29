@@ -17,6 +17,11 @@ import client.ctl.MsgHandle;
 import client.intf.IMsgHandle;
 import client.intf.IMsgWindow;
 
+/**
+ * message window UI
+ * @author Dai
+ *
+ */
 public class MsgWindow extends JFrame implements IMsgWindow{
 
 	private JPanel contentPane;

@@ -14,7 +14,11 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.ParsingException;
 import nu.xom.Serializer;
-
+/**
+ * parse a xml file for configuration
+ * @author Dai
+ *
+ */
 public class ParseClientConfig {
 	private static ClientConfig clientConfig;
 	
@@ -70,6 +74,11 @@ public class ParseClientConfig {
 		return null;
 	}
 	
+	/**
+	 * get a ClientConfig instance from a xml file
+	 * @param fileName - configuration file path
+	 * @return
+	 */
 	public static Object getConfig(String fileName) {
 		if(clientConfig == null){
 			return rebuildConfig(fileName);

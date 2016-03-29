@@ -20,6 +20,11 @@ import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
 import client.util.ClientLogger;
 
+/**
+ * log in UI
+ * @author Dai
+ *
+ */
 public class LoginWindow implements ILoginWindow {
 
 	private JFrame frame;

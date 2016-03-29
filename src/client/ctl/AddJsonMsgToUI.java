@@ -3,6 +3,11 @@ package client.ctl;
 import client.intf.IAddMsgToUI;
 import client.intf.IMsgWindow;
 
+/**
+ * update the ui with json type message
+ * @author Dai
+ *
+ */
 public class AddJsonMsgToUI implements IAddMsgToUI{
 
 	@Override
