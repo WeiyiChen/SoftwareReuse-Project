@@ -32,9 +32,9 @@ public class UserDAOTest {
 //
 //	}
 
-	@Test
-	public void testCheckOrCreateJsonFile() {
-		new UserDAO().checkOrCreateJsonFile();
-	}
+//	@Test
+//	public void testCheckOrCreateJsonFile() {
+//		new UserDAO().checkOrCreateJsonFile();
+//	}
 
 }
