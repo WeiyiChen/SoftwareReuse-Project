@@ -128,4 +128,22 @@ public class ClientLogger {
 		}
 	}
 	
+	public static String outputAttribute(){
+		String ic = isConnect?"true":"false";
+		String il = isLogin?"true":"false";
+		return "isConnect" + ic + "\n" 
+				+ "isLogin" + il + "\n"
+				+ "logFileName" + logFileName + "\n"
+				+ "sendNum" + sendNum + "\n"
+				+ "receiveNum" + receiveNum + "\n"
+				+ "loginSucceedCount" + loginSucceedCount + "\n"
+				+ "loginFailedCount" + loginFailedCount + "\n";
+				
+	}
+	
+	public String toString(){
+		return outputAttribute();
+	}
+	
+	
 }
