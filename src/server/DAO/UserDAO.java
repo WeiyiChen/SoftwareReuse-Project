@@ -38,6 +38,7 @@ public class UserDAO extends FileDAO <Map<String,String>>{
 			while(it.hasNext()){
 				String key = it.next();
 				userMap.put(key, jsonObj.getString(key));
+				//System.out.println(key + ":" + jsonObj.getString(key));
 			}
 			return userMap;
 		} catch (JSONException e) {

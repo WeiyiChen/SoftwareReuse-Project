@@ -16,6 +16,7 @@ public abstract class FileDAO <T>{
 	}
 	
 	protected void checkOrMk(){
+		System.out.println("checking file:" + getPathName());
 		this.chechOrMkDir();
 		this.checkOrMkFile();
 	}
@@ -30,10 +31,10 @@ public abstract class FileDAO <T>{
 	private void checkOrMkFile(){
 		try {
 			String fileName = getFileName();
-			File dataFile = new File(fileName);
+			File dataFile = new File(getPathName());
 			if(!dataFile.exists() || !dataFile.isFile()){
 				dataFile.createNewFile();
-				FileAccess.fileOverWrite(fileName, getBasicString());
+				FileAccess.fileOverWrite(getPathName(), getBasicString());
 			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

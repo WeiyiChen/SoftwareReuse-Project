@@ -10,9 +10,14 @@ import server.json.JsonAnalizerServer;
 
 public class PasswordController implements IPasswordController{
 
-	private static UserDAO  userDao = new UserDAO();
+	private UserDAO userDao;
 	
 	private Map<String, String> userMap = new HashMap<String, String>();
+	
+	public PasswordController(){
+		userDao = new UserDAO();
+		userMap = userDao.read();
+	}
 	
 	
 	@Override

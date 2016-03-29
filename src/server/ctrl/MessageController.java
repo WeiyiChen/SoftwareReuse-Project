@@ -16,8 +16,8 @@ public class MessageController {
 	private String UserID;
 	private int remainMessageCount;
 	private List<Timer> timers = new ArrayList<Timer>();
-	private PasswordController passwordCtrl = new PasswordController();
-	private RecordController recordController = new RecordController();
+	static private PasswordController passwordCtrl = new PasswordController();
+	static private RecordController recordController = new RecordController();
 
 	public MessageController() {
 		UserID = "";
