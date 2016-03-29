@@ -41,4 +41,8 @@ public class PasswordController implements IPasswordController{
 		return true;
 	}
 	
+	public void quit(){
+		userDao.save(userMap);
+	}
+	
 }

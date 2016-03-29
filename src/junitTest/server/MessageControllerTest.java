@@ -28,6 +28,17 @@ public class MessageControllerTest {
 		}catch(InterruptedException ie){
 			
 		}
+		System.out.println(msgs.dealWithMessage(JsonBuilderClient.getPasswordJson("qyd", "1252865")));
+		try{
+			for(int i =0 ;i<31;i++){
+				System.out.println(msgs.dealWithMessage(JsonBuilderClient.getMessageJson("qyd", "message"+i)));
+				Thread.sleep(100);
+			}
+				System.out.println(msgs.dealWithMessage(JsonBuilderClient.getMessageJson("ssd", "messagessd")));
+		}catch(InterruptedException ie){
+			
+		}
+		msgs.quit();
 	}
 
 }

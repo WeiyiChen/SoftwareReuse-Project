@@ -73,6 +73,7 @@ public class FileAccess {
 
 	public boolean append(String content) {
 		pwa.println(content);
+		pwa.flush();
 		return !pwa.checkError();
 	}
 	

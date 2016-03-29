@@ -7,10 +7,10 @@ import java.util.Calendar;
 
 public class CounterDAO extends FileDAO <String>{
 
-	FileAccess fa;
-	String fileName = "";
-	boolean fileOpened;
-	
+	private FileAccess fa;
+	private String fileName = "";
+	private boolean fileOpened;
+		
 	public CounterDAO(){
 		super();
 		checkOrCreateFile();

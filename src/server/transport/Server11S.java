@@ -44,7 +44,7 @@ class Server11S extends Thread {
 					continue;
 				}
 				this.sendMessage(result);
-
+				messageController.addSendRecord();
 			}
 			socketControllerList.remove(socketController);
 		} catch (IOException e) {
