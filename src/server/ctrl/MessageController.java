@@ -16,7 +16,8 @@ public class MessageController {
 	private String UserID;
 	private int remainMessageCount;
 	private List<Timer> timers = new ArrayList<Timer>();
-	private PasswordController pwdCtrl = new PasswordController();
+	private PasswordController passwordCtrl = new PasswordController();
+	private RecordController recordController = new RecordController();
 
 	public MessageController() {
 		UserID = "";
@@ -58,11 +59,15 @@ public class MessageController {
 	}
 
 	private String dealWithPassword(String jsonString) {
-		if (pwdCtrl.passwordCheck(jsonString)) {
+		if (passwordCtrl.passwordCheck(jsonString)) {
 			this.remainMessageCount = this.maxMessagePerLogin;
 			this.UserID = JsonAnalizerServer.getUser(jsonString);
 			return JsonBuilderServer.getLoginSucceedJson();
 		}
 		return JsonBuilderServer.getLoginFailedJson();
+	}
+	
+	public void quit(){
+		
 	}
 }

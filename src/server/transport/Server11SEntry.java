@@ -1,6 +1,8 @@
 package server.transport;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import java.util.List;
 public class Server11SEntry {
 
 	private ServerSocket serverSocket;
+	
+	private List<SocketController> socketList; 
 
 	/**
 	 * Description
@@ -17,7 +21,7 @@ public class Server11SEntry {
 	 */
 	public void startWork() throws IOException {
 		serverSocket = new ServerSocket(2345);
-		List<SocketController> socketList = new ArrayList<SocketController>();
+		socketList = new ArrayList<SocketController>();
 		Socket socket = null;
 		while (true) {
 			socket = serverSocket.accept();
@@ -39,6 +43,10 @@ public class Server11SEntry {
 			e.printStackTrace();
 		}
 	}
+	
+	public void quit() throws IOException{
+		serverSocket.close();
+	}
 
 	/**
 	 * Description
@@ -46,8 +54,20 @@ public class Server11SEntry {
 	 * @param args
 	 * @throws IOException
 	 */
-	public static void main(String[] args) throws IOException {
-		Server11SEntry server11SEntry = new Server11SEntry();
-		server11SEntry.startWork();
+	public static void main(String[] args) {
+		try {
+			BufferedReader input = null;
+			Server11SEntry server11SEntry = new Server11SEntry();
+			server11SEntry.startWork();
+			input = new BufferedReader(new InputStreamReader(System.in));
+			while (true) {
+				String cmd = input.readLine();
+				if (cmd.equals("quit")) {
+					server11SEntry.quit();
+				}
+			}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 }

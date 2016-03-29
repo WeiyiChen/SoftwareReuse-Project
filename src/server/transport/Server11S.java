@@ -7,6 +7,7 @@ import java.util.List;
 
 import base.JsonBuilderBase;
 import server.ctrl.MessageController;
+import server.ctrl.RecordController;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
 

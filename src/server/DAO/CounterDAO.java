@@ -23,6 +23,10 @@ public class CounterDAO extends FileDAO <String>{
 		fileOpened = fa.createAppendFile(getPathName());
 	}
 	
+	public void quit(){
+		fa.closeFile();
+	}
+	
 	@Override
 	public boolean save(String str) {
 		if(!fileOpened){
