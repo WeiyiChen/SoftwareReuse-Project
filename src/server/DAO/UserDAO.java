@@ -13,7 +13,6 @@ public class UserDAO extends FileDAO <Map<String,String>>{
 	protected String fileName = "users.json";
 			
 	public UserDAO(){
-		super();
 		checkOrCreateFile();
 		read();
 	}

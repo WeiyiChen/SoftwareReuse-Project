@@ -3,7 +3,6 @@ package server.transport;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +34,6 @@ public class Server11Entry extends Thread {
 				new Server11Entity(socketWS, socketList).start();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

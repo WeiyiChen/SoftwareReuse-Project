@@ -2,12 +2,10 @@ package server.transport;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import base.JsonBuilderBase;
 import server.ctrl.MessageController;
-import server.ctrl.RecordController;
 import server.ctrl.SocketController;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
@@ -27,7 +25,6 @@ class Server11Entity extends Thread {
 
 	public void run() {
 		BufferedReader reader = null;
-		PrintWriter writer = null;
 		try {
 			reader = socketController.getBufferedReader();
 
