@@ -40,6 +40,10 @@ public abstract class FileDAO {
 		}
 	}
 	
+	public abstract boolean save();
+	
+	public abstract void read();
+	
 	protected abstract void checkOrCreateFile();
 	
 	protected abstract String getFileName();

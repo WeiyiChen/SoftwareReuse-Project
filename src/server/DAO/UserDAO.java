@@ -44,12 +44,14 @@ public class UserDAO extends FileDAO {
 		return true;
 	}
 	
+	@Override
 	public boolean save(){
 		JSONObject jsonObj= new JSONObject(userMap);
 		return FileAccess.fileOverWrite(getPathName(), jsonObj.toString());
 	}
 	
-	private void read(){
+	@Override
+	public void read(){
 		String jsonString = FileAccess.readFile(getPathName());
 		if(jsonString.equals("")){
 			return;
