@@ -5,34 +5,24 @@ import java.util.Calendar;
 
 //import sun.util.resources.CalendarData;
 
-public class CounterDAO extends FileDAO <String>{
+public class TextDAO extends FileDAO <String>{
 
-	private FileAccess fa;
 	private String fileName = "";
-	private boolean fileOpened;
 		
-	public CounterDAO(){
+	public TextDAO(){
 		super();
-		checkOrCreateFile();
-		
-		Calendar cal =  Calendar.getInstance();
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		fileName =  "record" + format.format(cal.getTime()) + ".txt";
-		
-		fa = new FileAccess();
-		fileOpened = fa.createAppendFile(getPathName());
 	}
 	
 	public void quit(){
-		fa.closeFile();
 	}
 	
 	@Override
 	public boolean save(String str) {
-		if(!fileOpened){
-			return false;
-		}
-		return fa.append(str);
+		Calendar cal =  Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd-hhmmss");
+		fileName =  "record" + format.format(cal.getTime()) + ".txt";
+		checkOrCreateFile();
+		return FileAccess.fileOverWrite(getPathName(), str);
 	}
 
 	@Override
@@ -48,12 +38,12 @@ public class CounterDAO extends FileDAO <String>{
 
 	@Override
 	protected String getFileName() {
-		return "recoder.txt";
+		return fileName;
 	}
 
 	@Override
 	protected String getBasicString() {
-		return fileName;
+		return "";
 	}
 
 }

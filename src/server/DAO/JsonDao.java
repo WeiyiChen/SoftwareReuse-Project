@@ -1,4 +1,4 @@
-/*package server.DAO;
+package server.DAO;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -6,16 +6,27 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
-
-public class UserDAO extends FileDAO <Map<String,String>>{
-	protected String fileName = "users.json";
-			
-	public UserDAO(){
+public class JsonDao extends FileDAO<Map<String,String>>{
+	protected String fileName = "";
+	private Map<String, String> defaultContentMap;
+	
+	/*
+	 * 
+	 * 
+	 * */
+	public JsonDao(String fileName){
 		super();
+		this.fileName = fileName.endsWith(".json") ? fileName : fileName + ".json";
+		this.defaultContentMap = new HashMap<String, String>();
 		checkOrCreateFile();
-		read();
+	}
+	
+	public JsonDao(String fileName, Map<String, String> defaultContentMap){
+		super();
+		this.fileName = fileName.endsWith(".json") ? fileName : fileName + ".json";
+		this.defaultContentMap = new HashMap<String, String>(defaultContentMap);
+		checkOrCreateFile();
 	}
 	
 	@Override
@@ -28,14 +39,14 @@ public class UserDAO extends FileDAO <Map<String,String>>{
 	@Override
 	public Map<String,String> read(){
 		String jsonString = FileAccess.readFile(getPathName());
+		Map<String,String> userMap = new HashMap<String,String>();
 		if(jsonString.equals("")){
-			return null;
+			return userMap;
 		}
 		try {
 			JSONObject jsonObj = new JSONObject(jsonString);
 			@SuppressWarnings("unchecked")
 			Iterator<String> it = jsonObj.keys();
-			Map<String,String> userMap = new HashMap<String,String>();
 			while(it.hasNext()){
 				String key = it.next();
 				userMap.put(key, jsonObj.getString(key));
@@ -45,21 +56,13 @@ public class UserDAO extends FileDAO <Map<String,String>>{
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return null;
-
+		return userMap;
 	}
 	
 	@Override
 	protected String getBasicString() {
-		String basicUserString = "";
-		try {
-			JSONStringer js = new JSONStringer();
-			basicUserString = js.object().key("qyd").value("1252865")
-					.key("cwy").value("1252874").endObject().toString();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return basicUserString;
+		JSONObject jo = new JSONObject(defaultContentMap);
+		return jo.toString();
 	}
 
 	@Override
@@ -72,4 +75,4 @@ public class UserDAO extends FileDAO <Map<String,String>>{
 		return fileName;
 	}
 	
-}*/
+}

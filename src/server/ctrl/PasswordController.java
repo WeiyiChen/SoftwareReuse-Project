@@ -3,19 +3,19 @@ package server.ctrl;
 import java.util.HashMap;
 import java.util.Map;
 
-import server.DAO.UserDAO;
+import server.DAO.JsonDao;
 import server.intf.IPasswordController;
 import server.json.JsonAnalizerServer;
 
 
 public class PasswordController implements IPasswordController{
 
-	private UserDAO userDao;
+	private JsonDao userDao;
 	
 	private Map<String, String> userMap = new HashMap<String, String>();
 	
 	public PasswordController(){
-		userDao = new UserDAO();
+		userDao = new JsonDao("user.json");
 		userMap = userDao.read();
 	}
 	

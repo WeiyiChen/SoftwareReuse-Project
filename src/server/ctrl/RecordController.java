@@ -3,7 +3,7 @@ package server.ctrl;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import server.DAO.CounterDAO;
+import server.DAO.TextDAO;
 
 public class RecordController {
 	private int receivedNumber;
@@ -11,7 +11,7 @@ public class RecordController {
 	private int forwardedNumber;
 	private int logsucceedNumber;
 	private int logfailedNumber;
-	private CounterDAO counterDao;
+	private TextDAO counterDao;
 	private SaveRecordThread saveRecordThread;
 
 	private class SaveRecordThread extends Thread {
@@ -50,7 +50,7 @@ public class RecordController {
 	}
 
 	public RecordController() {
-		counterDao = new CounterDAO();
+		counterDao = new TextDAO();
 		saveRecordThread = new SaveRecordThread(this);
 		saveRecordThread.start();
 	}

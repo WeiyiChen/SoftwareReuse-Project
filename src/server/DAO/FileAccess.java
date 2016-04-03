@@ -26,6 +26,7 @@ public class FileAccess {
 				laststr += tempString;
 			}
 			reader.close();
+			fileInputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
