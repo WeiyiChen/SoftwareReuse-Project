@@ -3,7 +3,7 @@ package server.ctrl;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import server.DAO.TextDAO;
+import packedDao.TextDao;
 
 public class RecordController {
 	private int receivedNumber;
@@ -11,7 +11,7 @@ public class RecordController {
 	private int forwardedNumber;
 	private int logsucceedNumber;
 	private int logfailedNumber;
-	private TextDAO counterDao;
+	private TextDao counterDao;
 	private SaveRecordThread saveRecordThread;
 	private int saveCycle;
 
@@ -51,7 +51,7 @@ public class RecordController {
 	}
 
 	public RecordController() {
-		counterDao = new TextDAO();
+		counterDao = new TextDao();
 		saveRecordThread = new SaveRecordThread(this);
 	}
 	

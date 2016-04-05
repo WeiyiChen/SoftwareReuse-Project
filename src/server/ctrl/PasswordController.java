@@ -3,7 +3,7 @@ package server.ctrl;
 import java.util.HashMap;
 import java.util.Map;
 
-import server.DAO.JsonDao;
+import packedDao.JsonDao;
 import server.intf.IPasswordController;
 import server.json.JsonAnalizerServer;
 

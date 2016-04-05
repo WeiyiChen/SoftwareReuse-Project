@@ -3,8 +3,7 @@ package server.ctrl;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.util.Pair;
-import server.DAO.JsonDao;
+import packedDao.JsonDao;
 
 public class ConfigController {
 	private JsonDao configDao;
