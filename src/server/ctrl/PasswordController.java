@@ -13,9 +13,15 @@ public class PasswordController implements IPasswordController{
 	private JsonDao userDao;
 	
 	private Map<String, String> userMap = new HashMap<String, String>();
+	@SuppressWarnings("serial")
+	private static final Map<String, String> defaultUserMap = new HashMap<String, String>(){
+	{
+		put("qyd","1252865");
+		put("cwy","1252874");
+	}};
 	
 	public PasswordController(){
-		userDao = new JsonDao("user.json");
+		userDao = new JsonDao("user.json", defaultUserMap);
 		userMap = userDao.read();
 	}
 	

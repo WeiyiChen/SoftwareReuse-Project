@@ -10,18 +10,23 @@ import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
 
 public class MessageController {
-	private int maxMessagePerLogin = 10;
-	private int maxMessagePerSecond = 5;
+	private int maxMessagePerLogin;
+	private int maxMessagePerSecond;
 
 	private String UserID;
 	private int remainMessageCount;
 	private List<Timer> timers = new ArrayList<Timer>();
 	static private PasswordController passwordController = new PasswordController();
 	static private RecordController recordController = new RecordController();
+	static private ConfigController configController = new ConfigController();
 
 	public MessageController() {
 		UserID = "";
 		remainMessageCount = 0;
+		maxMessagePerLogin = configController
+				.getInt(ConfigController.maxMsgsPerLogin);
+		maxMessagePerSecond = configController
+				.getInt(ConfigController.maxMsgsPerSecond);
 	}
 
 	public String dealWithMessage(String jsonString) {
@@ -34,6 +39,11 @@ public class MessageController {
 		}
 		return JsonBuilderServer.getTypeNoFoundError();
 	}
+	
+	public static void startRecordThread(){
+		recordController.setAndStart(configController
+				.getInt(ConfigController.saveCycle));
+	}
 
 	private String dealWithTextMessage(String jsonString) {
 		if (timers.size() >= this.maxMessagePerSecond) {
@@ -44,9 +54,9 @@ public class MessageController {
 			recordController.ignoredNumberAdd();
 			return JsonBuilderServer.getNeedReloginError();
 		}
-		if(!JsonAnalizerServer.getUser(jsonString).equals(UserID)){
+		if (!JsonAnalizerServer.getUser(jsonString).equals(UserID)) {
 			recordController.logfailedNumberAdd();
-			//how can this happens, I don't know.
+			// how can this happens, I don't know.
 			remainMessageCount = 0;
 			return JsonBuilderServer.getNeedReloginError();
 		}
@@ -73,12 +83,12 @@ public class MessageController {
 		recordController.logfailedNumberAdd();
 		return JsonBuilderServer.getLoginFailedJson();
 	}
-	
-	public void addSendRecord(){
+
+	public void addSendRecord() {
 		recordController.forwardedNumberAdd();
 	}
-	
-	public void quit(){
+
+	public void quit() {
 		recordController.quit();
 		passwordController.quit();
 	}

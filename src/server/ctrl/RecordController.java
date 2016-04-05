@@ -13,6 +13,7 @@ public class RecordController {
 	private int logfailedNumber;
 	private TextDAO counterDao;
 	private SaveRecordThread saveRecordThread;
+	private int saveCycle;
 
 	private class SaveRecordThread extends Thread {
 		private RecordController rec;
@@ -32,14 +33,14 @@ public class RecordController {
 		@Override
 		public void run() {
 			try {
-				Thread.sleep(1 * 1000);
+				Thread.sleep(rec.getSaveCycle() * 1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			while (continueFlag) {
 				rec.save();
 				try {
-					Thread.sleep(1 * 1000);
+					Thread.sleep(rec.getSaveCycle() * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -52,7 +53,15 @@ public class RecordController {
 	public RecordController() {
 		counterDao = new TextDAO();
 		saveRecordThread = new SaveRecordThread(this);
+	}
+	
+	public void setAndStart(int saveCycle){
+		this.saveCycle = saveCycle;
 		saveRecordThread.start();
+	}
+	
+	public int getSaveCycle() {
+		return saveCycle;
 	}
 
 	public void reset() {

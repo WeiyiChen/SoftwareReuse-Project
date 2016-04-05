@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.ctrl.MessageController;
 import server.ctrl.SocketController;
 
 public class Server11Entry extends Thread {
@@ -19,6 +20,7 @@ public class Server11Entry extends Thread {
 	@Override
 	public void run() {
 		continueToRun = true;
+		MessageController.startRecordThread();
 		try {
 			serverSocket = new ServerSocket(2345);
 			socketList = new ArrayList<SocketController>();
