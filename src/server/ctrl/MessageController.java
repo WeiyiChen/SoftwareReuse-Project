@@ -1,37 +1,27 @@
 package server.ctrl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import base.JsonBuilderBase;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
-
 import packedController.PasswordController;
 import packedController.RecordController;
 import packedController.ConfigController;
 
 public class MessageController {
-	private int maxMessagePerLogin;
-	private int maxMessagePerSecond;
 
-	private String UserID;
-	private int remainMessageCount;
-	private List<Timer> timers = new ArrayList<Timer>();
 	static private PasswordController passwordController = new PasswordController();
 	static private RecordController recordController = new RecordController();
 	static private ConfigController configController = new ConfigController(
 			ServerConfigEnum.defaultConfigMap);
+	private LicenseController licenseController;
+
+	private static int maxMessagePerLogin = configController
+			.getInt(ServerConfigEnum.maxMsgsPerLogin.getKey());
+	private static int maxMessagePerSecond = configController
+			.getInt(ServerConfigEnum.maxMsgsPerSecond.getKey());
 
 	public MessageController() {
-		UserID = "";
-		remainMessageCount = 0;
-		maxMessagePerLogin = configController
-				.getInt(ConfigController.maxMsgsPerLogin);
-		maxMessagePerSecond = configController
-				.getInt(ConfigController.maxMsgsPerSecond);
+		licenseController = new LicenseController();
 	}
 
 	public String dealWithMessage(String jsonString) {
@@ -47,34 +37,28 @@ public class MessageController {
 
 	public static void startRecordThread() {
 		recordController.setAndStart(configController
-				.getInt(ConfigController.saveCycle));
+				.getInt(ServerConfigEnum.saveCycle.getKey()));
 	}
 
 	private String dealWithTextMessage(String jsonString) {
-		if (timers.size() >= this.maxMessagePerSecond) {
+		String user = JsonAnalizerServer.getUser(jsonString);
+		int licenseResult = licenseController.receivedMessage(user);
+		if (licenseResult != 0) {
 			recordController.ignoredNumberAdd();
-			return JsonBuilderServer.getMessageBusyError();
-		}
-		if (remainMessageCount <= 0) {
-			recordController.ignoredNumberAdd();
-			return JsonBuilderServer.getNeedReloginError();
-		}
-		if (!JsonAnalizerServer.getUser(jsonString).equals(UserID)) {
-			recordController.logfailedNumberAdd();
-			// how can this happens, I don't know.
-			remainMessageCount = 0;
-			return JsonBuilderServer.getNeedReloginError();
-		}
-		recordController.receivedNumberAdd();
-		--remainMessageCount;
-		Timer t = new Timer();
-		timers.add(t);
-		t.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				timers.remove(t);
+			if (licenseResult == 1) {
+				return JsonBuilderServer.getMessageBusyError();
 			}
-		}, 1000);
+			if (licenseResult == 2) {
+				return JsonBuilderServer.getNeedReloginError();
+			}
+			if (licenseResult == 3) {
+				// how can this happens, I don't know.
+				licenseController.stopCounting();
+				return JsonBuilderServer.getNeedReloginError();
+			}
+		}
+		
+		recordController.receivedNumberAdd();
 		return jsonString;
 	}
 
@@ -83,8 +67,7 @@ public class MessageController {
 		String password = JsonAnalizerServer.getPassword(jsonString);
 
 		if (passwordController.passwordCheck(user, password)) {
-			this.remainMessageCount = this.maxMessagePerLogin;
-			this.UserID = JsonAnalizerServer.getUser(jsonString);
+			licenseController.reset(user);
 			recordController.logsucceedNumberAdd();
 			return JsonBuilderServer.getLoginSucceedJson();
 		}

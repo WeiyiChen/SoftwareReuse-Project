@@ -13,26 +13,26 @@ public class ServerConfigEnum {
 			"SaveCycle", "60");
 	public static Map<String, String> defaultConfigMap = new HashMap<String, String>() {
 		{
-			put(maxMsgsPerSecond.key, maxMsgsPerSecond.value);
-			put(maxMsgsPerLogin.key, maxMsgsPerLogin.value);
-			put(saveCycle.key, saveCycle.value);
+			put(maxMsgsPerSecond.key, maxMsgsPerSecond.defaultValue);
+			put(maxMsgsPerLogin.key, maxMsgsPerLogin.defaultValue);
+			put(saveCycle.key, saveCycle.defaultValue);
 		}
 	};
 
 	public ServerConfigEnum(String key, String value) {
 		this.key = key;
-		this.value = value;
+		this.defaultValue = value;
 	}
 
 	private String key;
 
-	private String value;
+	private String defaultValue;
 
 	public String getKey() {
 		return key;
 	}
 
-	public String getValue() {
-		return value;
+	public String getDefaultValue() {
+		return defaultValue;
 	}
 }
