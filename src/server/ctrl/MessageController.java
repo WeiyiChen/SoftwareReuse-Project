@@ -6,6 +6,9 @@ import server.json.JsonBuilderServer;
 import packedController.PasswordController;
 import packedController.RecordController;
 import packedController.ConfigController;
+import packedController.LicenseController;
+
+;
 
 public class MessageController {
 
@@ -16,10 +19,16 @@ public class MessageController {
 	private LicenseController licenseController;
 
 	private static int maxMessagePerLogin = configController
-			.getInt(ServerConfigEnum.maxMsgsPerLogin.getKey());
+			.getInt(ServerConfigEnum.maxMsgsPerLogin.getKey(),
+					Integer.valueOf(ServerConfigEnum.maxMsgsPerLogin
+							.getDefaultValue()));
 	private static int maxMessagePerSecond = configController
-			.getInt(ServerConfigEnum.maxMsgsPerSecond.getKey());
-
+			.getInt(ServerConfigEnum.maxMsgsPerSecond.getKey(),
+					Integer.valueOf(ServerConfigEnum.maxMsgsPerSecond
+							.getDefaultValue()));
+	static{
+		LicenseController.setLimit(maxMessagePerLogin, maxMessagePerSecond);
+	}
 	public MessageController() {
 		licenseController = new LicenseController();
 	}
@@ -37,7 +46,8 @@ public class MessageController {
 
 	public static void startRecordThread() {
 		recordController.setAndStart(configController
-				.getInt(ServerConfigEnum.saveCycle.getKey()));
+				.getInt(ServerConfigEnum.saveCycle.getKey(),
+						Integer.valueOf(ServerConfigEnum.saveCycle.getDefaultValue())));
 	}
 
 	private String dealWithTextMessage(String jsonString) {
@@ -57,7 +67,7 @@ public class MessageController {
 				return JsonBuilderServer.getNeedReloginError();
 			}
 		}
-		
+
 		recordController.receivedNumberAdd();
 		return jsonString;
 	}
