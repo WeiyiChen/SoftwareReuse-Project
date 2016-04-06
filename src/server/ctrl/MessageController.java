@@ -22,7 +22,8 @@ public class MessageController {
 	private List<Timer> timers = new ArrayList<Timer>();
 	static private PasswordController passwordController = new PasswordController();
 	static private RecordController recordController = new RecordController();
-	static private ConfigController configController = new ConfigController();
+	static private ConfigController configController = new ConfigController(
+			ServerConfigEnum.defaultConfigMap);
 
 	public MessageController() {
 		UserID = "";
