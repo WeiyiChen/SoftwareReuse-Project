@@ -12,7 +12,7 @@ public class PasswordControllerTest {
 		PasswordController pwdCtrl = new PasswordController();
 		
 		System.out.println(JsonBuilderClient.getPasswordJson("qyd", "1252865"));
-		System.out.println(pwdCtrl.passwordCheck(JsonBuilderClient.getPasswordJson("qyd", "1252865")));
+		System.out.println(pwdCtrl.passwordCheck("qyd", "1252865"));
 
 	}
 	

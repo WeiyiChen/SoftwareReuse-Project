@@ -4,11 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import packedDao.JsonDao;
-import server.intf.IPasswordController;
-import server.json.JsonAnalizerServer;
 
-
-public class PasswordController implements IPasswordController{
+public class PasswordController{
 
 	private JsonDao userDao;
 	
@@ -26,11 +23,11 @@ public class PasswordController implements IPasswordController{
 	}
 	
 	
-	@Override
-	public boolean passwordCheck(String jsonString) {
+	public boolean passwordCheck(String user, String password) {
 		// TODO Auto-generated method stub
-		String user = JsonAnalizerServer.getUser(jsonString);
-		String password = JsonAnalizerServer.getPassword(jsonString);
+		if(user == null || password ==null){
+			return false;
+		}
 		String pwdInDB = userMap.get(user);
 		if(pwdInDB==null){
 			return false;

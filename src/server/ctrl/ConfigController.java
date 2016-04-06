@@ -12,6 +12,7 @@ public class ConfigController {
 	public static final String maxMsgsPerLogin = "MaxMessagesPerLogin";
 	public static final String saveCycle = "SaveCycle";
 
+	@SuppressWarnings("serial")
 	private static final Map<String, String> defaultConfigMap = new HashMap<String, String>() {
 		{
 			put(maxMsgsPerSecond, "5");

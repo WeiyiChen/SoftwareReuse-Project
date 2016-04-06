@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONException;
+
 import base.JsonBuilderBase;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
@@ -39,8 +41,8 @@ public class MessageController {
 		}
 		return JsonBuilderServer.getTypeNoFoundError();
 	}
-	
-	public static void startRecordThread(){
+
+	public static void startRecordThread() {
 		recordController.setAndStart(configController
 				.getInt(ConfigController.saveCycle));
 	}
@@ -74,7 +76,10 @@ public class MessageController {
 	}
 
 	private String dealWithPassword(String jsonString) {
-		if (passwordController.passwordCheck(jsonString)) {
+		String user = JsonAnalizerServer.getUser(jsonString);
+		String password = JsonAnalizerServer.getPassword(jsonString);
+
+		if (passwordController.passwordCheck(user, password)) {
 			this.remainMessageCount = this.maxMessagePerLogin;
 			this.UserID = JsonAnalizerServer.getUser(jsonString);
 			recordController.logsucceedNumberAdd();
