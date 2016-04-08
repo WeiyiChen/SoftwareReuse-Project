@@ -2,8 +2,9 @@ package junitTest.server;
 
 import org.junit.Test;
 
+
 import client.ctl.JsonBuilderClient;
-import server.ctrl.PasswordController;
+import packedController.PasswordController;
 
 public class PasswordControllerTest {
 
