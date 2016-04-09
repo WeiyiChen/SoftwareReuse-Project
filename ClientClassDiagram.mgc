@@ -30,7 +30,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
     </Class>
-    <Class name="client.ui.MsgWindow" x="184" y="304">
+    <Class name="client.ui.MsgWindow" x="176" y="289">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -43,7 +43,7 @@
             endpointName="imh" kind="Simple"/>
         <Communication destinationClassName="client.intf.IMsgHandle"/>
     </Class>
-    <Class name="client.util.ClientConfig" x="367" y="520">
+    <Class name="client.util.ClientConfig" x="334" y="513">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -136,7 +136,7 @@
         <Extension destinationClassName="client.intf.IWindowJump"/>
         <Communication destinationClassName="client.intf.IClientWindow"/>
     </Class>
-    <Class name="client.ctl.MsgHandle" x="379" y="310">
+    <Class name="client.ctl.MsgHandle" x="380" y="316">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -201,7 +201,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
     </Class>
-    <Class name="client.intf.IAddMsgToUI" x="248" y="562">
+    <Class name="client.intf.IAddMsgToUI" x="190" y="555">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -219,7 +219,7 @@
             default-accepted="false" static-accepted="false"
             accessors-accepted="false" constructors-accepted="false"/>
     </Class>
-    <Class name="client.util.ParseClientConfig" x="539" y="541">
+    <Class name="client.util.ParseClientConfig" x="477" y="547">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
