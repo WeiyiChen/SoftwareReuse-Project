@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
+import packedEncrypt.EncryptImpl;
+import packedEncrypt.IEncrypt;
 import client.intf.ILogInCheck;
 import client.intf.IMsgSender;
 import client.transport.ClientSocket;
@@ -21,7 +23,8 @@ public class LogInCheck implements ILogInCheck{
 	
 	private static boolean result = false;
 	private static boolean isReceived = false;
-
+	private static IEncrypt encrypt = new EncryptImpl();
+	
 	/**
 	 * After send login message, create a new thread to receive login result
 	 * the longest wait time is 1000ms
@@ -30,6 +33,7 @@ public class LogInCheck implements ILogInCheck{
 	public boolean check(String usrName, String pwd) throws UnknownHostException, IOException {
 		// TODO Auto-generated method stub
 		result = false;
+		String secretPassword = encrypt.encrypt(pwd);
 		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, pwd);
 		IMsgSender msgSender = new JsonMsgSender();
 		msgSender.send(jsonStr);

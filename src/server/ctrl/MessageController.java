@@ -7,15 +7,21 @@ import packedController.PasswordController;
 import packedController.RecordController;
 import packedController.ConfigController;
 import packedController.LicenseController;
+import packedEncrypt.EncryptImpl;
+import packedEncrypt.IEncrypt;
 
 ;
 
 public class MessageController {
 
-	static private PasswordController passwordController = new PasswordController();
+	static private PasswordController passwordController = new PasswordController(
+			ServerConfigEnum.defaultUserPwdMap);
 	static private RecordController recordController = new RecordController();
 	static private ConfigController configController = new ConfigController(
 			ServerConfigEnum.defaultConfigMap);
+
+	private static IEncrypt encrypt = new EncryptImpl();
+	
 	private LicenseController licenseController;
 
 	private static int maxMessagePerLogin = configController
@@ -74,7 +80,7 @@ public class MessageController {
 
 	private String dealWithPassword(String jsonString) {
 		String user = JsonAnalizerServer.getUser(jsonString);
-		String password = JsonAnalizerServer.getPassword(jsonString);
+		String password = encrypt.decryptToTMD5(JsonAnalizerServer.getPassword(jsonString));
 
 		if (passwordController.passwordCheck(user, password)) {
 			licenseController.reset(user);
