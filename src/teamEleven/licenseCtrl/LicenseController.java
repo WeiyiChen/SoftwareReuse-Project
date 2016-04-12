@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 许可控制类
+ * @author Qin YiDan
+ *
+ */
 public class LicenseController {
 
 	private static int maxMessagePerLogin;
@@ -52,11 +57,20 @@ public class LicenseController {
 		return 0;
 	}
 	
+	/**
+	 * 
+	 * @param user - 用户名
+	 */
 	public void reset(String user){
 		this.UserID =user;
 		remainMessageCount = maxMessagePerLogin;
 	}
 	
+	/**
+	 * 设置许可限制
+	 * @param msgsPerLogin - 登录尝试次数限制
+	 * @param msgsPerSecong - 每秒最多运行发送消息的数量
+	 */
 	public static void setLimit(int msgsPerLogin, int msgsPerSecong){
 		maxMessagePerLogin = msgsPerLogin;
 		maxMessagePerSecond = msgsPerSecong;
