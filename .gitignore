@@ -53,3 +53,4 @@ compiler.xml
 *log.txt
 data/recoder.txt
 recoder.txt
+log/*
