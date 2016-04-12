@@ -31,7 +31,12 @@ public class TextDao extends FileDao<String>{
     public boolean append(String str){
         boolean result = false;
         if("".equals(fileName) || fileName == null){
-            return false;
+        	super.dirPath = System.getProperties().getProperty("user.dir")
+        			+ File.separator + "log";
+        	Calendar cal =  Calendar.getInstance();
+        	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd-hhmmss");
+        	fileName =  "record" + format.format(cal.getTime()) + ".txt";
+        	checkOrCreateFile();
         }
         FileAccess fa = new FileAccess();
         if(fa.createAppendFile(getPathName())){

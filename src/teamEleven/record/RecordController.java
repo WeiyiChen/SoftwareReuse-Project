@@ -14,6 +14,8 @@ public class RecordController {
 	private TextDao counterDao;
 	private SaveRecordThread saveRecordThread;
 	private int saveCycle;
+	
+	private static RecordController recordController;
 
 	private class SaveRecordThread extends Thread {
 		private RecordController rec;
@@ -50,9 +52,16 @@ public class RecordController {
 
 	}
 
-	public RecordController() {
+	private RecordController() {
 		counterDao = new TextDao();
 		saveRecordThread = new SaveRecordThread(this);
+	}
+	
+	public static RecordController getInstance(){
+		if(recordController == null){
+			recordController = new RecordController();
+		}
+		return recordController;
 	}
 	
 	public void setAndStart(int saveCycle){

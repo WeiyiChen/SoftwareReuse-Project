@@ -65,6 +65,11 @@ public class ClientRecordController {
 		return clientRecordController;
 	}
 	
+	public void setAndStart(int saveCycle){
+		this.saveCycle = saveCycle;
+		saveRecordThread.start();
+	}
+	
 	public void reset(){
 		this.loginFailedCount = 0;
 		this.loginSucceedCount = 0;
@@ -98,9 +103,9 @@ public class ClientRecordController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		
 		String strToSave = format.format(cal.getTime()) 
-				+ "[ user : " + user + " loginFailedCount : " + loginFailedCount 
-				+ " loginSucceedCount : " + loginSucceedCount + " sendNum : " + sendNum
-				+ "receiveNum : " + receiveNum + " ]";
+				+ " [ user : " + user + " , loginFailedCount : " + loginFailedCount 
+				+ " , loginSucceedCount : " + loginSucceedCount + " , sendNum : " + sendNum
+				+ " , receiveNum : " + receiveNum + " ]";
 		counterDao.append(strToSave);
 	}
 	
