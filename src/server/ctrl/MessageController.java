@@ -3,9 +3,9 @@ package server.ctrl;
 import base.JsonBuilderBase;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
+import teamEleven.configController.ConfigController;
+import teamEleven.record.RecordController;
 import packedController.PasswordController;
-import packedController.RecordController;
-import packedController.ConfigController;
 import packedController.LicenseController;
 import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
@@ -16,7 +16,8 @@ public class MessageController {
 
 	static private PasswordController passwordController = new PasswordController(
 			ServerConfigEnum.defaultUserPwdMap);
-	static private RecordController recordController = new RecordController();
+	//static private RecordController recordController = new RecordController();
+	static private RecordController recordController = RecordController.getInstance();
 	static private ConfigController configController = new ConfigController(
 			ServerConfigEnum.defaultConfigMap);
 
