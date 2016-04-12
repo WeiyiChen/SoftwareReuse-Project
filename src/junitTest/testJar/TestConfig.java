@@ -14,8 +14,8 @@ public class TestConfig {
 	public TestConfig(){
 		ConfigController cc = new ConfigController();
 		try{
-			int result = cc.getInt("port2", 2);
-//			String result = cc.getString("ip1");
+//			int result = cc.getInt("port", 2);
+			String result = cc.getString("ip");
 			System.out.println(result);
 			System.out.println("end");
 		}catch(RuntimeException e){
