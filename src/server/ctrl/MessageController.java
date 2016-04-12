@@ -16,7 +16,8 @@ public class MessageController {
 
 	static private PasswordController passwordController = new PasswordController(
 			ServerConfigEnum.defaultUserPwdMap);
-	static private RecordController recordController = new RecordController();
+	//static private RecordController recordController = new RecordController();
+	static private RecordController recordController = RecordController.getInstance();
 	static private ConfigController configController = new ConfigController(
 			ServerConfigEnum.defaultConfigMap);
 
