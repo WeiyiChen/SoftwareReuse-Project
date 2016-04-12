@@ -10,5 +10,7 @@
 
 ##pwd.ctrl-1.0.jar用于与用户数据库有关的相关操作，可用于验证密码是否正确，以及新建用户。用户数据库为一json文件，因此该包也依赖于org.json.jar包
 
+##packedController.jar包为以上四个功能的整合
+
 ##encrypt.jar用于数据的加密
 
