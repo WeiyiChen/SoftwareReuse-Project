@@ -64,7 +64,7 @@ public class JsonDao extends FileDao<Map<String, String>>{
 	@Override
 	protected void checkOrCreateFile() {
 		// TODO Auto-generated method stub
-		super.checkOrmk();
+		super.checkOrMk();
 	}
 
 	@Override
