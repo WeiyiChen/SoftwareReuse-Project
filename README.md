@@ -6,4 +6,4 @@ Members:<br>
 1252874  陈薇伊  WeiyiChen<br>
 1252899  阮康乐  rkl1994
 
-<br> jar包在lib文件夹中
+<br> jar包(可复用构件）在lib文件夹中
