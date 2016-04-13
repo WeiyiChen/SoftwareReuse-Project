@@ -5,7 +5,7 @@
 
 + config-1.0.jar用于对解析配置文件，编辑配置文件的相关操纵,配置文件为json格式，该包依赖于org.json.jar包
 
-+ record-1.0.jar用于记录日志等操作，可以设置记录日志的周期
++ record-1.0.jar用于记录日志等操作，可以设置记录日志的周期(Performance Monitor)
 
 + license.ctrl-1.0.jar用于许可管理
 
