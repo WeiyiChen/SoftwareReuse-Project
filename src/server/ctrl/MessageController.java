@@ -97,6 +97,7 @@ public class MessageController {
 
 	public static void quit() {
 		recordController.quit();
+		//recordController.notify();
 		passwordController.quit();
 	}
 }

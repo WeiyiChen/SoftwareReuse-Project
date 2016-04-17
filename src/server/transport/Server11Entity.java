@@ -57,7 +57,6 @@ class Server11Entity extends Thread {
 	}
 
 	public void quit(){
-		messageController.quit();
 		try {
 			socketController.quit();
 		} catch (IOException e) {
