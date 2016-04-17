@@ -29,9 +29,16 @@ public class ServerMain {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				break;
 			}
 			
 		}
+		try {
+			input.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("main exit");
 	}
 
 }

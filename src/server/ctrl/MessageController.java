@@ -95,7 +95,7 @@ public class MessageController {
 		recordController.forwardedNumberAdd();
 	}
 
-	public void quit() {
+	public static void quit() {
 		recordController.quit();
 		passwordController.quit();
 	}
