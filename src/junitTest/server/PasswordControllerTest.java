@@ -26,7 +26,9 @@ public class PasswordControllerTest {
 		PasswordController pwdCtrl = new PasswordController(defMap);
 		String str =ie.encrypt("1252865");
 		System.out.println(JsonBuilderClient.getPasswordJson("qyd",str ));
-		System.out.println(pwdCtrl.passwordCheck("qyd", ie.decryptToTMD5(str)));
+		System.out.println(pwdCtrl.passwordCheck("qyd", ie.decryptToTMD5(
+				str)));
+		System.out.println(ie.decryptToTMD5("766a60c2153ea0ab9f2970b48134c63b248"));
 
 	}
 	

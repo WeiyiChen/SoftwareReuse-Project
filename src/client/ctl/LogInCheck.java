@@ -34,7 +34,7 @@ public class LogInCheck implements ILogInCheck{
 		// TODO Auto-generated method stub
 		result = false;
 		String secretPassword = encrypt.encrypt(pwd);
-		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, pwd);
+		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, secretPassword);
 		IMsgSender msgSender = new JsonMsgSender();
 		msgSender.send(jsonStr);
 		
