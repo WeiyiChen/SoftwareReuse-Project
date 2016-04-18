@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import client.util.ClientConfig;
-import client.util.ParseClientConfig;
+import teamEleven.configController.ConfigController;
 /**
  * keep a global socket for the client
  * @author Dai
@@ -20,10 +19,11 @@ public class ClientSocket {
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
-	private static Socket createSocket() throws UnknownHostException, IOException{
-		ClientConfig config = (ClientConfig) ParseClientConfig.getConfig("ClientConfig.xml");
-		String ip = config.getIp();
-		int port = config.getIntPort();
+	private synchronized static Socket createSocket() throws UnknownHostException, IOException{
+//		ClientConfig config = (ClientConfig) ParseClientConfig.getConfig("ClientConfig.xml");
+		ConfigController cc = new ConfigController("clientconfig.json");
+		String ip = cc.getString("ip", "127.0.0.1");
+		int port = cc.getInt("port", 2345);
 		socket = new Socket(ip, port);
 		System.out.println("create socket\n");
 		return socket;
@@ -37,7 +37,10 @@ public class ClientSocket {
 	 */
 	public static Socket getSocket() throws UnknownHostException, IOException{
 		if(socket == null){
-			return createSocket();
+			
+				return createSocket();
+			
+			
 		}
 		return socket;
 	}
