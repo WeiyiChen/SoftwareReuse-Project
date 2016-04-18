@@ -18,7 +18,8 @@ import client.intf.ILogInCheck;
 import client.intf.ILoginWindow;
 import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
-import client.util.ClientLogger;
+//import client.util.ClientLogger;
+import teamEleven.record.ClientRecordController;
 
 /**
  * log in UI
@@ -102,7 +103,9 @@ public class LoginWindow implements ILoginWindow {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				try {
+				
+					ClientRecordController crc = ClientRecordController.getInstance();
+					crc.setUser(usr);
 					if (logInResult) {
 //						IJump2MsgWindow windowJump = new JumpToMsgWindowOld();
 //						windowJump.startMsgWindow(usr);
@@ -113,23 +116,24 @@ public class LoginWindow implements ILoginWindow {
 						ims.setUsr(usr);
 						frame.dispose();
 
-						ClientLogger.updateUsr(usr);
-						ClientLogger.writeLoginSuccessful(usr);
-						ClientLogger.increaseLoginSucceedCount();
-						ClientLogger.resetSendNum();
-						ClientLogger.resetReceiveNum();
-						ClientLogger.setIsLogin(true);
+//						ClientLogger.updateUsr(usr);
+//						ClientLogger.writeLoginSuccessful(usr);
+//						ClientLogger.increaseLoginSucceedCount();
+//						ClientLogger.resetSendNum();
+//						ClientLogger.resetReceiveNum();
+						
+						crc.loginSucceedCountAdd();
+//						crc.reset();
+//						ClientLogger.setIsLogin(true);
 //						
 
 					} else {
-						ClientLogger.writeLoginFailed(usr);
-						ClientLogger.increaseLoginFailedCount();
+						crc.loginFailedCountAdd();
+//						ClientLogger.writeLoginFailed(usr);
+//						ClientLogger.increaseLoginFailedCount();
 						lblTip.setText("Error input!");
 					}
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				
 			}
 		});
 	}
