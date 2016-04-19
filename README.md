@@ -7,3 +7,5 @@ Members:<br>
 1252899  阮康乐  rkl1994
 
 <br> jar包(可复用构件）在release文件夹中
+
+[构件使用改进建议](https://github.com/WeiyiChen/SoftwareReuse-Project/blob/master/doc/构件使用改进建议.md)
