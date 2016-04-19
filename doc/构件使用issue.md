@@ -5,5 +5,5 @@
 
 ### performance
 + log无法选择存放路径
-+ 用户重新登录的时候，客户端需要reset一下，这个功能好像没有提供。
-+ monitor记数与创建在不同的地方的时候，使用不是很方便
++ 想要log用户名时怎么办
++ performance monitor如何停止

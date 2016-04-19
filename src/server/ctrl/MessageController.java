@@ -11,7 +11,7 @@ import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
 import teamEleven.licenseCtrl.LicenseController;
 import teamEleven.pwdCtrl.PasswordController;
-import teamEleven.record.RecordController;
+//import teamEleven.record.RecordController;
 
 ;
 
@@ -19,7 +19,7 @@ public class MessageController {
 
 	static private PasswordController passwordController = new PasswordController(
 			ServerConfigEnum.defaultUserPwdMap);
-	static private RecordController recordController = RecordController.getInstance();
+//	static private RecordController recordController = RecordController.getInstance();
 //	static private ConfigController configController = new ConfigController(
 //			ServerConfigEnum.defaultConfigMap);
 	
@@ -51,6 +51,7 @@ public class MessageController {
 			maxMessagePerLogin = configBean.getMaxMessagesPerLogin();
 			maxMessagePerSecond = configBean.getMaxMessagesPerSecond();
 			saveCycle = configBean.getSaveCycle();
+			ServerMonitorController.setSaveCycle(saveCycle);
 			LicenseController.setLimit(maxMessagePerLogin, maxMessagePerSecond);
 		}catch(IOException ioe){
 			throw new RuntimeException(ioe);
@@ -76,14 +77,16 @@ public class MessageController {
 //		recordController.setAndStart(configController
 //				.getInt(ServerConfigEnum.saveCycle.getKey(),
 //						Integer.valueOf(ServerConfigEnum.saveCycle.getDefaultValue())));
-		recordController.setAndStart(saveCycle);
+//		recordController.setAndStart(saveCycle);
+		ServerMonitorController.startRecord();
 	}
 
 	private String dealWithTextMessage(String jsonString) {
 		String user = JsonAnalizerServer.getUser(jsonString);
 		int licenseResult = licenseController.receivedMessage(user);
 		if (licenseResult != 0) {
-			recordController.ignoredNumberAdd();
+//			recordController.ignoredNumberAdd();
+			ServerMonitorController.increaseIgnoredNumber();
 			if (licenseResult == 1) {
 				return JsonBuilderServer.getMessageBusyError();
 			}
@@ -96,8 +99,8 @@ public class MessageController {
 				return JsonBuilderServer.getNeedReloginError();
 			}
 		}
-
-		recordController.receivedNumberAdd();
+		ServerMonitorController.increaseReceivedNumber();
+//		recordController.receivedNumberAdd();
 		return jsonString;
 	}
 
@@ -107,20 +110,25 @@ public class MessageController {
 
 		if (passwordController.passwordCheck(user, password)) {
 			licenseController.reset(user);
-			recordController.logsucceedNumberAdd();
+//			recordController.logsucceedNumberAdd();
+			ServerMonitorController.increaseLogfailedNumber();
 			return JsonBuilderServer.getLoginSucceedJson();
 		}
-		recordController.logfailedNumberAdd();
+		ServerMonitorController.increaseLogfailedNumber();
+//		recordController.logfailedNumberAdd();
 		return JsonBuilderServer.getLoginFailedJson();
 	}
 
 	public void addSendRecord() {
-		recordController.forwardedNumberAdd();
+		ServerMonitorController.increaseForwardedNumber();
+//		recordController.forwardedNumberAdd();
 	}
 
 	public static void quit() {
-		recordController.quit();
+//		recordController.quit();
 		//recordController.notify();
+//		ServerMonitorController.reset();
+		ServerMonitorController.getMonitor().stop();
 		passwordController.quit();
 	}
 }
