@@ -9,44 +9,27 @@ import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
-//import teamEleven.licenseCtrl.LicenseController;
-import teamEleven.pwdCtrl.PasswordController;
-//import teamEleven.record.RecordController;
-import wheellllll.license.License;
 
-;
+import teamEleven.pwdCtrl.PasswordController;
+
 
 public class MessageController {
 
 	static private PasswordController passwordController = new PasswordController(
 			ServerConfigEnum.defaultUserPwdMap);
-//	static private RecordController recordController = RecordController.getInstance();
-//	static private ConfigController configController = new ConfigController(
-//			ServerConfigEnum.defaultConfigMap);
+
 	
 	static ConfigManager configManager = new ConfigManager(new JsonAdapter(), "data/config.json");
 	static ServerConfigBean configBean;
 	
-//	static ServerConfigBean 
 
 	private static IEncrypt encrypt = new EncryptImpl();
 	
-	private static License license; 
-	
-//	private LicenseController licenseController;
+	private LicenseCtrl licenseController;
 
-//	private static int maxMessagePerLogin = configController
-//			.getInt(ServerConfigEnum.maxMsgsPerLogin.getKey(),
-//					Integer.valueOf(ServerConfigEnum.maxMsgsPerLogin
-//							.getDefaultValue()));
-//	private static int maxMessagePerSecond = configController
-//			.getInt(ServerConfigEnum.maxMsgsPerSecond.getKey(),
-//					Integer.valueOf(ServerConfigEnum.maxMsgsPerSecond
-//							.getDefaultValue()));
 	
 	private static int maxMessagePerLogin;
 	private static int maxMessagePerSecond;
-//	private static int maxMessagePerSession;
 	private static int saveCycle;
 	
 	static{
@@ -56,8 +39,8 @@ public class MessageController {
 			maxMessagePerSecond = configBean.getMaxMessagesPerSecond();
 			saveCycle = configBean.getSaveCycle();
 			ServerMonitorController.setSaveCycle(saveCycle);
-			license = new License(License.LicenseType.BOTH, maxMessagePerLogin, maxMessagePerSecond);
-//			LicenseController.setLimit(maxMessagePerLogin, maxMessagePerSecond);
+//			license = new License(License.LicenseType.BOTH, maxMessagePerLogin, maxMessagePerSecond);
+			LicenseCtrl.setLimit(maxMessagePerLogin, maxMessagePerSecond);
 		}catch(IOException ioe){
 			throw new RuntimeException(ioe);
 		}
@@ -65,6 +48,7 @@ public class MessageController {
 	}
 	public MessageController() {
 //		licenseController = new LicenseController();
+		licenseController = new LicenseCtrl();
 	}
 
 	public String dealWithMessage(String jsonString) {
@@ -79,33 +63,29 @@ public class MessageController {
 	}
 
 	public static void startRecordThread() {
-//		recordController.setAndStart(configController
-//				.getInt(ServerConfigEnum.saveCycle.getKey(),
-//						Integer.valueOf(ServerConfigEnum.saveCycle.getDefaultValue())));
-//		recordController.setAndStart(saveCycle);
+
 		ServerMonitorController.startRecord();
 	}
 
 	private String dealWithTextMessage(String jsonString) {
 		String user = JsonAnalizerServer.getUser(jsonString);
-//		int licenseResult = licenseController.receivedMessage(user);
-//		if (licenseResult != 0) {
-////			recordController.ignoredNumberAdd();
-//			ServerMonitorController.increaseIgnoredNumber();
-//			if (licenseResult == 1) {
-//				return JsonBuilderServer.getMessageBusyError();
-//			}
-//			if (licenseResult == 2) {
-//				return JsonBuilderServer.getNeedReloginError();
-//			}
-//			if (licenseResult == 3) {
-//				// how can this happens, I don't know.
-//				licenseController.stopCounting();
-//				return JsonBuilderServer.getNeedReloginError();
-//			}
-//		}
+		int licenseResult = licenseController.receivedMessage(user);
+		if (licenseResult != 0) {
+//			recordController.ignoredNumberAdd();
+			ServerMonitorController.increaseIgnoredNumber();
+			if (licenseResult == 1) {
+				return JsonBuilderServer.getMessageBusyError();
+			}
+			if (licenseResult == 2) {
+				return JsonBuilderServer.getNeedReloginError();
+			}
+			if (licenseResult == 3) {
+				// how can this happens, I don't know.
+				licenseController.stopCounting();
+				return JsonBuilderServer.getNeedReloginError();
+			}
+		}
 		ServerMonitorController.increaseReceivedNumber();
-//		recordController.receivedNumberAdd();
 		return jsonString;
 	}
 
@@ -115,24 +95,20 @@ public class MessageController {
 
 		if (passwordController.passwordCheck(user, password)) {
 			licenseController.reset(user);
-//			recordController.logsucceedNumberAdd();
 			ServerMonitorController.increaseLogfailedNumber();
 			return JsonBuilderServer.getLoginSucceedJson();
 		}
 		ServerMonitorController.increaseLogfailedNumber();
-//		recordController.logfailedNumberAdd();
+
 		return JsonBuilderServer.getLoginFailedJson();
 	}
 
 	public void addSendRecord() {
 		ServerMonitorController.increaseForwardedNumber();
-//		recordController.forwardedNumberAdd();
 	}
 
 	public static void quit() {
-//		recordController.quit();
-		//recordController.notify();
-//		ServerMonitorController.reset();
+
 		ServerMonitorController.getMonitor().stop();
 		passwordController.quit();
 	}
