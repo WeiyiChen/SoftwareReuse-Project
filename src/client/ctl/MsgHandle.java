@@ -10,8 +10,9 @@ import client.intf.IMsgWindow;
 import client.transport.ClientSocket;
 import client.transport.JsonMsgSender;
 import client.ui.LoginWindow;
+import client.util.ClientMonitorController;
 //import client.util.ClientLogger;
-import teamEleven.record.ClientRecordController;
+//import teamEleven.record.ClientRecordController;
 
 /**
  * 
@@ -38,8 +39,9 @@ public class MsgHandle implements IMsgHandle{
 		result = msgSender.send(msg);
 		if(result){
 //			ClientLogger.increaseSendNum();
-			ClientRecordController crc = ClientRecordController.getInstance();
-			crc.sendNumAdd();
+//			ClientRecordController crc = ClientRecordController.getInstance();
+//			crc.sendNumAdd();
+			ClientMonitorController.increaseSendNum();
 		}	
 	}
 	
@@ -50,8 +52,9 @@ public class MsgHandle implements IMsgHandle{
 		
 		// relogin message is also count as a message
 //		ClientLogger.increaseReceiveNum();
-		ClientRecordController crc = ClientRecordController.getInstance();
-		crc.receiveNumAdd();
+//		ClientRecordController crc = ClientRecordController.getInstance();
+//		crc.receiveNumAdd();
+		ClientMonitorController.increaseReceiveNum();
 		IAddMsgToUI iAddMsgToUi;
 		try{
 			if(msg instanceof java.lang.String){

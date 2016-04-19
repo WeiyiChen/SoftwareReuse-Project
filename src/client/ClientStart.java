@@ -4,8 +4,8 @@ import java.awt.EventQueue;
 
 import client.intf.ILoginWindow;
 import client.ui.LoginWindow;
-
-import teamEleven.record.ClientRecordController;
+import client.util.ClientMonitorController;
+//import teamEleven.record.ClientRecordController;
 
 public class ClientStart {
 	/**
@@ -23,6 +23,7 @@ public class ClientStart {
 			}
 		});
 //		new Thread(new TimerAndLogger()).start();
-		ClientRecordController.getInstance().setAndStart(60);
+//		ClientRecordController.getInstance().setAndStart(60);
+		ClientMonitorController.startRecord();
 	}
 }

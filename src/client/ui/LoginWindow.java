@@ -18,8 +18,9 @@ import client.intf.ILogInCheck;
 import client.intf.ILoginWindow;
 import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
+import client.util.ClientMonitorController;
 //import client.util.ClientLogger;
-import teamEleven.record.ClientRecordController;
+//import teamEleven.record.ClientRecordController;
 
 /**
  * log in UI
@@ -104,8 +105,8 @@ public class LoginWindow implements ILoginWindow {
 					e1.printStackTrace();
 				}
 				
-					ClientRecordController crc = ClientRecordController.getInstance();
-					crc.setUser(usr);
+//					ClientRecordController crc = ClientRecordController.getInstance();
+//					crc.setUser(usr);
 					if (logInResult) {
 //						IJump2MsgWindow windowJump = new JumpToMsgWindowOld();
 //						windowJump.startMsgWindow(usr);
@@ -115,6 +116,8 @@ public class LoginWindow implements ILoginWindow {
 						windowJump.jump(null, ims);
 						ims.setUsr(usr);
 						frame.dispose();
+						
+						ClientMonitorController.increaseLoginTimes();
 
 //						ClientLogger.updateUsr(usr);
 //						ClientLogger.writeLoginSuccessful(usr);
@@ -122,13 +125,14 @@ public class LoginWindow implements ILoginWindow {
 //						ClientLogger.resetSendNum();
 //						ClientLogger.resetReceiveNum();
 						
-						crc.loginSucceedCountAdd();
+//						crc.loginSucceedCountAdd();
 //						crc.reset();
 //						ClientLogger.setIsLogin(true);
 //						
 
 					} else {
-						crc.loginFailedCountAdd();
+						ClientMonitorController.increaseReceiveNum();
+//						crc.loginFailedCountAdd();
 //						ClientLogger.writeLoginFailed(usr);
 //						ClientLogger.increaseLoginFailedCount();
 						lblTip.setText("Error input!");

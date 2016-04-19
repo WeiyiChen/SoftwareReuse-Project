@@ -5,8 +5,9 @@ import client.intf.ILoginWindow;
 import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
 import client.transport.Client11SReciever;
+import client.util.ClientMonitorController;
 //import client.util.ClientLogger;
-import teamEleven.record.ClientRecordController;
+//import teamEleven.record.ClientRecordController;
 
 /**
  * jump from message window to login window
@@ -29,8 +30,9 @@ public class WindowJumpFromMsgToLogin implements IWindowJump {
 			
 			imw.toCloseWindow();
 //			ClientLogger.setIsLogin(false);
-			ClientRecordController crc = ClientRecordController.getInstance();
-			crc.reset();
+//			ClientRecordController crc = ClientRecordController.getInstance();
+//			crc.reset();
+			ClientMonitorController.reset();
 			Client11SReciever.exit();
 		}catch(ClassCastException e1){
 			e1.printStackTrace();
