@@ -9,9 +9,10 @@ import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
-import teamEleven.licenseCtrl.LicenseController;
+//import teamEleven.licenseCtrl.LicenseController;
 import teamEleven.pwdCtrl.PasswordController;
 //import teamEleven.record.RecordController;
+import wheellllll.license.License;
 
 ;
 
@@ -30,7 +31,9 @@ public class MessageController {
 
 	private static IEncrypt encrypt = new EncryptImpl();
 	
-	private LicenseController licenseController;
+	private static License license; 
+	
+//	private LicenseController licenseController;
 
 //	private static int maxMessagePerLogin = configController
 //			.getInt(ServerConfigEnum.maxMsgsPerLogin.getKey(),
@@ -43,6 +46,7 @@ public class MessageController {
 	
 	private static int maxMessagePerLogin;
 	private static int maxMessagePerSecond;
+//	private static int maxMessagePerSession;
 	private static int saveCycle;
 	
 	static{
@@ -52,14 +56,15 @@ public class MessageController {
 			maxMessagePerSecond = configBean.getMaxMessagesPerSecond();
 			saveCycle = configBean.getSaveCycle();
 			ServerMonitorController.setSaveCycle(saveCycle);
-			LicenseController.setLimit(maxMessagePerLogin, maxMessagePerSecond);
+			license = new License(License.LicenseType.BOTH, maxMessagePerLogin, maxMessagePerSecond);
+//			LicenseController.setLimit(maxMessagePerLogin, maxMessagePerSecond);
 		}catch(IOException ioe){
 			throw new RuntimeException(ioe);
 		}
 		
 	}
 	public MessageController() {
-		licenseController = new LicenseController();
+//		licenseController = new LicenseController();
 	}
 
 	public String dealWithMessage(String jsonString) {
@@ -83,22 +88,22 @@ public class MessageController {
 
 	private String dealWithTextMessage(String jsonString) {
 		String user = JsonAnalizerServer.getUser(jsonString);
-		int licenseResult = licenseController.receivedMessage(user);
-		if (licenseResult != 0) {
-//			recordController.ignoredNumberAdd();
-			ServerMonitorController.increaseIgnoredNumber();
-			if (licenseResult == 1) {
-				return JsonBuilderServer.getMessageBusyError();
-			}
-			if (licenseResult == 2) {
-				return JsonBuilderServer.getNeedReloginError();
-			}
-			if (licenseResult == 3) {
-				// how can this happens, I don't know.
-				licenseController.stopCounting();
-				return JsonBuilderServer.getNeedReloginError();
-			}
-		}
+//		int licenseResult = licenseController.receivedMessage(user);
+//		if (licenseResult != 0) {
+////			recordController.ignoredNumberAdd();
+//			ServerMonitorController.increaseIgnoredNumber();
+//			if (licenseResult == 1) {
+//				return JsonBuilderServer.getMessageBusyError();
+//			}
+//			if (licenseResult == 2) {
+//				return JsonBuilderServer.getNeedReloginError();
+//			}
+//			if (licenseResult == 3) {
+//				// how can this happens, I don't know.
+//				licenseController.stopCounting();
+//				return JsonBuilderServer.getNeedReloginError();
+//			}
+//		}
 		ServerMonitorController.increaseReceivedNumber();
 //		recordController.receivedNumberAdd();
 		return jsonString;
