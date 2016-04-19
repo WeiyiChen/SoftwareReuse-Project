@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import teamEleven.configController.ConfigController;
+import octoteam.tahiti.config.ConfigManager;
+import octoteam.tahiti.config.loader.JsonAdapter;
 /**
  * keep a global socket for the client
  * @author Dai
@@ -21,9 +22,13 @@ public class ClientSocket {
 	 */
 	private synchronized static Socket createSocket() throws UnknownHostException, IOException{
 //		ClientConfig config = (ClientConfig) ParseClientConfig.getConfig("ClientConfig.xml");
-		ConfigController cc = new ConfigController("clientconfig.json");
-		String ip = cc.getString("ip", "127.0.0.1");
-		int port = cc.getInt("port", 2345);
+//		ConfigController cc = new ConfigController("clientconfig.json");
+//		String ip = cc.getString("ip", "127.0.0.1");
+//		int port = cc.getInt("port", 2345);
+		ConfigManager configManager = new ConfigManager(new JsonAdapter(),"data/clientconfig.json");
+		ClientConfigBean configBean = configManager.loadToBean(ClientConfigBean.class);
+		String ip = configBean.getHost();
+		int port = configBean.getPort();
 		socket = new Socket(ip, port);
 		System.out.println("create socket\n");
 		return socket;
