@@ -49,7 +49,7 @@ local.properties
 # *.xml
 compiler.xml
 .idea
-*.json
+
 *log.txt
 data/recoder.txt
 recoder.txt
