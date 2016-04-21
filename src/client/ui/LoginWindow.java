@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import client.ctl.JumpToMsgWindowOld;
+
 import client.ctl.LogInCheck;
 import client.ctl.WindowJumpFromLoginToMsg;
 import client.intf.IJump2MsgWindow;
