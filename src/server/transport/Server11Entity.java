@@ -1,8 +1,17 @@
 package server.transport;
 
+import java.awt.event.FocusAdapter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.Console;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import base.JsonBuilderBase;
 import server.ctrl.MessageController;
@@ -30,6 +39,7 @@ class Server11Entity extends Thread {
 			String message = null;
 			while (continueToWork) {
 				message = reader.readLine();
+				saveServerMsg(message);
 				System.out.println("receive: "+message);
 				if (message == null) { break;}
 				String result = messageController.dealWithMessage(message);
@@ -61,6 +71,16 @@ class Server11Entity extends Thread {
 			socketController.quit();
 		} catch (IOException e) {
 		}
+	}
+	
+	private void saveServerMsg(String msg) throws IOException {
+	    ArrayList<String> arr = new ArrayList<String>();
+	    arr.add(msg);
+	    FileWriter writer = new FileWriter("output.txt"); 
+	    for(String str: arr) {
+	      writer.write(str);
+	    }
+	    writer.close();
 	}
 	
 	private void sendMessage(String text) {
