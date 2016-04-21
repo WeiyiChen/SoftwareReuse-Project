@@ -23,6 +23,7 @@ class Server11Entity extends Thread {
 	private SocketController socketController;
 	private MessageController messageController;
 	private List<SocketController> socketControllerList;
+	private ArrayList<String> serverReceiveMsgList;
 	private boolean continueToWork;
 
 	public Server11Entity(SocketController socketP, List<SocketController> socketList) {
@@ -30,6 +31,7 @@ class Server11Entity extends Thread {
 		this.socketControllerList = socketList;
 		this.messageController = new MessageController();
 		continueToWork = true;
+		serverReceiveMsgList = new ArrayList<String>();
 	}
 
 	public void run() {
@@ -39,7 +41,8 @@ class Server11Entity extends Thread {
 			String message = null;
 			while (continueToWork) {
 				message = reader.readLine();
-				saveServerMsg(message);
+				serverReceiveMsgList.add(message);
+				saveServerMsg(serverReceiveMsgList);
 				System.out.println("receive: "+message);
 				if (message == null) { break;}
 				String result = messageController.dealWithMessage(message);
@@ -73,11 +76,9 @@ class Server11Entity extends Thread {
 		}
 	}
 	
-	private void saveServerMsg(String msg) throws IOException {
-	    ArrayList<String> arr = new ArrayList<String>();
-	    arr.add(msg);
-	    FileWriter writer = new FileWriter("output.txt"); 
-	    for(String str: arr) {
+	private void saveServerMsg(ArrayList<String> msg) throws IOException {
+	    FileWriter writer = new FileWriter("server_msg.txt"); 
+	    for(String str: msg) {
 	      writer.write(str);
 	    }
 	    writer.close();
