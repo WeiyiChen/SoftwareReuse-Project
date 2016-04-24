@@ -27,6 +27,7 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 	private JPanel contentPane;
 	private JTextArea textField;
 	private JButton btnSend;
+	private JButton btnCompress;
 	private JLabel lblUser;
 	private JLabel lblUserToShow;
 	private JTextArea textArea;
@@ -55,13 +56,17 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		
 		textField = new JTextArea();
 		JScrollPane tmpSp = new JScrollPane(textField);
-		tmpSp.setBounds(66, 274, 250, 41);
+		tmpSp.setBounds(66, 274, 240, 41);
 		contentPane.add(tmpSp);
 		textField.setColumns(10);
 		
 		btnSend = new JButton("Send");
-		btnSend.setBounds(365, 274, 75, 41);
+		btnSend.setBounds(310, 274, 65, 41);
 		contentPane.add(btnSend);
+		
+		btnCompress = new JButton("ZIP");
+		btnCompress.setBounds(378, 274, 60, 41);
+        contentPane.add(btnCompress);
 		
 		lblUser = new JLabel("User:");
 		lblUser.setBounds(183, 26, 33, 16);
