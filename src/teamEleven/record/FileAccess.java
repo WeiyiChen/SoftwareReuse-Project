@@ -9,102 +9,81 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 public class FileAccess {
+
 	private PrintWriter pwa;
 	private FileOutputStream fosa;
-	
-	// to be tested
-	public static String readFile(String path, String encoding){
+
+	public static String readFile(String path) {
 		BufferedReader reader = null;
 		String laststr = "";
-		try{
+		try {
 			FileInputStream fileInputStream = new FileInputStream(path);
-			InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, encoding);
+			InputStreamReader inputStreamReader = new InputStreamReader(
+					fileInputStream, "UTF-8");
 			reader = new BufferedReader(inputStreamReader);
 			String tempString = null;
-			while((tempString = reader.readLine()) != null){
+			while ((tempString = reader.readLine()) != null) {
 				laststr += tempString;
 			}
 			reader.close();
 			fileInputStream.close();
-		}catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
-			if(reader != null){
-				try{
+		} finally {
+			if (reader != null) {
+				try {
 					reader.close();
-				}catch(IOException ioe){
-					ioe.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		}
 		return laststr;
 	}
-	
-	public static String readFile(String path){
-		return readFile(path, "UTF-8");
-	}
-	
-	public static boolean fileOverWrite(String path, String content){
+
+	public static boolean fileOverWrite(String path, String content) {
 		boolean succeed = true;
-		try{
+		try {
 			FileOutputStream fos = new FileOutputStream(path, false);
 			PrintWriter pw = new PrintWriter(fos);
 			pw.write(content);
 			pw.close();
 			fos.close();
-		}catch(FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			succeed = false;
 			e.printStackTrace();
-		}catch(IOException e){
+		} catch (IOException e) {
 			succeed = false;
 			e.printStackTrace();
 		}
 		return succeed;
+
 	}
-	
-	public boolean createAppendFile(String path){
+
+	public boolean createAppendFile(String path) {
 		boolean succeed = true;
-		try{
+		try {
 			fosa = new FileOutputStream(path, true);
 			pwa = new PrintWriter(fosa);
-		}catch(FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			succeed = false;
 			e.printStackTrace();
-		}
-		System.out.println(succeed);
+		} 
 		return succeed;
 	}
-	
-	public boolean append(String content){
+
+	public boolean append(String content) {
 		pwa.println(content);
 		pwa.flush();
 		return !pwa.checkError();
 	}
+	
 	public void closeFile(){
 		pwa.close();
-		try{
+		try {
 			fosa.close();
-		}catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -34,18 +34,20 @@ public class RecordController {
 
 		@Override
 		public void run() {
-			try {
-				Thread.sleep(rec.getSaveCycle() * 1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			while (continueFlag) {
-				rec.save();
-				try {
-					Thread.sleep(rec.getSaveCycle() * 1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				do {
+					try {
+						int i = rec.getSaveCycle();
+						while (continueFlag && i > 0) {
+							Thread.sleep(1000);
+							i--;
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					rec.save();
+
+				} while (continueFlag);
 			}
 			System.out.println("record thread stop");
 		}
@@ -119,7 +121,6 @@ public class RecordController {
 
 	public void quit() {
 		saveRecordThread.setStop();
-		this.save();
 		counterDao.quit();
 	}
 	
