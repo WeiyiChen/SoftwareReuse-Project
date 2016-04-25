@@ -38,7 +38,14 @@ public class ServerMain {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("wait 3 seconds");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		System.out.println("main exit");
+		System.exit(0);
 	}
 
 }
