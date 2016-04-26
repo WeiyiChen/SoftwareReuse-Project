@@ -5,7 +5,11 @@ public class ClientConfigBean {
 
     public int port;
     
-    public int saveCycle;
+    public int logSaveCycle;
+    
+    public int beginCompressSeconds;
+    
+    public int internalCompressSeconds;
 
     public String getHost() {
         return host;
@@ -23,13 +27,31 @@ public class ClientConfigBean {
         this.port = port;
     }
 
-	public int getSaveCycle() {
-		return saveCycle;
+	public int getLogSaveCycle() {
+		return logSaveCycle;
 	}
 
-	public void setSaveCycle(int saveCycle) {
-		this.saveCycle = saveCycle;
+	public void setLogSaveCycle(int logSaveCycle) {
+		this.logSaveCycle = logSaveCycle;
 	}
+
+	public int getBeginCompressSeconds() {
+		return beginCompressSeconds;
+	}
+
+	public void setBeginCompressSeconds(int beginCompressSeconds) {
+		this.beginCompressSeconds = beginCompressSeconds;
+	}
+
+	public int getInternalCompressSeconds() {
+		return internalCompressSeconds;
+	}
+
+	public void setInternalCompressSeconds(int internalCompressSeconds) {
+		this.internalCompressSeconds = internalCompressSeconds;
+	}
+
+	
     
     
 }

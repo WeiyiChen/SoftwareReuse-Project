@@ -8,6 +8,7 @@ import client.transport.ClientConfigBean;
 import client.transport.ClientSocket;
 import client.ui.LoginWindow;
 import client.util.ClientMonitorController;
+import client.util.ClientZipLogController;
 //import teamEleven.record.ClientRecordController;
 import octoteam.tahiti.config.ConfigManager;
 import octoteam.tahiti.config.loader.JsonAdapter;
@@ -28,19 +29,27 @@ public class ClientStart {
 			}
 		});
 		
-		int saveCycle = 60;
+		int logSaveCycle = 60;
+		int beginCompressSecs = 1;
+		int internalCompressSecs = 86400;
+		 
 		ConfigManager configManager = new ConfigManager(new JsonAdapter(),"data/clientconfig.json");
 		
 		try {
 			ClientConfigBean configBean = configManager.loadToBean(ClientConfigBean.class);
-			saveCycle = configBean.getSaveCycle();
+			logSaveCycle = configBean.getLogSaveCycle();
+			beginCompressSecs = configBean.getBeginCompressSeconds();
+			internalCompressSecs = configBean.getInternalCompressSeconds();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-		ClientMonitorController.setSaveCycle(saveCycle);
+		ClientMonitorController.setSaveCycle(logSaveCycle);
 		ClientMonitorController.startRecord();
+		
+		ClientZipLogController.getInstance().setCompressConfig(beginCompressSecs, internalCompressSecs);
+		ClientZipLogController.getInstance().setAndStart("logclient", "zipclient/bar-");
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	        public void run() {

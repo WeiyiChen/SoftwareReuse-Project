@@ -7,7 +7,11 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import client.util.ClientZip;
+
 public class ZipTest {
+
+	
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -24,7 +28,7 @@ public class ZipTest {
 		String destinationName = path + File.separator + "log";
 		try {
 //			Zip.zip(sourceName, destinationName);
-			Zip.zip("log", "test.zip");
+			ClientZip.zip("log", "test.zip");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
