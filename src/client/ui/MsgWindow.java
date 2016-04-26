@@ -3,6 +3,7 @@ package client.ui;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -116,7 +117,6 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 			return;
 		}
 		String jsonStr = JsonBuilderClient.getMessageJson(usr, msgStr);
-//		imh = new MsgHandle(this);
 		imh.sendMessage(jsonStr);
 		textField.setText("");
 	}
@@ -140,21 +140,4 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		return imh;
 	}
 	
-	
-
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MsgWindow frame = new MsgWindow();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 }

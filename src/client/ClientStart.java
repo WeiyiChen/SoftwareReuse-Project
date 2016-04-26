@@ -22,8 +22,7 @@ public class ClientStart {
 				}
 			}
 		});
-//		new Thread(new TimerAndLogger()).start();
-//		ClientRecordController.getInstance().setAndStart(60);
+
 		ClientMonitorController.startRecord();
 	}
 }
