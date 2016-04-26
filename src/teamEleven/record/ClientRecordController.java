@@ -61,7 +61,7 @@ public class ClientRecordController {
 		counterDao = new TextDao();
 		saveRecordThread = new SaveRecordThread(this);
 	}
-<<<<<<< HEAD
+
 	
 	/**
 	 * 获取一个ClientRecordController类的实例，这里用到singleton的模式
@@ -69,16 +69,12 @@ public class ClientRecordController {
 	 */
 	public static ClientRecordController getInstance(){
 		if(clientRecordController == null){
-=======
 
-	public static ClientRecordController getInstance() {
-		if (clientRecordController == null) {
->>>>>>> 421301f046695ac77272b1df39ca48ad43e41ddd
 			clientRecordController = new ClientRecordController();
 		}
 		return clientRecordController;
 	}
-<<<<<<< HEAD
+
 	
 	/**
 	 * 开始记录日志，并且设置记录日志的周期
@@ -93,22 +89,14 @@ public class ClientRecordController {
 	 * 将登录失败次数，登录成功次数，接受消息次数，发送消息次数重新置0
 	 */
 	public void reset(){
-=======
 
-	public void setAndStart(int saveCycle) {
-		this.saveCycle = saveCycle;
-		saveRecordThread.start();
-	}
-
-	public void reset() {
->>>>>>> 421301f046695ac77272b1df39ca48ad43e41ddd
 		this.loginFailedCount = 0;
 		this.loginSucceedCount = 0;
 		this.receiveNum = 0;
 		this.sendNum = 0;
 		this.user = "";
 	}
-<<<<<<< HEAD
+
 	
 	/**
 	 * 设置用户名
@@ -143,26 +131,7 @@ public class ClientRecordController {
 	 * 发送消息次数加1
 	 */
 	public void sendNumAdd(){
-=======
 
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public void loginFailedCountAdd() {
-		this.loginFailedCount++;
-	}
-
-	public void loginSucceedCountAdd() {
-		this.loginSucceedCount++;
-	}
-
-	public void receiveNumAdd() {
-		this.receiveNum++;
-	}
-
-	public void sendNumAdd() {
->>>>>>> 421301f046695ac77272b1df39ca48ad43e41ddd
 		this.sendNum++;
 	}
 
@@ -170,15 +139,12 @@ public class ClientRecordController {
 		return this.saveCycle;
 	}
 	
-<<<<<<< HEAD
 	/**
 	 * 把当前时间，用户名，接受消息次数，发送消息次数，登录成功次数，登录失败次数写进日志中
 	 * 调用setAndStart()方法后，会有一个线程周期性地调用该方法
 	 */
 	public void save(){
-=======
-	public void save() {
->>>>>>> 421301f046695ac77272b1df39ca48ad43e41ddd
+
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -189,16 +155,12 @@ public class ClientRecordController {
 				+ " ]";
 		counterDao.append(strToSave);
 	}
-<<<<<<< HEAD
+
 	
 	/**
 	 * 停止周期性写日志的线程
 	 */
 	public void quit(){
-=======
-
-	public void quit() {
->>>>>>> 421301f046695ac77272b1df39ca48ad43e41ddd
 		saveRecordThread.setStop();
 		this.save();
 		counterDao.quit();
