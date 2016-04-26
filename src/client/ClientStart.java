@@ -1,8 +1,10 @@
 package client;
 
 import java.awt.EventQueue;
+import java.io.IOException;
 
 import client.intf.ILoginWindow;
+import client.transport.ClientSocket;
 import client.ui.LoginWindow;
 import client.util.ClientMonitorController;
 //import teamEleven.record.ClientRecordController;
@@ -24,5 +26,16 @@ public class ClientStart {
 		});
 
 		ClientMonitorController.startRecord();
+		
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+	        public void run() {
+	            try {
+					ClientSocket.getSocket().close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	    }, "Shutdown-thread"));
 	}
 }
