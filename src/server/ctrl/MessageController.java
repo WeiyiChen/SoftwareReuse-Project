@@ -15,13 +15,13 @@ import teamEleven.pwdCtrl.PasswordController;
 
 public class MessageController {
 
-	static private PasswordController passwordController = new PasswordController(
+	private static PasswordController passwordController = new PasswordController(
 			ServerConfigEnum.defaultUserPwdMap);
 
 	
-	static ConfigManager configManager = new ConfigManager(new JsonAdapter(), "data/config.json");
-	static ServerConfigBean configBean;
-	
+	private static ConfigManager configManager = new ConfigManager(new JsonAdapter(), "data/config.json");
+	private static ServerConfigBean configBean;
+	private static ZipLogController zipLogController = new ZipLogController();
 
 	private static IEncrypt encrypt = new EncryptImpl();
 	
@@ -41,6 +41,7 @@ public class MessageController {
 			ServerMonitorController.setSaveCycle(saveCycle);
 //			license = new License(License.LicenseType.BOTH, maxMessagePerLogin, maxMessagePerSecond);
 			LicenseCtrl.setLimit(maxMessagePerLogin, maxMessagePerSecond);
+			zipLogController.setAndStart(86400);
 		}catch(IOException ioe){
 			throw new RuntimeException(ioe);
 		}
@@ -111,5 +112,6 @@ public class MessageController {
 
 		ServerMonitorController.getMonitor().stop();
 		passwordController.quit();
+		zipLogController.quit();
 	}
 }
