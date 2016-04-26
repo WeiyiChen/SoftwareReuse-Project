@@ -23,7 +23,8 @@ public class ZipTest {
 		String sourceName = path +"dsdf" + File.separator + "log";
 		String destinationName = path + File.separator + "log";
 		try {
-			Zip.zip(sourceName, destinationName);
+//			Zip.zip(sourceName, destinationName);
+			Zip.zip("log", "test.zip");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
