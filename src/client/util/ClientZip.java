@@ -31,7 +31,7 @@ public class ClientZip {
 		zip = new ZipOutputStream(fileWriter);
 		
 		
-		ZipFile("", sourceName, zip);
+		zipFile("", sourceName, zip);
 
 		zip.flush();
 		zip.close();
@@ -39,14 +39,14 @@ public class ClientZip {
 		fileWriter.close();
 	}
 
-	private static void ZipFile(String path, String srcFile, ZipOutputStream ouputZip) throws IOException {
+	private static void zipFile(String path, String srcFile, ZipOutputStream ouputZip) throws IOException {
 
 		File folder = new File(srcFile);
 		if(!folder.exists()){
 			return;
 		}
 		if (folder.isDirectory()) {
-			ZipFolder(path, srcFile, ouputZip);
+			zipFolder(path, srcFile, ouputZip);
 		} else {
 			byte[] buf = new byte[1024];
 			int len;
@@ -63,14 +63,14 @@ public class ClientZip {
 		}
 	}
 
-	private static void ZipFolder(String path, String srcFolder, ZipOutputStream outputZip) throws IOException {
+	private static void zipFolder(String path, String srcFolder, ZipOutputStream outputZip) throws IOException {
 		File folder = new File(srcFolder);
 
 		for (String fileName : folder.list()) {
 			if (path.equals("")) {
-				ZipFile(folder.getName(), srcFolder + separater + fileName, outputZip);
+				zipFile(folder.getName(), srcFolder + separater + fileName, outputZip);
 			} else {
-				ZipFile(path + separater + folder.getName(), srcFolder + separater + fileName, outputZip);
+				zipFile(path + separater + folder.getName(), srcFolder + separater + fileName, outputZip);
 			}
 		}
 	}
