@@ -4,6 +4,8 @@ public class ClientConfigBean {
 	public String host;
 
     public int port;
+    
+    public int saveCycle;
 
     public String getHost() {
         return host;
@@ -20,4 +22,14 @@ public class ClientConfigBean {
     public void setPort(int port) {
         this.port = port;
     }
+
+	public int getSaveCycle() {
+		return saveCycle;
+	}
+
+	public void setSaveCycle(int saveCycle) {
+		this.saveCycle = saveCycle;
+	}
+    
+    
 }

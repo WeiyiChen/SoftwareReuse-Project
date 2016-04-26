@@ -54,15 +54,7 @@ public class Client11SReciever extends Thread {
 			if (!socket.isClosed()) {
 				e.printStackTrace();
 			}
-		} finally {
-//			try {
-//				if (reader != null) {
-//					reader.close();
-//				}
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-		}
+		} 
 	}
 	
 	private void saveClientMsgToFile(ArrayList<String> msg) throws IOException {
