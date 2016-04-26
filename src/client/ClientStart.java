@@ -30,8 +30,9 @@ public class ClientStart {
 		});
 		
 		int logSaveCycle = 60;
-		int beginCompressSecs = 1;
+		int beginCompressSecs = 12;
 		int internalCompressSecs = 86400;
+		String zipPrex = "zipclient/logzip-";
 		 
 		ConfigManager configManager = new ConfigManager(new JsonAdapter(),"data/clientconfig.json");
 		
@@ -40,6 +41,7 @@ public class ClientStart {
 			logSaveCycle = configBean.getLogSaveCycle();
 			beginCompressSecs = configBean.getBeginCompressSeconds();
 			internalCompressSecs = configBean.getInternalCompressSeconds();
+			zipPrex = configBean.getCompressPathPrex();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -49,7 +51,7 @@ public class ClientStart {
 		ClientMonitorController.startRecord();
 		
 		ClientZipLogController.getInstance().setCompressConfig(beginCompressSecs, internalCompressSecs);
-		ClientZipLogController.getInstance().setAndStart("logclient", "zipclient/bar-");
+		ClientZipLogController.getInstance().setAndStart("logclient", zipPrex);
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	        public void run() {

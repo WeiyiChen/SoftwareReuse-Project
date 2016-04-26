@@ -10,6 +10,8 @@ public class ClientConfigBean {
     public int beginCompressSeconds;
     
     public int internalCompressSeconds;
+    
+    public String compressPathPrex;
 
     public String getHost() {
         return host;
@@ -49,6 +51,14 @@ public class ClientConfigBean {
 
 	public void setInternalCompressSeconds(int internalCompressSeconds) {
 		this.internalCompressSeconds = internalCompressSeconds;
+	}
+
+	public String getCompressPathPrex() {
+		return compressPathPrex;
+	}
+
+	public void setCompressPathPrex(String compressPathPrex) {
+		this.compressPathPrex = compressPathPrex;
 	}
 
 	
