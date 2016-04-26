@@ -21,10 +21,6 @@ public class ClientSocket {
 	 * @throws IOException
 	 */
 	private synchronized static Socket createSocket() throws UnknownHostException, IOException{
-//		ClientConfig config = (ClientConfig) ParseClientConfig.getConfig("ClientConfig.xml");
-//		ConfigController cc = new ConfigController("clientconfig.json");
-//		String ip = cc.getString("ip", "127.0.0.1");
-//		int port = cc.getInt("port", 2345);
 		ConfigManager configManager = new ConfigManager(new JsonAdapter(),"data/clientconfig.json");
 		ClientConfigBean configBean = configManager.loadToBean(ClientConfigBean.class);
 		String ip = configBean.getHost();
@@ -41,11 +37,8 @@ public class ClientSocket {
 	 * @throws IOException
 	 */
 	public static Socket getSocket() throws UnknownHostException, IOException{
-		if(socket == null){
-			
+		if(socket == null){			
 				return createSocket();
-			
-			
 		}
 		return socket;
 	}
