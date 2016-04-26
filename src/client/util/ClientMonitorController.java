@@ -13,11 +13,11 @@ public class ClientMonitorController {
 	private static CountingRecorder logfailTimes;
 	private static CountingRecorder sendNum;
 	private static CountingRecorder receiveNum;
-	private static int saveCycle = 3;
+	private static int saveCycle;
 	
 	private synchronized static PerformanceMonitor createMonitor(){
 		//不知是否能改变目录
-		LogReporter reporter = new RollingFileReporter("log/bar-%d{yyyy-MM-dd_HH-mm}.log");
+		LogReporter reporter = new RollingFileReporter("logclient/bar-%d{yyyy-MM-dd_HH-mm}.log");
 		monitor = new PerformanceMonitor(reporter);
 		loginTimes = new CountingRecorder("User login times");
 		logfailTimes = new CountingRecorder("User login failed times");
