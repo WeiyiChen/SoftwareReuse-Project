@@ -1,69 +1,56 @@
 package teamEleven.configController;
 
 import java.util.Map;
+import teamEleven.userKeyValueCtrl.KeyValueController;
 
+public class ConfigController extends KeyValueController {
 
-public class ConfigController {
-	private JsonDao configDao;
-	private Map<String, String> confMap;
-	
-	public ConfigController(){
-		configDao = new JsonDao("config");
-		confMap = configDao.read();
+	public ConfigController(String configFilePathName) {
+		super("config");
 	}
-	
-	public ConfigController(String configFilePathName){
-		configDao = new JsonDao("config");
-		confMap = configDao.read();
+
+	public ConfigController(Map<String, String> defaultConfigMap) {
+		super(defaultConfigMap, "config");
 	}
-	
-	public ConfigController(Map<String, String> defaultConfigMap){
-		configDao = new JsonDao("config", defaultConfigMap);
-		confMap = configDao.read();
-	}
-	
+
 	public int getInt(String key, int defaultValue) {
 		try {
-			return Integer.valueOf(confMap.get(key));
+			return Integer.valueOf(super.getValue(key));
 		} catch (Exception e) {
-		
 			return defaultValue;
 		}
 	}
-	
-	public int getInt(String key){
+
+	public int getInt(String key) {
 		try {
-			return Integer.valueOf(confMap.get(key));
+			return Integer.valueOf(super.getValue(key));
 		} catch (Exception e) {
-		
+
 			throw new RuntimeException(e);
 		}
 	}
 
 	public String getString(String key, String defaultValue) {
-		if(confMap.containsKey(key)){
-			return confMap.get(key);
-		}
-		return defaultValue;
+		return super.getValue(key) != null ? super.getValue(key) : defaultValue;
 	}
-	
-	public String getString(String key){
-		if(confMap.containsKey(key)){
-			return confMap.get(key);
+
+	public String getString(String key) {
+		if (null == super.getValue(key)) {
+			throw new RuntimeException("config doesn't contains " + key);
 		}
-		throw new RuntimeException("config doesn't contains " + key);
+		return super.getValue(key);
 	}
 
 	public void setString(String key, String value) {
-		confMap.put(key, value);
+		super.forceSetKeyValue(key, value);
 	}
 
 	public void setInt(String key, int value) {
-		confMap.put(key, String.valueOf(value));
+		super.forceSetKeyValue(key, String.valueOf(value));
 	}
 
 	public void refresh() {
-		this.confMap = configDao.read();
+		super.refresh();
 	}
-	
+
 }
