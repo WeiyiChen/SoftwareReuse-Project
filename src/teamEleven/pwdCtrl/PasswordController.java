@@ -2,34 +2,20 @@ package teamEleven.pwdCtrl;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import teamEleven.userKeyValueCtrl.KeyValueController;
 //import packedDao.JsonDao;
 
-/**
- * 用于验证用户密码是否正确，以及向数据库中添加用户，
- * 这里的“数据库”指的是项目根目录下data文件下的user.json文件
- * @author Qin YiDan
- *
- */
-public class PasswordController{
 
-	private JsonDao userDao;
+public class PasswordController extends KeyValueController{
+
 
 	private Map<String, String> userMap = new HashMap<String, String>();
 	
 	public PasswordController(Map<String, String> defaultUserMap){
-		userDao = new JsonDao("user.json", defaultUserMap);
-		userMap = userDao.read();
+		super(defaultUserMap, "userpwd.json");
 	}	
 	
-	/**
-	 * 验证用户密码是否正确
-	 * @param user
-	 * @param password
-	 * @return
-	 */
 	public boolean passwordCheck(String user, String password) {
-		// TODO Auto-generated method stub
 		if(user == null || password ==null){
 			return false;
 		}
@@ -40,23 +26,12 @@ public class PasswordController{
 		return pwdInDB.equals(password);
 	}
 	
-	/**
-	 * 向数据库中添加用户
-	 * @param user
-	 * @param password
-	 * @return
-	 */
 	public boolean addUser(String user, String password) {
-		if(userMap.containsKey(user)){
-			return false;
-		}
-		userMap.put(user, password);
-		userDao.save(userMap);
-		return true;
+		return super.addUserKeyValue(user, password);
 	}
 	
 	public void quit(){
-		userDao.save(userMap);
+		super.quit();
 	}
 	
 }
