@@ -27,12 +27,23 @@ public class ServerConfigEnum {
 	public static IEncrypt encrypt = new EncryptImpl();
 	
 	public static Map<String, String> defaultUserPwdMap = new HashMap<String, String>() {
-
 		private static final long serialVersionUID = 1L;
 
 		{
-			put("qyd", encrypt.getTMD5("1252865"));
-			put("cwy", encrypt.getTMD5("1252874"));
+			put("qyd", encrypt.getTMD5("111"));
+			put("cwy", encrypt.getTMD5("111"));
+			put("ddy", encrypt.getTMD5("111"));
+			put("rkl", encrypt.getTMD5("111"));
+		}
+	};
+	
+	public static Map<String, String> defaultUserGroupMap = new HashMap<String, String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			put("qyd", "backend");
+			put("cwy", "backend");
+			put("ddy", "frontend");
+			put("rkl", "frontend");
 		}
 	};
 

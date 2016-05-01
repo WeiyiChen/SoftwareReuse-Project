@@ -11,45 +11,49 @@ import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
 
 import teamEleven.pwdCtrl.PasswordController;
-
+import teamEleven.groupCtrl.GroupController;
 
 public class MessageController {
 
 	private static PasswordController passwordController = new PasswordController(
 			ServerConfigEnum.defaultUserPwdMap);
+	private static GroupController groupController = new GroupController(
+			ServerConfigEnum.defaultUserGroupMap);
 
-	
-	private static ConfigManager configManager = new ConfigManager(new JsonAdapter(), "data/config.json");
+	private static int maxMessagePerLogin;
+	private static int maxMessagePerSecond;
+	private static int saveCycle;
+	private static ConfigManager configManager = new ConfigManager(
+			new JsonAdapter(), "data/config.json");
 	private static ServerConfigBean configBean;
 	private static ZipLogController zipLogController = new ZipLogController();
 
 	private static IEncrypt encrypt = new EncryptImpl();
-	
-	private LicenseCtrl licenseController;
 
-	
-	private static int maxMessagePerLogin;
-	private static int maxMessagePerSecond;
-	private static int saveCycle;
-	
-	static{
-		try{
+	private LicenseCtrl licenseController;
+	private String currentUser;
+
+	static {
+		try {
 			configBean = configManager.loadToBean(ServerConfigBean.class);
 			maxMessagePerLogin = configBean.getMaxMessagesPerLogin();
 			maxMessagePerSecond = configBean.getMaxMessagesPerSecond();
 			saveCycle = configBean.getSaveCycle();
 			ServerMonitorController.setSaveCycle(saveCycle);
-//			license = new License(License.LicenseType.BOTH, maxMessagePerLogin, maxMessagePerSecond);
+			// license = new License(License.LicenseType.BOTH,
+			// maxMessagePerLogin, maxMessagePerSecond);
 			LicenseCtrl.setLimit(maxMessagePerLogin, maxMessagePerSecond);
 			zipLogController.setAndStart(86400);
-		}catch(IOException ioe){
+		} catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-		
+
 	}
+
 	public MessageController() {
-//		licenseController = new LicenseController();
+		// licenseController = new LicenseController();
 		licenseController = new LicenseCtrl();
+		this.currentUser = "";
 	}
 
 	public String dealWithMessage(String jsonString) {
@@ -64,7 +68,6 @@ public class MessageController {
 	}
 
 	public static void startRecordThread() {
-
 		ServerMonitorController.startRecord();
 	}
 
@@ -72,7 +75,8 @@ public class MessageController {
 		String user = JsonAnalizerServer.getUser(jsonString);
 		int licenseResult = licenseController.receivedMessage(user);
 		if (licenseResult != 0) {
-//			recordController.ignoredNumberAdd();
+			// recordController.ignoredNumberAdd();
+			currentUser = "";
 			ServerMonitorController.increaseIgnoredNumber();
 			if (licenseResult == 1) {
 				return JsonBuilderServer.getMessageBusyError();
@@ -92,15 +96,16 @@ public class MessageController {
 
 	private String dealWithPassword(String jsonString) {
 		String user = JsonAnalizerServer.getUser(jsonString);
-		String password = encrypt.decryptToTMD5(JsonAnalizerServer.getPassword(jsonString));
+		String password = encrypt.decryptToTMD5(JsonAnalizerServer
+				.getPassword(jsonString));
 
 		if (passwordController.passwordCheck(user, password)) {
 			licenseController.reset(user);
 			ServerMonitorController.increaseLogfailedNumber();
+			this.currentUser = user;
 			return JsonBuilderServer.getLoginSucceedJson();
 		}
 		ServerMonitorController.increaseLogfailedNumber();
-
 		return JsonBuilderServer.getLoginFailedJson();
 	}
 
@@ -108,10 +113,18 @@ public class MessageController {
 		ServerMonitorController.increaseForwardedNumber();
 	}
 
-	public static void quit() {
+	public String getGroup() {
+		return groupController.getGroup(this.currentUser);
+	}
 
+	public boolean hasCurrentUser() {
+		return this.currentUser != "";
+	}
+
+	public static void quit() {
 		ServerMonitorController.getMonitor().stop();
 		passwordController.quit();
+		groupController.quit();
 		zipLogController.quit();
 	}
 }

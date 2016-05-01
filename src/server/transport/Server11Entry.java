@@ -14,7 +14,7 @@ public class Server11Entry extends Thread {
 
 	private ServerSocket serverSocket;
 
-	private List<SocketController> socketList;
+	private List<Server11Entity> socketServerList;
 
 	private boolean continueToRun;
 
@@ -25,7 +25,7 @@ public class Server11Entry extends Thread {
 		try {
 			serverSocket = new ServerSocket(2345);
 			serverSocket.setSoTimeout(1000);
-			socketList = new ArrayList<SocketController>();
+			socketServerList = new ArrayList<Server11Entity>();
 			Socket socket = null;
 			while (continueToRun) {
 				try {
@@ -34,9 +34,12 @@ public class Server11Entry extends Thread {
 					System.out.println("Clinet connected to the server!"
 							+ socket.getLocalAddress().toString());
 					// add the socket to all socket list
-					socketList.add(socketWS);
+					
 					// allocate a server for new socket
-					new Server11Entity(socketWS, socketList).start();
+					Server11Entity s11 = new Server11Entity(socketWS, socketServerList);
+					s11.start();
+					
+					socketServerList.add(s11);
 				} catch (SocketTimeoutException ste) {
 					continue;
 				}
@@ -54,15 +57,12 @@ public class Server11Entry extends Thread {
 		}
 	}
 
-	public void quit() {
+	public void quit() throws IOException {
 		this.continueToRun = false;
-		for (SocketController sc : socketList) {
-			try {
-				sc.quit();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		for (Server11Entity s11 : socketServerList) {
+			s11.quit();
 		}
+		MessageController.quit();
 		System.out.println("server socket exit");
 	}
 
