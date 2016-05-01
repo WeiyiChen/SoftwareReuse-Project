@@ -5,12 +5,12 @@ import teamEleven.userKeyValueCtrl.KeyValueController;
 
 public class ConfigController extends KeyValueController {
 
-	public ConfigController(String configFilePathName) {
+	public ConfigController() {
 		super("config");
 	}
 
 	public ConfigController(Map<String, String> defaultConfigMap) {
-		super(defaultConfigMap, "config");
+		super(defaultConfigMap, "config11s");
 	}
 
 	public int getInt(String key, int defaultValue) {

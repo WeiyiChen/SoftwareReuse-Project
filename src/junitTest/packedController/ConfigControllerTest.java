@@ -38,13 +38,10 @@ public class ConfigControllerTest {
 			e.printStackTrace();
 		}
 		
-		
-		
-		
 	}
 	
 	void testGetString(){
-		ConfigController configController= new ConfigController("config");
+		ConfigController configController= new ConfigController();
 		try{
 			String result1 = configController.getString("ab");
 			System.out.println(result1);
