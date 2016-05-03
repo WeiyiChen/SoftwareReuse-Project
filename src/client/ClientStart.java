@@ -8,10 +8,10 @@ import client.transport.ClientConfigBean;
 import client.transport.ClientSocket;
 import client.ui.LoginWindow;
 import client.util.ClientMonitorController;
+import client.util.ZipLogController;
 //import teamEleven.record.ClientRecordController;
 import octoteam.tahiti.config.ConfigManager;
 import octoteam.tahiti.config.loader.JsonAdapter;
-import teamEleven.zip.ZipLogController;
 
 public class ClientStart {
 	/**

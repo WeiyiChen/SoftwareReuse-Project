@@ -47,7 +47,12 @@ public class Zip {
 		}
 		if ((sourceName.contains(File.separator) && !sourceName.contains(":"))
 				|| (destinationName.contains(File.separator) && !destinationName.contains(":"))) {
-			throw new IOException("dir name error");
+			try{
+				new File(destinationName).getParentFile().mkdirs();
+			}catch(Exception ioe){
+				throw new IOException("dir name error");
+			}
+			
 		}
 
 		FileOutputStream fileWriter = null;
