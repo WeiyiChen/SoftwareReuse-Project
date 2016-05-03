@@ -8,6 +8,8 @@ import server.transport.Server11Entry;
 
 public class ServerMain {
 
+	
+	
 	/**
 	 * Description
 	 * 
@@ -46,6 +48,10 @@ public class ServerMain {
 		}
 		System.out.println("main exit");
 		System.exit(0);
+	}
+	
+	private interface cmdAnalizer{
+		public int runCmd(String cmd);
 	}
 
 }
