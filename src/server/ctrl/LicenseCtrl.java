@@ -41,7 +41,6 @@ public class LicenseCtrl {
 	
 	public void reset(String user){
 		this.userID = user;
-		license.reset(License.LicenseType.BOTH);
 	}
 	
 	public static void setLimit(int msgsPerLogin, int msgsPerSecond){
