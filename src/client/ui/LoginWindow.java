@@ -19,8 +19,6 @@ import client.intf.ILoginWindow;
 import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
 import client.util.ClientMonitorController;
-//import client.util.ClientLogger;
-//import teamEleven.record.ClientRecordController;
 
 /**
  * log in UI

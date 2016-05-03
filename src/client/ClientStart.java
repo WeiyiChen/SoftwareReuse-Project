@@ -8,10 +8,10 @@ import client.transport.ClientConfigBean;
 import client.transport.ClientSocket;
 import client.ui.LoginWindow;
 import client.util.ClientMonitorController;
-import client.util.ClientZipLogController;
 //import teamEleven.record.ClientRecordController;
 import octoteam.tahiti.config.ConfigManager;
 import octoteam.tahiti.config.loader.JsonAdapter;
+import teamEleven.zip.ZipLogController;
 
 public class ClientStart {
 	/**
@@ -50,8 +50,8 @@ public class ClientStart {
 		ClientMonitorController.setSaveCycle(logSaveCycle);
 		ClientMonitorController.startRecord();
 		
-		ClientZipLogController.getInstance().setCompressConfig(beginCompressSecs, internalCompressSecs);
-		ClientZipLogController.getInstance().setAndStart("logclient", zipPrex);
+		ZipLogController.getInstance().setCompressConfig(beginCompressSecs, internalCompressSecs);
+		ZipLogController.getInstance().setAndStart("logclient", zipPrex);
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	        public void run() {

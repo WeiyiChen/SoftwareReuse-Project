@@ -6,8 +6,6 @@ import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
 import client.transport.Client11SReciever;
 import client.util.ClientMonitorController;
-//import client.util.ClientLogger;
-//import teamEleven.record.ClientRecordController;
 
 /**
  * jump from message window to login window

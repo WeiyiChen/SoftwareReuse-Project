@@ -1,1 +1,1 @@
-{"Type":"Message","User":"qyd","Content":"a"}{"Type":"Message","User":"qyd","Content":"a"}{"Type":"Message","User":"qyd","Content":"a"}{"Type":"Message","User":"qyd","Content":"a"}{"Type":"Message","User":"qyd","Content":"a"}{"Type":"Message","User":"qyd","Content":"a"}{"Type":"Authorization","Content":"Relogin"}
+{"Type":"Authorization","Content":"Relogin"}

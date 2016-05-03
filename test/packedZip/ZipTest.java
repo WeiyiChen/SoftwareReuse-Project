@@ -7,7 +7,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import client.util.ClientZip;
+import teamEleven.zip.Zip;
 
 public class ZipTest {
 
@@ -28,7 +28,7 @@ public class ZipTest {
 		String destinationName = path + File.separator + "log";
 		try {
 //			Zip.zip(sourceName, destinationName);
-			ClientZip.zip("log", "test.zip");
+			Zip.zip("log", "test.zip");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

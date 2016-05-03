@@ -11,8 +11,6 @@ import client.transport.ClientSocket;
 import client.transport.JsonMsgSender;
 import client.ui.LoginWindow;
 import client.util.ClientMonitorController;
-//import client.util.ClientLogger;
-//import teamEleven.record.ClientRecordController;
 
 /**
  * 
