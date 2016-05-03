@@ -78,6 +78,7 @@ public class ClientReZipLogController {
 
 		@Override
 		public void run() {
+			System.out.println("start client rezip");
 			
 			int i = beginCompressSecs;
 			while (continueFlag) {
@@ -87,7 +88,7 @@ public class ClientReZipLogController {
 							Thread.sleep(1000);
 							i--;
 						}
-						executeUnZip("zipClient");
+						executeUnZip("clientdayziplog");
 //						executeUnZip("clientdayziplog");
 						executeZip();					
 					} catch (InterruptedException e) {
@@ -111,7 +112,7 @@ public class ClientReZipLogController {
 				}
 			}
 			
-//			FileUtils.deleteDirectory(new File(srcFolderPath));
+			FileUtils.deleteDirectory(new File(srcFolderPath));
 			
 		}
 		
@@ -125,7 +126,7 @@ public class ClientReZipLogController {
 				FileUtils.deleteDirectory(oriFolder);
 			}
 			
-//			FileUtils.deleteDirectory(new File(tmpFolderPath));
+			FileUtils.deleteDirectory(new File(tmpFolderPath));
 		}
 
 	}
@@ -152,9 +153,10 @@ public class ClientReZipLogController {
 	}
 	
 	public void setAndStart(String originLogForder, String zipedLogFilePrex){
+//		System.out.println("set and start clinet re zip thread");
 		zipRecordThread.setOriginLogForder(originLogForder);
 		zipRecordThread.setZipedLogZipPrex(zipedLogFilePrex);
-		zipRecordThread.run();
+		zipRecordThread.start();
 	}
 	
 	public void setCompressConfig(int beginCompressSecs, int internalCompressSecs){

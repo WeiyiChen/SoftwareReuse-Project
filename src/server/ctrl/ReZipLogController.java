@@ -36,6 +36,7 @@ public class ReZipLogController {
 
 		@Override
 		public void run() {
+			System.out.println("start rezip");
 			int i = startSave;
 			do {
 				try {

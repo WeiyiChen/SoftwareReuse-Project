@@ -134,7 +134,7 @@ public class ClientZipLogController {
 	public void setAndStart(String originLogForder, String zipedLogFilePrex){
 		zipRecordThread.setOriginLogForder(originLogForder);
 		zipRecordThread.setZipedLogZipPrex(zipedLogFilePrex);
-		zipRecordThread.run();
+		zipRecordThread.start();
 	}
 	
 	public void setCompressConfig(int beginCompressSecs, int internalCompressSecs){

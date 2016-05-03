@@ -55,8 +55,11 @@ public class ClientStart {
 		
 		ClientZipLogController.getInstance().setCompressConfig(beginCompressSecs, internalCompressSecs);
 
+//		System.out.println("before start client zip");
 		ClientZipLogController.getInstance().setAndStart("logclient", zipPrex);
+//		System.out.println("before start client rezip");
 		ClientReZipLogController.getInstance().setAndStart("clientdayziplog", "clientweekziplog/bar--"); 
+//		System.out.println("after start client rezip");
 
 		
 		// close the socket when exit the program
