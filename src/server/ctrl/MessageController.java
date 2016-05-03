@@ -3,17 +3,10 @@ package server.ctrl;
 import base.JsonBuilderBase;
 import server.json.JsonAnalizerServer;
 import server.json.JsonBuilderServer;
-<<<<<<< HEAD
 import teamEleven.pwdCtrl.PasswordController;
 import teamEleven.record.RecordController;
 import teamEleven.configController.ConfigController;
 import teamEleven.licenseCtrl.LicenseController;
-=======
-import teamEleven.configController.ConfigController;
-import teamEleven.record.RecordController;
-import packedController.PasswordController;
-import packedController.LicenseController;
->>>>>>> 3028cb59e16c8a79b01a8183baef70d953c71209
 import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
 
@@ -23,10 +16,7 @@ public class MessageController {
 
 	static private PasswordController passwordController = new PasswordController(
 			ServerConfigEnum.defaultUserPwdMap);
-<<<<<<< HEAD
-=======
 	//static private RecordController recordController = new RecordController();
->>>>>>> 3028cb59e16c8a79b01a8183baef70d953c71209
 	static private RecordController recordController = RecordController.getInstance();
 	static private ConfigController configController = new ConfigController(
 			ServerConfigEnum.defaultConfigMap);

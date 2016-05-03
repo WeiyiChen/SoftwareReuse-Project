@@ -7,9 +7,6 @@ import teamEleven.userKeyValueCtrl.KeyValueController;
 
 
 public class PasswordController extends KeyValueController{
-
-
-	private Map<String, String> userMap = new HashMap<String, String>();
 	
 	public PasswordController(Map<String, String> defaultUserMap){
 		super(defaultUserMap, "userpwd.json");
@@ -19,7 +16,7 @@ public class PasswordController extends KeyValueController{
 		if(user == null || password ==null){
 			return false;
 		}
-		String pwdInDB = userMap.get(user);
+		String pwdInDB = super.getValue(user);
 		if(pwdInDB==null){
 			return false;
 		}

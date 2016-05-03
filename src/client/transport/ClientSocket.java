@@ -21,7 +21,7 @@ public class ClientSocket {
 	 */
 	private synchronized static Socket createSocket() throws UnknownHostException, IOException{
 //		ClientConfig config = (ClientConfig) ParseClientConfig.getConfig("ClientConfig.xml");
-		ConfigController cc = new ConfigController("clientconfig.json");
+		ConfigController cc = new ConfigController();
 		String ip = cc.getString("ip", "127.0.0.1");
 		int port = cc.getInt("port", 2345);
 		socket = new Socket(ip, port);
