@@ -1,7 +1,0 @@
-2016-04-13 12:19:54[ user : hello loginFailedCount : 18 loginSucceedCount : 18 sendNum : 18receiveNum : 18 ]
-2016-04-13 12:19:55[ user : hello loginFailedCount : 37 loginSucceedCount : 37 sendNum : 37receiveNum : 37 ]
-2016-04-13 12:19:56[ user : hello loginFailedCount : 56 loginSucceedCount : 56 sendNum : 56receiveNum : 56 ]
-2016-04-13 12:19:57[ user : hello loginFailedCount : 75 loginSucceedCount : 75 sendNum : 75receiveNum : 75 ]
-2016-04-13 12:19:58[ user : hello loginFailedCount : 94 loginSucceedCount : 94 sendNum : 94receiveNum : 94 ]
-2016-04-13 12:19:59[ user :  loginFailedCount : 0 loginSucceedCount : 0 sendNum : 0receiveNum : 0 ]
-2016-04-13 12:20:00[ user :  loginFailedCount : 0 loginSucceedCount : 0 sendNum : 0receiveNum : 0 ]
