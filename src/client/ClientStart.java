@@ -51,7 +51,9 @@ public class ClientStart {
 		ClientMonitorController.startRecord();
 		
 		ClientZipLogController.getInstance().setCompressConfig(beginCompressSecs, internalCompressSecs);
+
 		ClientZipLogController.getInstance().setAndStart("daylogclient", zipPrex);
+
 		
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	        public void run() {
