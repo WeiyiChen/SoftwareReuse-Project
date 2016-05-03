@@ -17,7 +17,7 @@ public class ClientMonitorController {
 	
 	private synchronized static PerformanceMonitor createMonitor(){
 		//不知是否能改变目录
-		LogReporter reporter = new RollingFileReporter("logclient/bar-%d{yyyy-MM-dd_HH-mm}.log");
+		LogReporter reporter = new RollingFileReporter("logclient/bar-%d{yyyy-MM-dd-HH-mm-ss}.log");
 		monitor = new PerformanceMonitor(reporter);
 		loginTimes = new CountingRecorder("User login times");
 		logfailTimes = new CountingRecorder("User login failed times");

@@ -4,5 +4,5 @@
     "logSaveCycle": 1,
     "beginCompressSeconds": 2,
     "internalCompressSeconds": 86400,
-    "compressPathPrex": "zipclient/bar-"
+    "compressPathPrex": "zipclient/bar--"
 }

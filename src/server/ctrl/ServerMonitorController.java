@@ -17,7 +17,7 @@ public class ServerMonitorController {
 	private static PerformanceMonitor monitor;
 	
 	private synchronized static PerformanceMonitor createMonitor(){
-		LogReporter reporter = new RollingFileReporter("log/bar-%d{yyyy-MM-dd_HH-mm}.log");
+		LogReporter reporter = new RollingFileReporter("log/bar-%d{yyyy-MM-dd-HH-mm-ss}.log");
 		monitor = new PerformanceMonitor(reporter);
 		receivedNumber = new CountingRecorder("Received Number");
 		ignoredNumber = new CountingRecorder("Ignored Number");

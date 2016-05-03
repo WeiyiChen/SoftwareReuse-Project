@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
-import packedZip.Zip;
+import teamEleven.zip.Zip;
+
+
 
 public class ZipLogController {
 
@@ -30,7 +32,8 @@ public class ZipLogController {
 		public void run() {
 			do {
 				try {
-					int i = this.saveCycle;
+//					int i = this.saveCycle;
+					int i = this.saveCycle - 10;
 					while (continueFlag && i > 0) {
 						Thread.sleep(1000);
 						i--;

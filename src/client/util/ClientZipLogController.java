@@ -1,4 +1,4 @@
-package teamEleven.zip;
+package client.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,9 @@ import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 
-public class ZipLogController {
+import teamEleven.zip.Zip;
+
+public class ClientZipLogController {
 	
 	private class ZipRecordThread extends Thread {
 
@@ -58,6 +60,7 @@ public class ZipLogController {
 		}
 		
 		public void mkdir(){
+			
 			String[] files = zipedLogZipPrex.split(File.separator);
 			String path = System.getProperties().getProperty("user.dir");
 			
@@ -83,7 +86,7 @@ public class ZipLogController {
 							i--;
 						}
 						Calendar cal = Calendar.getInstance();
-						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 						mkdir();
 						Zip.zip(this.originLogForder,this.zipedLogZipPrex + format.format(cal.getTime()));
 						File oriFolder  = new File(this.originLogForder);
@@ -109,18 +112,18 @@ public class ZipLogController {
 	
 	private ZipRecordThread zipRecordThread;
 	
-	private static ZipLogController clientZipLogController;
+	private static ClientZipLogController clientZipLogController;
 	
-	private ZipLogController(){
+	private ClientZipLogController(){
 		super();
 		zipRecordThread = new ZipRecordThread();
 	}
 	
-	public static ZipLogController getInstance(){
+	public static ClientZipLogController getInstance(){
 		if(clientZipLogController == null){
-			synchronized(ZipLogController.class){
+			synchronized(ClientZipLogController.class){
 				if(clientZipLogController == null){
-					clientZipLogController = new ZipLogController();
+					clientZipLogController = new ClientZipLogController();
 				}
 			}
 			
