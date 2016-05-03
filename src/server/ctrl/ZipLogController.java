@@ -16,7 +16,7 @@ public class ZipLogController {
 		private String originParentLogForder;
 		private String zipFolder = "dayziplog";
 		private int saveCycle;
-		private int startSave = 10;
+		private int startSave = 100;
 
 		public void setStartSave(int startSave) {
 			this.startSave = startSave;

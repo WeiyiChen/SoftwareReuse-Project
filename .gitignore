@@ -58,5 +58,5 @@ bar*.log
 
 zipclient/*
 
-*log*/
-*zip*/
+*dayziplog/
+*weekziplog/

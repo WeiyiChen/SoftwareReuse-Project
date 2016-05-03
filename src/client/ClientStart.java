@@ -8,6 +8,7 @@ import client.transport.ClientConfigBean;
 import client.transport.ClientSocket;
 import client.ui.LoginWindow;
 import client.util.ClientMonitorController;
+import client.util.ClientReZipLogController;
 import client.util.ClientZipLogController;
 //import teamEleven.record.ClientRecordController;
 import octoteam.tahiti.config.ConfigManager;
@@ -29,11 +30,13 @@ public class ClientStart {
 			}
 		});
 		
+		// configuration variable values
 		int logSaveCycle = 60;
 		int beginCompressSecs = 12;
 		int internalCompressSecs = 86400;
 		String zipPrex = "zipclient/logzip-";
 		 
+		// read the configuration
 		ConfigManager configManager = new ConfigManager(new JsonAdapter(),"data/clientconfig.json");
 		
 		try {
@@ -52,9 +55,11 @@ public class ClientStart {
 		
 		ClientZipLogController.getInstance().setCompressConfig(beginCompressSecs, internalCompressSecs);
 
-		ClientZipLogController.getInstance().setAndStart("daylogclient", zipPrex);
+		ClientZipLogController.getInstance().setAndStart("logclient", zipPrex);
+		ClientReZipLogController.getInstance().setAndStart("clientdayziplog", "clientweekziplog/bar--"); 
 
 		
+		// close the socket when exit the program
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	        public void run() {
 	            try {

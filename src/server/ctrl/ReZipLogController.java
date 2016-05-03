@@ -18,7 +18,7 @@ public class ReZipLogController {
 		private String originParentLogForder;
 		private String zipFolder = "weekziplog";
 		private int saveCycle;
-		private int startSave = 30;
+		private int startSave = 300;
 
 		public void setStartSave(int startSave) {
 			this.startSave = startSave;
