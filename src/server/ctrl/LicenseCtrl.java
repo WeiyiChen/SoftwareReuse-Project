@@ -1,6 +1,7 @@
 package server.ctrl;
 
 import wheellllll.license.License;
+import wheellllll.license.License.LicenseType;
 
 public class LicenseCtrl {
 	private static int maxMessagePerLogin = 100;
@@ -41,7 +42,7 @@ public class LicenseCtrl {
 	
 	public void reset(String user){
 		this.userID = user;
-		license.reset(License.LicenseType.BOTH);
+		license.reset(LicenseType.BOTH);
 	}
 	
 	public static void setLimit(int msgsPerLogin, int msgsPerSecond){
