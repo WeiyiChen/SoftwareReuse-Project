@@ -1,0 +1,7 @@
+2016-04-13 12:31:09 [ user : hello , loginFailedCount : 19 , loginSucceedCount : 19 , sendNum : 19 , receiveNum : 19 ]
+2016-04-13 12:31:10 [ user : hello , loginFailedCount : 38 , loginSucceedCount : 38 , sendNum : 38 , receiveNum : 38 ]
+2016-04-13 12:31:11 [ user : hello , loginFailedCount : 57 , loginSucceedCount : 57 , sendNum : 57 , receiveNum : 57 ]
+2016-04-13 12:31:12 [ user : hello , loginFailedCount : 76 , loginSucceedCount : 76 , sendNum : 76 , receiveNum : 76 ]
+2016-04-13 12:31:13 [ user : hello , loginFailedCount : 94 , loginSucceedCount : 94 , sendNum : 94 , receiveNum : 94 ]
+2016-04-13 12:31:14 [ user :  , loginFailedCount : 0 , loginSucceedCount : 0 , sendNum : 0 , receiveNum : 0 ]
+2016-04-13 12:31:15 [ user :  , loginFailedCount : 0 , loginSucceedCount : 0 , sendNum : 0 , receiveNum : 0 ]

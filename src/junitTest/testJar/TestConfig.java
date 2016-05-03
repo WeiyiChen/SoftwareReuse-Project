@@ -12,7 +12,7 @@ public class TestConfig {
 	}
 	
 	public TestConfig(){
-		ConfigController cc = new ConfigController("config2");
+		ConfigController cc = new ConfigController();
 		try{
 //			int result = cc.getInt("port", 2);
 			String result = cc.getString("ip");
