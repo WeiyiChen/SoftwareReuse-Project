@@ -27,6 +27,7 @@ public class MessageController {
 			new JsonAdapter(), "data/config.json");
 	private static ServerConfigBean configBean;
 	private static ZipLogController zipLogController = new ZipLogController();
+	private static ReZipLogController reZipLogController = new ReZipLogController();
 
 	private static IEncrypt encrypt = new EncryptImpl();
 
@@ -44,6 +45,7 @@ public class MessageController {
 			// maxMessagePerLogin, maxMessagePerSecond);
 			LicenseCtrl.setLimit(maxMessagePerLogin, maxMessagePerSecond);
 			zipLogController.setAndStart(86400);
+			reZipLogController.setAndStart(86400*7);
 		} catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}

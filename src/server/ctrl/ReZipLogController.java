@@ -8,7 +8,7 @@ import org.apache.commons.io.FileUtils;
 
 import teamEleven.zip.Zip;
 
-public class ZipLogController {
+public class ReZipLogController {
 
 	private ZipRecordThread zipRecordThread;
 
@@ -16,9 +16,9 @@ public class ZipLogController {
 
 		private boolean continueFlag;
 		private String originParentLogForder;
-		private String zipFolder = "dayziplog";
+		private String zipFolder = "weekziplog";
 		private int saveCycle;
-		private int startSave = 10;
+		private int startSave = 30;
 
 		public void setStartSave(int startSave) {
 			this.startSave = startSave;
@@ -43,12 +43,13 @@ public class ZipLogController {
 						Thread.sleep(1000);
 						i--;
 					}
-					
+					executeUnZip(System.getProperty("user.dir") + File.separator + "dayziplog");
 					executeZip();
 					i = this.saveCycle;
+					System.out.println("reZip once");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				} 
+				}
 				// rec.save();
 
 			} while (continueFlag);
@@ -64,50 +65,52 @@ public class ZipLogController {
 		public void setSaveCycle(int saveCycle) {
 			this.saveCycle = saveCycle;
 		}
-		
-		public void executeZip(){
-			try{
+
+		public void executeUnZip(String folderPath) {
+			File folder = new File(folderPath);
+			String[] list = folder.list();
+			try {
+				for (String filePath : list) {
+					if (filePath.contains(".zip")) {
+						Zip.unZip(folderPath + File.separator + filePath, "tmp");
+					}
+				}
+
+				FileUtils.deleteDirectory(new File(folderPath));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		public void executeZip() {
+			try {
 				Calendar cal = Calendar.getInstance();
-				java.text.SimpleDateFormat format = new java.text.SimpleDateFormat(
-						"yyyyMMddhhmmss");
+				java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyyMMddhhmmss");
 
-				String folderOfZippedLog = this.originParentLogForder
-						+ File.separator + zipFolder;
-				File outputFolder = new File(folderOfZippedLog);
-				// check if folder exist
-				if (!outputFolder.exists() || !outputFolder.isDirectory()) {
-					outputFolder.mkdir();
-				}
-
-				String logForder = this.originParentLogForder
-						+ File.separator + "log";
-				File inputFolder = new File(logForder);
-				if (!inputFolder.exists() || !inputFolder.isDirectory()) {
-					return;
-				}
-
-				String destFile = folderOfZippedLog + File.separator
-						+ "log" + format.format(cal.getTime());
-				Zip.zip(logForder, destFile);
-				FileUtils.deleteDirectory(new File(logForder));
-			}catch (IOException e) {
+				String tmpFolder = System.getProperty("user.dir") + File.separator + "tmp";
+				String destFile = System.getProperty("user.dir") + File.separator + zipFolder + File.separator + "log" + format.format(cal.getTime());
+				Zip.zip(tmpFolder, destFile);
+				FileUtils.deleteDirectory(new File(tmpFolder));
+				
+				
+			} catch (IOException e) {
 				new RuntimeException(e);
-			}			
+			}
 		}
 	}
 
-	public ZipLogController() {
+	public ReZipLogController() {
 		zipRecordThread = new ZipRecordThread(System.getProperty("user.dir"));
-//		throw new RuntimeException("hello");
 	}
 
 	public void setAndStart(int saveCycle) {
 		this.zipRecordThread.setSaveCycle(saveCycle);
 		zipRecordThread.start();
-//		throw new RuntimeException("hello");
 	}
 
 	public void quit() {
 		this.zipRecordThread.setStop();
 	}
+	
 }
