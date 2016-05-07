@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 
 import javax.crypto.Cipher;
@@ -25,22 +27,40 @@ import javax.crypto.spec.IvParameterSpec;
  */
 public class FileEncrypt {
 	private final static int BYTE_LEN = 1024;
-	private static AlgorithmParameterSpec paramSpec;
+	private static AlgorithmParameterSpec paramSpec = new IvParameterSpec(new byte[]{
+
+			  (byte)0xB2, (byte)0x12, (byte)0xD5, (byte)0xB2,
+
+			  (byte)0x44, (byte)0x21, (byte)0xC3, (byte)0xC3
+			    });
+	
+	private static Key key = null;
 	
 	/**
 	 * Default Constructor.
 	 */
 	public FileEncrypt(){
-		paramSpec = new IvParameterSpec("default".getBytes());
+		this("default");
 	}
 	
 	/**
 	 * Construct a FileEncrypt instance with a specific string.
-	 * @param paramStr - a string to specific the encrypt and decrypt a stream or file.
+	 * @param keyStr - a string to specific the encrypt and decrypt a stream or file.
 	 */
-	public FileEncrypt(String paramStr){
-		paramSpec = new IvParameterSpec(paramStr.getBytes());
+	public FileEncrypt(String keyStr){
+		super();
+		KeyGenerator keyGenerator;
+		try {
+			keyGenerator = KeyGenerator.getInstance("DES");
+			keyGenerator.init(new SecureRandom());
+			key = keyGenerator.generateKey();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}			
 	}
+	
 	
 	/**
 	 * To encrypt a stream. The InputStream and OutputStream won't be closed in this function.
@@ -50,14 +70,14 @@ public class FileEncrypt {
 	public void encrypt(InputStream is, OutputStream os){
 		CipherOutputStream cos = null;
 		try {
-			SecretKey key = KeyGenerator.getInstance("DES").generateKey();
+			
 			Cipher enCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
 			enCipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);			
 			cos = new CipherOutputStream(os, enCipher);
 			byte[] buff = new byte[BYTE_LEN];
 			int numRead = 0;
 			while((numRead = is.read(buff)) > 0){
-				os.write(buff, 0, numRead);
+				cos.write(buff, 0, numRead);
 			}
 			cos.flush();
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException 
@@ -87,19 +107,17 @@ public class FileEncrypt {
 	public void decrypt(InputStream is, OutputStream os){
 		CipherInputStream cis = null;
 		try {
-			SecretKey key = KeyGenerator.getInstance("DES").generateKey();
 			Cipher deCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
 			deCipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
 			cis = new CipherInputStream(is, deCipher);
 			byte[] buff = new byte[BYTE_LEN];
 			int numRead = 0;
-			while((numRead = cis.read()) > 0){
+			while((numRead = cis.read(buff)) > 0){
 				os.write(buff, 0, numRead);
 			}
 			os.flush();
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
 				InvalidAlgorithmParameterException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}finally{

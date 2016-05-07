@@ -1,4 +1,4 @@
-package teamEleven.zip;
+package team.eleven.zip;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 
-import teamEleven.zip.Zip;
+import team.eleven.zip.Zip;
 
 public class ClientZipLogController {
 	

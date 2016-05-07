@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import teamEleven.zip.Zip;
+import team.eleven.zip.Zip;
 
 public class testunzip {
 
