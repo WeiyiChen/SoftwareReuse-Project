@@ -4,8 +4,7 @@ import client.intf.IClientWindow;
 import client.intf.ILoginWindow;
 import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
-import client.transport.Client11SReciever;
-import client.util.ClientMonitorController;
+import client.transport.ClientReciever;
 
 /**
  * jump from message window to login window
@@ -31,7 +30,7 @@ public class WindowJumpFromMsgToLogin implements IWindowJump {
 //			ClientRecordController crc = ClientRecordController.getInstance();
 //			crc.reset();
 			ClientMonitorController.reset();
-			Client11SReciever.exit();
+			ClientReciever.exit();
 		}catch(ClassCastException e1){
 			e1.printStackTrace();
 		}catch(Exception e2){

@@ -10,7 +10,6 @@ import client.intf.IMsgWindow;
 import client.transport.ClientSocket;
 import client.transport.JsonMsgSender;
 import client.ui.LoginWindow;
-import client.util.ClientMonitorController;
 
 /**
  * 

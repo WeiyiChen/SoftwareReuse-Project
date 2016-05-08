@@ -21,7 +21,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
 /**
- * 
+ * With methods encrypt and decrypt a stream or file.
  * @author Dai
  *
  */

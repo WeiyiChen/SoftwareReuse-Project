@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-
+import client.ctl.ClientMonitorController;
 import client.ctl.LogInCheck;
 import client.ctl.WindowJumpFromLoginToMsg;
 import client.intf.IJump2MsgWindow;
@@ -18,7 +18,6 @@ import client.intf.ILogInCheck;
 import client.intf.ILoginWindow;
 import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
-import client.util.ClientMonitorController;
 
 /**
  * log in UI

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import client.intf.IMsgHandle;
 
-public class Client11SReciever extends Thread {
+public class ClientReciever extends Thread {
 	private static boolean isExit = false;
 	private Socket socket;
 	private IMsgHandle imh;
@@ -19,11 +19,11 @@ public class Client11SReciever extends Thread {
 		isExit = true;
 	}
 	
-	public Client11SReciever(Socket socket) {
+	public ClientReciever(Socket socket) {
 		this.socket = socket;
 	}
 
-	public Client11SReciever(Socket socket, IMsgHandle imh){
+	public ClientReciever(Socket socket, IMsgHandle imh){
 		this.socket = socket;
 		this.imh = imh;
 	}

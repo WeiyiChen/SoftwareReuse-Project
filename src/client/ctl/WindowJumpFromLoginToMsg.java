@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 import client.intf.IClientWindow;
 import client.intf.IMsgWindow;
 import client.intf.IWindowJump;
-import client.transport.Client11SReciever;
+import client.transport.ClientReciever;
 import client.transport.ClientSocket;
 
 /**
@@ -25,7 +25,7 @@ public class WindowJumpFromLoginToMsg implements IWindowJump {
 		try{
 			IMsgWindow imw = (IMsgWindow)to;
 			imw.toShowWindow();
-			new Client11SReciever(ClientSocket.getSocket(), imw.getMsgHandle()).start();
+			new ClientReciever(ClientSocket.getSocket(), imw.getMsgHandle()).start();
 			result = true;
 		}catch(ClassCastException e1){
 			e1.printStackTrace();

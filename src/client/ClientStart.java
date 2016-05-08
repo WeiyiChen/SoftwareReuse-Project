@@ -3,13 +3,13 @@ package client;
 import java.awt.EventQueue;
 import java.io.IOException;
 
+import client.ctl.ClientMonitorController;
+import client.ctl.ClientReZipLogController;
+import client.ctl.ClientZipLogController;
 import client.intf.ILoginWindow;
 import client.transport.ClientConfigBean;
 import client.transport.ClientSocket;
 import client.ui.LoginWindow;
-import client.util.ClientMonitorController;
-import client.util.ClientReZipLogController;
-import client.util.ClientZipLogController;
 //import teamEleven.record.ClientRecordController;
 import octoteam.tahiti.config.ConfigManager;
 import octoteam.tahiti.config.loader.JsonAdapter;
