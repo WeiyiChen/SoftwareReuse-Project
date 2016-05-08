@@ -1,11 +1,11 @@
 package team.eleven.storage.object;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 /**
  * Persistent object using StorageObectUtil class
@@ -13,17 +13,7 @@ import java.io.Serializable;
  *
  */
 public class StorageObjectUtil<T> {
-	private class SerializedObj implements Serializable {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -1145414390501769359L;
-		public T obj;
-
-		SerializedObj(T obj) {
-			this.obj = obj;
-		}
-	}
+	
 
 	/**
 	 * Persistent an object to a file
@@ -32,9 +22,11 @@ public class StorageObjectUtil<T> {
 	 */
 	public void storageObject(T obj, String dumpPath) {
 		ObjectOutputStream oos = null;
-		SerializedObj sObj = new SerializedObj(obj);
+		SerializedObj<T> sObj = new SerializedObj<T>(obj);
 
 		try {
+			File f = new File(dumpPath);
+			f.getParentFile().mkdirs();
 			oos = new ObjectOutputStream(new FileOutputStream(dumpPath));
 			oos.writeObject(sObj);
 			oos.flush();
@@ -64,7 +56,7 @@ public class StorageObjectUtil<T> {
 		T result = null;
 		try {
 			ois = new ObjectInputStream(new FileInputStream(dumpPath));
-			SerializedObj sObj = (SerializedObj)ois.readObject();
+			SerializedObj<T> sObj = (SerializedObj<T>)ois.readObject();
 			result = sObj.obj;
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
