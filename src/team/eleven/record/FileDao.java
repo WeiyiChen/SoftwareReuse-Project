@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class FileDao<T> {
+    private long maxFileSize = 100000;//max file size 100kb
 
 	protected String dirPath = System.getProperties().getProperty("user.dir")
 			+ File.separator + "data";
@@ -32,10 +33,13 @@ public abstract class FileDao<T> {
 	private void checkOrMkFile() {
 		try {
 			File dataFile = new File(getPathName());
-			if (!dataFile.exists() || !dataFile.isFile()) {
-				dataFile.createNewFile();
-				FileAccess.fileOverWrite(getPathName(), getBasicString());
+			if(dataFile.length() >= maxFileSize) {
+			    if (!dataFile.exists() || !dataFile.isFile()) {
+	                dataFile.createNewFile();
+	                FileAccess.fileOverWrite(getPathName(), getBasicString());
+	            }
 			}
+			
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}

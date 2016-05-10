@@ -16,6 +16,8 @@ public class RecordController {
 	private SaveRecordThread saveRecordThread;
 	private int saveCycle;
 	
+	//private long maxServerLogSize = 1000;
+	
 	private static RecordController recordController;
 
 	private class SaveRecordThread extends Thread {
