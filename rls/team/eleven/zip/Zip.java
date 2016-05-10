@@ -32,7 +32,7 @@ public class Zip {
 	 *            line, the current working directory is the project path, such
 	 *            as ../Projects/SoftwareResuse.
 	 * @param destinationName
-	 *            -- the target compressed zip file's name, a.zip or a is equal.
+	 *            - the target compressed zip file's name, a.zip or a is equal.
 	 *            a file a.zip will generated if you set destinationName "a" or
 	 *            "a.zip".
 	 * @throws FileNotFoundException
