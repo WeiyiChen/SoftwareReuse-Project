@@ -51,7 +51,7 @@ class FileProcessUtil {
 		String[] results = null;
 		int fileSeperatorIndex = originFilePath.lastIndexOf(File.separatorChar);
 		if(fileSeperatorIndex < 0 || fileSeperatorIndex >= originFilePath.length()){
-			throw new RuntimeException("please makesure parameters in method getRelatedFies valid!");
+			throw new RuntimeException("illegal input: " + originFilePath);
 		}
 		
 		String dirPath = originFilePath.substring(0, fileSeperatorIndex);
@@ -75,6 +75,33 @@ class FileProcessUtil {
 		
 		return results;
 		
+	}
+	
+	
+	/**
+	 * list origin files
+	 * @param dirOrFilePath - directory under with the origin files will be list, 
+	 * or file under whose directory the origin files will be list
+	 * @param appendIdentifier - the identifier to demonstrate append file
+	 * @return
+	 */
+	public static String[] getOriginFiles(String dirOrFilePath, String appendIdentifier){
+		String[] results = null;
+		File dir = null;
+		File testF = new File(dirOrFilePath);
+		
+		if(testF.isDirectory()){
+			dir = testF;
+		}else{
+			int fileSeperatorIndex = dirOrFilePath.lastIndexOf(File.separatorChar);
+			String dirPath = dirOrFilePath.substring(0, fileSeperatorIndex);
+			dir = new File(dirPath);
+			if(!dir.exists()||!dir.isDirectory()){
+				throw new RuntimeException("illegal input: " + dirOrFilePath);
+			}
+		}
+		
+		return dir.list(originFilter(appendIdentifier));
 	}
 	
 	/**
@@ -101,5 +128,25 @@ class FileProcessUtil {
 			}};
 	
 	
+	}
+	
+	/**
+	 * filter the origin file (doesn't contains the append identifier)
+	 * @param appendIdentifier - the identifier to demonstrate append file
+	 * @return
+	 */
+	public static FilenameFilter originFilter(final String appendIdentifier){
+		return new FilenameFilter(){
+
+			@Override
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				if(name.contains(appendIdentifier)){
+					return false;
+				}
+				return true;
+			}
+			
+		};
 	}
 }
