@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class TestFileLen {
 	
-	@Test
+	
 	public void testWriteb(){
 		int i = 1 + 2 + 2*2 + 2*2*2 + 2*2*2*2 + 2*2*2*2*2 + 2*2*2*2*2*2;
 		i = 2*i + 1;
@@ -26,18 +26,24 @@ public class TestFileLen {
 		printByteArray(baos.toByteArray());
 	}
 	
-//	@Test
+	@Test
 	public void testFileLen() throws FileNotFoundException{
 //		File file = new File("/Users/d/Desktop/");
 //		System.out.println(file.length());
 		PrintWriter pw = new PrintWriter("/Users/d/Desktop/tmp/test.out");
 		File file = new File("/Users/d/Desktop/tmp/test.out");
-		String testStr = "helloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworld";
+		String tStr = "helloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworld";
+		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i <= 100; i++){
+			sb.append(tStr);
+		}
+		String testStr = tStr.toString();
+		for(int i = 0; i <= 5; i++){
 			pw.write(testStr);
-//			pw.flush();
+			pw.flush();
 			System.out.println(file.length());
 		}
+		System.out.println(file.length());
 		pw.close();
 		System.out.println(file.length());
 	}
