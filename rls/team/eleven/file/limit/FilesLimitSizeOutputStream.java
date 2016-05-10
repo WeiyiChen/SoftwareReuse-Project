@@ -1,4 +1,4 @@
-package team.eleven.zip;
+package team.eleven.file.limit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +32,7 @@ public class FilesLimitSizeOutputStream extends OutputStream {
 	 * @param appendIdentifier - the identifier to demonstrate the appended file
 	 * @throws FileNotFoundException
 	 */
-	FilesLimitSizeOutputStream(String originFilePath, long fileSizeLimit, String appendIdentifier)
+	public FilesLimitSizeOutputStream(String originFilePath, long fileSizeLimit, String appendIdentifier)
 			throws FileNotFoundException {
 		f = new File(originFilePath);
 		f.getParentFile().mkdirs();
@@ -51,7 +51,7 @@ public class FilesLimitSizeOutputStream extends OutputStream {
 	 * @param fileSizeLimit - the file size limit
 	 * @throws FileNotFoundException
 	 */
-	FilesLimitSizeOutputStream(String originFilePath, long fileSizeLimit) throws FileNotFoundException{
+	public FilesLimitSizeOutputStream(String originFilePath, long fileSizeLimit) throws FileNotFoundException{
 		this(originFilePath, fileSizeLimit, "-app-");
 	}
 

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import team.eleven.file.limit.FileProcessUtil;
+
 public class FileProcessUtilTest {
 	
 	@Test

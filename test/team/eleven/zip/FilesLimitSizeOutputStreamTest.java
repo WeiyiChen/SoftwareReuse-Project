@@ -7,6 +7,8 @@ import java.io.StringBufferInputStream;
 import org.junit.Before;
 import org.junit.Test;
 
+import team.eleven.file.limit.FilesLimitSizeOutputStream;
+
 public class FilesLimitSizeOutputStreamTest {
 	FilesLimitSizeOutputStream flsos = null;
 	StringBufferInputStream sbis = null;

@@ -1,4 +1,4 @@
-package team.eleven.zip;
+package team.eleven.file.limit;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -10,7 +10,7 @@ import java.util.Arrays;
  *	May 10, 2016
  *
  */
-class FileProcessUtil {
+public class FileProcessUtil {
 	
 	/**
 	 * split the filename into prefileName(fileName without extension) and extension fileName
@@ -86,7 +86,7 @@ class FileProcessUtil {
 	 * @return
 	 */
 	public static String[] getOriginFiles(String dirOrFilePath, String appendIdentifier){
-		String[] results = null;
+		
 		File dir = null;
 		File testF = new File(dirOrFilePath);
 		
