@@ -85,22 +85,30 @@ public class FileProcessUtil {
 	 * @return
 	 */
 	public static String[] getOriginFiles(String dirOrFilePath, String appendIdentifier){
-		
+		String[] results = null;
 		File dir = null;
 		File testF = new File(dirOrFilePath);
-		
+		String dirPath = null;
 		if(testF.isDirectory()){
 			dir = testF;
+			if(dirOrFilePath.charAt(dirOrFilePath.length()-1) == File.separatorChar){
+				dirPath = dirOrFilePath.substring(0, dirOrFilePath.length() - 1);
+			}else{
+				dirPath = dirOrFilePath;
+			}
 		}else{
 			int fileSeperatorIndex = dirOrFilePath.lastIndexOf(File.separatorChar);
-			String dirPath = dirOrFilePath.substring(0, fileSeperatorIndex);
+			dirPath = dirOrFilePath.substring(0, fileSeperatorIndex);
 			dir = new File(dirPath);
 			if(!dir.exists()||!dir.isDirectory()){
 				throw new RuntimeException("illegal input: " + dirOrFilePath);
 			}
 		}
-		
-		return dir.list(originFilter(appendIdentifier));
+		results = dir.list(originFilter(appendIdentifier));
+		for(int i = 0; i < results.length; i++){
+			results[i] = dirPath + File.separator + results[i];
+		}
+		return results;
 	}
 	
 	/**

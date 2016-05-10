@@ -10,7 +10,7 @@ public class FileProcessUtilTest {
 	
 	@Test
 	public void testGetOriginFile(){
-		String originFilePath = "/Users/d/Desktop/tmp/";
+		String originFilePath = "/Users/d/Desktop/tmp";
 		String[] results = FileProcessUtil.getOriginFiles(originFilePath,"app");
 		System.out.println(results.length);
 		printStringArray(results);
