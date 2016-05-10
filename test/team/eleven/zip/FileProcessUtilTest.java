@@ -9,13 +9,15 @@ import team.eleven.file.limit.FileProcessUtil;
 public class FileProcessUtilTest {
 	
 	@Test
-	public void testGetRelatedFile(){
-		String originFilePath = "/Users/d/Desktop/tmp/testdir/bar.zip";
-		String[] results = FileProcessUtil.getRelatedFiles(originFilePath);
+	public void testGetOriginFile(){
+		String originFilePath = "/Users/d/Desktop/tmp/";
+		String[] results = FileProcessUtil.getOriginFiles(originFilePath,"app");
 		System.out.println(results.length);
 		printStringArray(results);
 		
 	}
+	
+
 
 //	@Test
 	public void test() {

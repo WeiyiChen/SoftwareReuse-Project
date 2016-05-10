@@ -82,7 +82,6 @@ public class FileProcessUtil {
 	 * list origin files
 	 * @param dirOrFilePath - directory under with the origin files will be list, 
 	 * or file under whose directory the origin files will be list
-	 * @param appendIdentifier - the identifier to demonstrate append file
 	 * @return
 	 */
 	public static String[] getOriginFiles(String dirOrFilePath, String appendIdentifier){
@@ -144,9 +143,47 @@ public class FileProcessUtil {
 				if(name.contains(appendIdentifier)){
 					return false;
 				}
+				File f = new File(dir.getAbsolutePath() + File.separator + name);
+				if(f.isDirectory()){
+					return false;
+				}
 				return true;
 			}
 			
 		};
+	}
+	
+	/**
+	 * get a total size of a directory or a size of a file
+	 * @param f - file or dirctory to get size
+	 * @return - file size in unit of byte
+	 */
+	public static long getLength(File f){
+		
+		if(f.isFile()){
+			return f.length();
+		}
+		if(f.isDirectory()){
+			//The return value is unspecified if this pathname denotes a directory.
+//			long length = f.length();
+			long length = 0;
+			for(File subf : f.listFiles()){
+				length += getLength(subf);
+			}
+			return length;
+		}
+		else{
+			return 0;
+		}
+	}
+	
+	/**
+	 * get a total size of a directory or a size of a file
+	 * @param dirOrFilePath - the file or dirctory's path you want to measure size
+	 * @return - file size in unit of byte
+	 */
+	public static long getLength(String dirOrFilePath){
+		File f = new File(dirOrFilePath);
+		return getLength(f);
 	}
 }
