@@ -59,10 +59,7 @@ public class ClientRecordController {
 	}
 
 	
-	/**
-	 * 鑾峰彇涓�涓狢lientRecordController绫荤殑瀹炰緥锛岃繖閲岀敤鍒皊ingleton鐨勬ā寮�
-	 * @return
-	 */
+	
 	public static ClientRecordController getInstance(){
 		if(clientRecordController == null){
 
@@ -72,18 +69,12 @@ public class ClientRecordController {
 	}
 
 	
-	/**
-	 * 寮�濮嬭褰曟棩蹇楋紝骞朵笖璁剧疆璁板綍鏃ュ織鐨勫懆鏈�
-	 * @param saveCycle 锛� 璁板綍鏃ュ織鐨勫懆鏈燂紙鍗曚綅绉掞級
-	 */
 	public void setAndStart(int saveCycle){
 		this.saveCycle = saveCycle;
 		saveRecordThread.start();
 	}
 	
-	/**
-	 * 灏嗙櫥褰曞け璐ユ鏁帮紝鐧诲綍鎴愬姛娆℃暟锛屾帴鍙楁秷鎭鏁帮紝鍙戦�佹秷鎭鏁伴噸鏂扮疆0
-	 */
+	
 	public void reset(){
 
 		this.loginFailedCount = 0;
