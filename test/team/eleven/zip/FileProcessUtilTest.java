@@ -5,13 +5,24 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class FileProcessUtilTest {
-
-	@Test
-	public void test() {
-//		fail("Not yet implemented");
-	}
 	
 	@Test
+	public void testGetRelatedFile(){
+		String originFilePath = "/Users/d/Desktop/tmp/testdir/bar.zip";
+		String[] results = FileProcessUtil.getRelatedFiles(originFilePath);
+		System.out.println(results.length);
+		printStringArray(results);
+		
+	}
+
+//	@Test
+	public void test() {
+//		fail("Not yet implemented");
+		boolean result = "hello".contains("");
+		System.out.println(result);
+	}
+	
+//	@Test
 	public void testGetFileNameAndEx(){
 		String[] test1 = FileProcessUtil.getFilePreNameAndEx("test");
 		printStringArray(test1);
