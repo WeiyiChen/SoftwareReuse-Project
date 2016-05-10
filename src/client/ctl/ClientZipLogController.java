@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 
-import team.eleven.zip.Zip;
+import team.eleven.zip.Zip2;
 
 public class ClientZipLogController {
 	
@@ -20,10 +20,21 @@ public class ClientZipLogController {
 		private int beginCompressSecs;
 		private int internalCompressSecs;
 		
+		private int fileLimit;
+		
 		public ZipRecordThread() {
 			super();
 			continueFlag = true;
 		}
+		
+		public int getFileLimit() {
+			return fileLimit;
+		}
+
+		public void setFileLimit(int fileLimit) {
+			this.fileLimit = fileLimit;
+		}
+
 		public int getBeginCompressSecs() {
 			return beginCompressSecs;
 		}
@@ -88,7 +99,7 @@ public class ClientZipLogController {
 						Calendar cal = Calendar.getInstance();
 						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 						mkdir();
-						Zip.zip(this.originLogForder,this.zipedLogZipPrex + format.format(cal.getTime()));
+						Zip2.zip(this.originLogForder,this.zipedLogZipPrex + format.format(cal.getTime()), fileLimit);
 						File oriFolder  = new File(this.originLogForder);
 						synchronized(oriFolder){
 							FileUtils.deleteDirectory(oriFolder);

@@ -6,7 +6,9 @@ import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 
+import team.eleven.file.limit.FileProcessUtil;
 import team.eleven.zip.Zip;
+import team.eleven.zip.Zip2;
 
 public class ReZipLogController {
 
@@ -19,6 +21,9 @@ public class ReZipLogController {
 		private String zipFolder = "weekziplog";
 		private int saveCycle;
 		private int startSave = 300;
+		
+		private String appendIdentifier ="-app-";
+		private int fileLimit = 5*1024;
 
 		public void setStartSave(int startSave) {
 			this.startSave = startSave;
@@ -67,13 +72,21 @@ public class ReZipLogController {
 			this.saveCycle = saveCycle;
 		}
 
+		public String getAppendIdentifier() {
+			return appendIdentifier;
+		}
+
+		public void setAppendIdentifier(String appendIdentifier) {
+			this.appendIdentifier = appendIdentifier;
+		}
+
 		public void executeUnZip(String folderPath) {
 			File folder = new File(folderPath);
-			String[] list = folder.list();
+			String[] list = folder.list(FileProcessUtil.originFilter(appendIdentifier));
 			try {
 				for (String filePath : list) {
 					if (filePath.contains(".zip")) {
-						Zip.unZip(folderPath + File.separator + filePath, "tmp");
+						Zip2.unZip(folderPath + File.separator + filePath, "tmp");
 					}
 				}
 
@@ -91,7 +104,7 @@ public class ReZipLogController {
 
 				String tmpFolder = System.getProperty("user.dir") + File.separator + "tmp";
 				String destFile = System.getProperty("user.dir") + File.separator + zipFolder + File.separator + "log" + format.format(cal.getTime());
-				Zip.zip(tmpFolder, destFile);
+				Zip2.zip(tmpFolder, destFile,fileLimit);
 				FileUtils.deleteDirectory(new File(tmpFolder));
 				
 				

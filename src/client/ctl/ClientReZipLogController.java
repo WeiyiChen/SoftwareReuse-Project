@@ -7,7 +7,9 @@ import java.util.Calendar;
 
 import org.apache.commons.io.FileUtils;
 
+import team.eleven.file.limit.FileProcessUtil;
 import team.eleven.zip.Zip;
+import team.eleven.zip.Zip2;
 
 public class ClientReZipLogController {
 	
@@ -16,7 +18,8 @@ public class ClientReZipLogController {
 		private boolean continueFlag;
 		private String originLogForder;
 		private String zipedLogZipPrex = "clientweekziplog/bar--";
-		
+		private String appendIdentifier = "-app-";
+		private long fileLimit = 5*1024;
 		private int beginCompressSecs = 3;
 		private int internalCompressSecs = 86400 * 7;
 		
@@ -105,10 +108,10 @@ public class ClientReZipLogController {
 		
 		public void executeUnZip(String srcFolderPath) throws IOException{
 			File srcFolder = new File(srcFolderPath);
-			String[] srcFileNames = srcFolder.list();
+			String[] srcFileNames = srcFolder.list(FileProcessUtil.originFilter(appendIdentifier));
 			for(String srcFileName : srcFileNames){
 				if(srcFileName.contains(".zip")){
-					Zip.unZip(srcFolderPath + File.separator + srcFileName, tmpFolderPath);
+					Zip2.unZip(srcFolderPath + File.separator + srcFileName, tmpFolderPath);
 				}
 			}
 			
@@ -120,7 +123,7 @@ public class ClientReZipLogController {
 			Calendar cal = Calendar.getInstance();
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 			mkdir();
-			Zip.zip(tmpFolderPath,this.zipedLogZipPrex + format.format(cal.getTime()));
+			Zip2.zip(tmpFolderPath,this.zipedLogZipPrex + format.format(cal.getTime()), fileLimit);
 			File oriFolder  = new File(this.originLogForder);
 			synchronized(oriFolder){
 				FileUtils.deleteDirectory(oriFolder);

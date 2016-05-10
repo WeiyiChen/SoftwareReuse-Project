@@ -3,9 +3,10 @@ package server.ctrl;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+
 import org.apache.commons.io.FileUtils;
 
-import team.eleven.zip.Zip;
+import team.eleven.zip.Zip2;
 
 public class ZipLogController {
 
@@ -18,6 +19,7 @@ public class ZipLogController {
 		private String zipFolder = "dayziplog";
 		private int saveCycle;
 		private int startSave = 100;
+		private int fileLimit;
 
 		public void setStartSave(int startSave) {
 			this.startSave = startSave;
@@ -31,6 +33,10 @@ public class ZipLogController {
 
 		public void setStop() {
 			continueFlag = false;
+		}
+		
+		public void setFileLimit(int fileLimit){
+			this.fileLimit = fileLimit;
 		}
 
 		@Override
@@ -87,7 +93,7 @@ public class ZipLogController {
 
 				String destFile = folderOfZippedLog + File.separator
 						+ "log" + format.format(cal.getTime());
-				Zip.zip(logForder, destFile);
+				Zip2.zip(logForder, destFile, fileLimit);
 				FileUtils.deleteDirectory(new File(logForder));
 			}catch (IOException e) {
 				new RuntimeException(e);
