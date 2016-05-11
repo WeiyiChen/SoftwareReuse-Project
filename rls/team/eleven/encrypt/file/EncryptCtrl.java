@@ -17,7 +17,6 @@ import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
 /**
@@ -25,8 +24,8 @@ import javax.crypto.spec.IvParameterSpec;
  * @author Dai
  *
  */
-public class FileEncrypt {
-	private final static int BYTE_LEN = 1024;
+public class EncryptCtrl {
+	private final static int BUFF_LEN = 1024;
 	private static AlgorithmParameterSpec paramSpec = new IvParameterSpec(new byte[]{
 
 			  (byte)0xB2, (byte)0x12, (byte)0xD5, (byte)0xB2,
@@ -34,12 +33,12 @@ public class FileEncrypt {
 			  (byte)0x44, (byte)0x21, (byte)0xC3, (byte)0xC3
 			    });
 	
-	private static Key key = null;
+	private Key key = null;
 	
 	/**
 	 * Default Constructor.
 	 */
-	public FileEncrypt(){
+	public EncryptCtrl(){
 		this("default");
 	}
 	
@@ -47,7 +46,7 @@ public class FileEncrypt {
 	 * Construct a FileEncrypt instance with a specific string.
 	 * @param keyStr - a string to specific the encrypt and decrypt a stream or file.
 	 */
-	public FileEncrypt(String keyStr){
+	public EncryptCtrl(String keyStr){
 		super();
 		KeyGenerator keyGenerator;
 		try {
@@ -61,6 +60,81 @@ public class FileEncrypt {
 		}			
 	}
 	
+	/**
+	 * return a CipherInputStream(FilterInputStream) for encrypt
+	 * @param in
+	 * @return
+	 */
+	public CipherInputStream encryptInputStream(InputStream in){
+		CipherInputStream cis = null;
+		try {
+			Cipher enCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+			enCipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
+			cis = new CipherInputStream(in, enCipher);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return cis;
+	}
+	
+	/**
+	 * return a CipherInputStream(FilterInputStream) for decrypt
+	 * @param in
+	 * @return
+	 */
+	public CipherInputStream decryptInputStream(InputStream in){
+		CipherInputStream cis = null;
+		try {
+			Cipher deCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+			deCipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
+			cis = new CipherInputStream(in, deCipher);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return cis;
+	}
+	
+	/**
+	 * return a CipherOutputStream(FilterOutputStream) for encrypt
+	 * @param out
+	 * @return
+	 */
+	public CipherOutputStream encryptOutputStream(OutputStream out){
+		CipherOutputStream cos = null;
+		try {
+			Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
+			cos = new CipherOutputStream(out, cipher);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return cos;
+	}
+	
+	/**
+	 * return a CipherOutputStream(FilterOutputStream) for decrypt
+	 * @param out
+	 * @return
+	 */
+	public CipherOutputStream decryptOutputStream(OutputStream out){
+		CipherOutputStream cos = null;
+		try {
+			Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+			cipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
+			cos = new CipherOutputStream(out, cipher);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return cos;
+	}
 	
 	/**
 	 * To encrypt a stream. The InputStream and OutputStream won't be closed in this function.
@@ -74,7 +148,7 @@ public class FileEncrypt {
 			Cipher enCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
 			enCipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);			
 			cos = new CipherOutputStream(os, enCipher);
-			byte[] buff = new byte[BYTE_LEN];
+			byte[] buff = new byte[BUFF_LEN];
 			int numRead = 0;
 			while((numRead = is.read(buff)) > 0){
 				cos.write(buff, 0, numRead);
@@ -110,7 +184,7 @@ public class FileEncrypt {
 			Cipher deCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
 			deCipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
 			cis = new CipherInputStream(is, deCipher);
-			byte[] buff = new byte[BYTE_LEN];
+			byte[] buff = new byte[BUFF_LEN];
 			int numRead = 0;
 			while((numRead = cis.read(buff)) > 0){
 				os.write(buff, 0, numRead);

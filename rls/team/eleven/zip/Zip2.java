@@ -9,6 +9,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
+
+import team.eleven.encrypt.file.EncryptCtrl;
 import team.eleven.file.limit.FilesLimitSizeOutputStream;
 
 //这个文件代码有点乱，抽空再改吧
@@ -96,7 +100,7 @@ public class Zip2 {
 		} else {
 			byte[] buf = new byte[1024];
 			int len;
-			FileInputStream in = new FileInputStream(srcFile);
+			CipherInputStream in = new EncryptCtrl().encryptInputStream(new FileInputStream(srcFile));
 
 			synchronized (in) {
 				outputZip.putNextEntry(new ZipEntry(path + separater + folder.getName()));
@@ -149,7 +153,7 @@ public class Zip2 {
 		}
 		byte[] buffer = new byte[1024];
 		ZipInputStream zis = null;
-		FileOutputStream fos = null;
+		CipherOutputStream fos = null;
 		try {
 			if(outputFolder.equals("")||outputFolder==null){
 				outputFolder = ".";
@@ -177,7 +181,8 @@ public class Zip2 {
 				// folder
 				new File(newFile.getParent()).mkdirs();
 
-				fos = new FileOutputStream(newFile);
+				fos = new EncryptCtrl().decryptOutputStream(new FileOutputStream(newFile));
+//						new FileOutputStream(newFile);
 
 				int len;
 				while ((len = zis.read(buffer)) > 0) {

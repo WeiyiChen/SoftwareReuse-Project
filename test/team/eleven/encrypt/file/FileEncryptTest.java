@@ -10,10 +10,10 @@ public class FileEncryptTest {
 	String inPath = "/Users/d/Project/Eclipse/SoftwareReuse/clientTmp/logclient/test.log";
 	String enCryptPath = "/Users/d/Project/Eclipse/SoftwareReuse/clientTmp/logclient/zencrypt";
 	String outPath = "/Users/d/Project/Eclipse/SoftwareReuse/clientTmp/logclient/testout.log";
-	FileEncrypt fe;
+	EncryptCtrl fe;
 	@Before
 	public void before(){
-		fe = new FileEncrypt("test");
+		fe = new EncryptCtrl("test");
 		
 		
 	}
