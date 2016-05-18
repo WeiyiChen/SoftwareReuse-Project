@@ -3,6 +3,8 @@ package base;
 import org.json.JSONException;
 import org.json.JSONStringer;
 
+//generate json string
+
 public class JsonBuilderBase {
 	//schema
 	public static final String type = "Type";

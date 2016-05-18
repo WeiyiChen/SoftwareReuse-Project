@@ -3,6 +3,8 @@ package base;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+// analyze Json message
+
 public class JsonAnalizerBase {
 
 	public static String getMessageType(String jsonString) {

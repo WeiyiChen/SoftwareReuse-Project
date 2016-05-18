@@ -17,6 +17,7 @@ import client.ctl.JsonBuilderClient;
 import client.ctl.MsgHandle;
 import client.intf.IMsgHandle;
 import client.intf.IMsgWindow;
+import javax.swing.JList;
 
 /**
  * message window UI
@@ -28,7 +29,6 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 	private JPanel contentPane;
 	private JTextArea textField;
 	private JButton btnSend;
-	private JButton btnCompress;
 	private JLabel lblUser;
 	private JLabel lblUserToShow;
 	private JTextArea textArea;
@@ -36,6 +36,8 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 	private JLabel lblTip;
 	private IMsgHandle imh;
 	private String usr;
+	private JScrollPane scrollPane;
+	private JList cantactlist;
 	
 	/**
 	 * Create the frame.
@@ -43,7 +45,7 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 	public MsgWindow() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 513, 364);
+		setBounds(100, 100, 650, 369);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -52,34 +54,38 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		sp = new JScrollPane(textArea);
-		sp.setBounds(66, 69, 374, 175);
+		sp.setBounds(230, 62, 374, 175);
 		contentPane.add(sp);
+		JScrollPane tmpSp = new JScrollPane();
+		tmpSp.setBounds(230, 274, 240, 41);
+		contentPane.add(tmpSp);
 		
 		textField = new JTextArea();
-		JScrollPane tmpSp = new JScrollPane(textField);
-		tmpSp.setBounds(66, 274, 240, 41);
-		contentPane.add(tmpSp);
+		tmpSp.setViewportView(textField);
 		textField.setColumns(10);
 		
 		btnSend = new JButton("Send");
-		btnSend.setBounds(310, 274, 65, 41);
+		btnSend.setBounds(499, 274, 65, 41);
 		contentPane.add(btnSend);
 		
-		btnCompress = new JButton("ZIP");
-		btnCompress.setBounds(378, 274, 60, 41);
-        contentPane.add(btnCompress);
-		
 		lblUser = new JLabel("User:");
-		lblUser.setBounds(183, 26, 33, 16);
+		lblUser.setBounds(273, 26, 33, 16);
 		contentPane.add(lblUser);
 		
 		lblUserToShow = new JLabel("New label");
-		lblUserToShow.setBounds(228, 26, 120, 16);
+		lblUserToShow.setBounds(370, 26, 120, 16);
 		contentPane.add(lblUserToShow);
 		
 		lblTip = new JLabel("");
 		lblTip.setBounds(267, 279, 61, 16);
 		contentPane.add(lblTip);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(42, 43, 120, 260);
+		contentPane.add(scrollPane);
+		
+		cantactlist = new JList();
+		scrollPane.setViewportView(cantactlist);
 		imh = new MsgHandle(this);
 		
 		btnSend.addActionListener(new ActionListener(){
@@ -139,5 +145,4 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		// TODO Auto-generated method stub
 		return imh;
 	}
-	
 }

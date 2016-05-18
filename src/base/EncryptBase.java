@@ -3,6 +3,8 @@ package base;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+// md5 encrypt for password
+
 public class EncryptBase {
 	protected static final int lengthOfMd5 =32;
 	
