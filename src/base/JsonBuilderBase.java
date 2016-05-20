@@ -10,6 +10,7 @@ public class JsonBuilderBase {
 	public static final String type = "Type";
 	public static final String content = "Content";
 	public static final String user = "User";
+	public static final String time = "Time";
 	
 	//types
 	public static final String authorization = "Authorization";
