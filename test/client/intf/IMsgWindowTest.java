@@ -1,0 +1,46 @@
+package client.intf;
+
+import client.ui.MsgWindow;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Scanner;
+
+import static org.junit.Assert.*;
+
+/**
+ * Created by daidongyang on 5/20/16.
+ */
+public class IMsgWindowTest {
+    IMsgWindow imw;
+    @Before
+    public void before(){
+//        new Thread(new Runnable(){
+//            @Override
+//            public void run() {
+//                System.out.print("in thread");
+//
+//                imw = new MsgWindow();
+//                imw.toShowWindow();
+//                imw.addContact("hello");
+//            }
+//        }).start();
+
+        imw = new MsgWindow();
+        imw.toShowWindow();
+
+    }
+
+    @Test
+    public void test(){
+        imw.addContact("hello");
+        imw.addContact("world");
+        StringBuilder sb = new StringBuilder("hello");
+        imw.removeContact(sb.toString());
+        Scanner scanner = new Scanner(System.in);
+        scanner.next();
+    }
+
+
+
+}

@@ -5,19 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import client.ctl.JsonBuilderClient;
 import client.ctl.MsgHandle;
 import client.intf.IMsgHandle;
 import client.intf.IMsgWindow;
-import javax.swing.JList;
 
 /**
  * message window UI
@@ -38,6 +32,7 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 	private String usr;
 	private JScrollPane scrollPane;
 	private JList cantactlist;
+	private DefaultListModel<String> listModel;
 	
 	/**
 	 * Create the frame.
@@ -83,8 +78,8 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(42, 43, 120, 260);
 		contentPane.add(scrollPane);
-		
-		cantactlist = new JList();
+		listModel = new DefaultListModel<String>();
+		cantactlist = new JList(listModel);
 		scrollPane.setViewportView(cantactlist);
 		imh = new MsgHandle(this);
 		
@@ -145,4 +140,17 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		// TODO Auto-generated method stub
 		return imh;
 	}
+
+
+    @Override
+    public void addContact(String user){
+        listModel.addElement(user);
+    }
+
+    @Override
+    public boolean removeContact(String user){
+        return listModel.removeElement(user);
+    }
+
+
 }
