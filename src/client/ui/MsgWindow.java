@@ -76,11 +76,15 @@ public class MsgWindow extends JFrame implements IMsgWindow{
 		contentPane.add(lblTip);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(42, 43, 120, 260);
+		scrollPane.setBounds(42, 62, 120, 241);
 		contentPane.add(scrollPane);
 		listModel = new DefaultListModel<String>();
 		cantactlist = new JList(listModel);
 		scrollPane.setViewportView(cantactlist);
+		
+		JLabel lblContact = new JLabel("Contact");
+		lblContact.setBounds(52, 26, 61, 16);
+		contentPane.add(lblContact);
 		imh = new MsgHandle(this);
 		
 		btnSend.addActionListener(new ActionListener(){
@@ -151,6 +155,4 @@ public class MsgWindow extends JFrame implements IMsgWindow{
     public boolean removeContact(String user){
         return listModel.removeElement(user);
     }
-
-
 }
