@@ -34,9 +34,33 @@ public class IMsgWindowTest {
     @Test
     public void test(){
         imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("world");
+        imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("world");
+        imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("world");
+        imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("world");
+        imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("world");
+        imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("world");
+        imw.addContact("hello");
+        imw.addContact("hello");
+        imw.addContact("world");
         imw.addContact("world");
         StringBuilder sb = new StringBuilder("hello");
+        StringBuilder sb2 = new StringBuilder("hello");
         imw.removeContact(sb.toString());
+        imw.removeContact(sb2.toString());
         Scanner scanner = new Scanner(System.in);
         scanner.next();
     }

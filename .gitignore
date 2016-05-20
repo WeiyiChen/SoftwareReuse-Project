@@ -108,3 +108,5 @@ zipclient/*
 *weekziplog/
 
 junittestDir/
+
+client_msg.txt
