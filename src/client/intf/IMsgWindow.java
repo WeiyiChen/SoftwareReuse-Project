@@ -39,5 +39,17 @@ public interface IMsgWindow extends IClientWindow{
 	 * @return - A controller for send message and receive message
 	 */
 	IMsgHandle getMsgHandle();
-	
+
+	/**
+	 * add a user to contact list
+	 * @param user - the user to be added to contact list
+     */
+	void addContact(String user);
+
+	/**
+	 * remove a user from the contact list
+	 * @param user - the user to be removed from contact list
+	 * @return
+     */
+	boolean removeContact(String user);
 }
