@@ -1,9 +1,12 @@
 package base;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 // analyze Json message
 
@@ -37,7 +40,23 @@ public class JsonAnalizerBase {
 		}
 	}
 
-
+	/**
+	 *  Get string value according key from a json message
+	 *
+     */
+	public static String getString(String jsonString, String key){
+		try{
+			JSONObject jsonObject = new JSONObject(jsonString);
+			String s = (String)jsonObject.getString(key);
+			return s;
+		}catch(JSONException e){
+			e.printStackTrace();
+			return null;
+		}catch(ClassCastException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public JsonAnalizerBase() {
 		super();

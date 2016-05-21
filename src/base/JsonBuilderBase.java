@@ -8,12 +8,15 @@ import java.util.Date;
 
 //generate json string
 
+// define these constants in several inner class may be better.
+
 public class JsonBuilderBase {
 	//schema
 	public static final String type = "Type";
 	public static final String content = "Content";
 	public static final String user = "User";
 	public static final String time = "Time";
+    public static final String op = "Op";
 	
 	//types
 	public static final String authorization = "Authorization";
@@ -25,6 +28,11 @@ public class JsonBuilderBase {
 	public static final String loginFailed = "LoginFailed";
 	public static final String loginSucceed = "LoginSucceed";
 	public static final String relogin = "Relogin";
+
+    //op
+    public static final String add = "Add";
+    public static final String remove = "Remove";
+    public static final String init = "Init";
 
 	protected static String getTypeContentJson(String type, String content, Date date) {
 		try {
@@ -70,7 +78,7 @@ public class JsonBuilderBase {
 				return "{\"Type\":\"Error\"}";
 			}
 
-    
+
 	public static String getLoginSucceedJson() {
 		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.loginSucceed);
 	}

@@ -1,6 +1,7 @@
 package client.ctl;
 
 import java.io.IOException;
+import java.util.List;
 
 import base.JsonBuilderBase;
 import client.intf.IAddMsgToUI;
@@ -72,6 +73,22 @@ public class MsgHandle implements IMsgHandle{
 			}
 		}catch(ClassCastException e){
 			e.printStackTrace();
+		}
+	}
+
+	public void handleContactsMsg(String jsonString){
+		String op = JsonAnalizerClient.getString(jsonString, JsonBuilderBase.op);
+		if(JsonBuilderBase.add.equals(op)){
+			imw.addContact(JsonAnalizerClient.getString(jsonString, JsonBuilderBase.content));
+		}
+		else if(JsonBuilderBase.remove.equals(op)){
+			imw.removeContact(JsonAnalizerClient.getString(jsonString, JsonBuilderBase.content));
+		}
+		else if(JsonBuilderBase.init.equals(op)){
+			List<String> contacts = JsonAnalizerClient.getInitContacts(jsonString);
+			for(String user : contacts){
+				imw.addContact(user);
+			}
 		}
 	}
 	
