@@ -19,6 +19,7 @@ public class JsonBuilderBase {
 	public static final String authorization = "Authorization";
 	public static final String message = "Message";
 	public static final String password = "Password";
+    public static final String contacts = "Contacts";
 	
 	//content
 	public static final String loginFailed = "LoginFailed";
@@ -69,6 +70,7 @@ public class JsonBuilderBase {
 				return "{\"Type\":\"Error\"}";
 			}
 
+    
 	public static String getLoginSucceedJson() {
 		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.loginSucceed);
 	}
@@ -80,6 +82,7 @@ public class JsonBuilderBase {
 	public static String getReloginRequestJson() {
 		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.relogin);
 	}
+
 
 	public JsonBuilderBase() {
 		super();
