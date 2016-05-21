@@ -26,10 +26,10 @@ public class JsonAnalizerBase {
 		return getValue(jsonString, JsonBuilderBase.user);
 	}
 
-	public static Date getTime(String jsonString){
+	public static Long getTime(String jsonString){
 		try{
 			JSONObject jsonObj = new JSONObject(jsonString);
-			Date d = (Date)jsonObj.get(JsonBuilderBase.time);
+			Long d = jsonObj.getLong(JsonBuilderBase.time);
 			return d;
 		}catch(JSONException e){
 			e.printStackTrace();

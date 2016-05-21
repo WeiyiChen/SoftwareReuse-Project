@@ -19,10 +19,10 @@ public class AddJsonMsgToUI implements IAddMsgToUI{
 		String jsonString = (String)msg;
 		String sender = JsonAnalizerClient.getUser(jsonString);
 		String content = JsonAnalizerClient.getMessageContent(jsonString);
-		Date d = JsonAnalizerClient.getTime(jsonString);
+		Date d = new Date(JsonAnalizerClient.getTime(jsonString));
 		SimpleDateFormat dateFormat = new SimpleDateFormat("K:mm a, yyyy-MM-dd");
 		String time = dateFormat.format(d);
-		imw.appendMsgRecord(sender + "\t\t" + time);
+		imw.appendMsgRecord(sender + "\t" + time);
 		imw.appendMsgRecord(content);
 	}
 
