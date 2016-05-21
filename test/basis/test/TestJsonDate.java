@@ -28,7 +28,7 @@ public class TestJsonDate{
         SimpleDateFormat formatter = new SimpleDateFormat("K:mm a, yyyy-MM-dd");
         System.out.println(formatter.format(d2));
         JSONObject obj2 = new JSONObject(obj.toString());
-        Date d3 = (Date)obj.get("date");
+        Date d3 = (Date)obj2.get("date");
         System.out.println(formatter.format(d3));
     }
 
