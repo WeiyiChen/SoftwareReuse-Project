@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
+import base.JsonBuilderBase;
 import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
 import client.intf.ILogInCheck;
@@ -83,12 +84,12 @@ public class LogInCheck implements ILogInCheck{
 				msg = reader.readLine();
 				if(msg != null){
 					isReceived = true;
-					System.out.println("receive login result");
-					System.out.println(msg);
-					if(msg.equals(JsonBuilderClient.getLoginSucceedJson())){
+//					System.out.println("receive login result");
+//					System.out.println(msg);
+					if(JsonBuilderBase.loginSucceed.equals(JsonAnalizerClient.getMessageContent(msg))){
 						return true;
 					}
-					else if(msg.equals(JsonBuilderClient.getLoginFailedJson())){
+					else if(JsonBuilderBase.loginFailed.equals(JsonAnalizerClient.getMessageContent(msg))){
 						return false;
 					}
 					else{

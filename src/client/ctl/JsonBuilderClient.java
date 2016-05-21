@@ -10,4 +10,6 @@ public class JsonBuilderClient extends JsonBuilderBase {
 	public static String getMessageJson(String user, String msg){
 		return getTypeUserContentJson(JsonBuilderBase.message, user, msg);
 	}
+
+
 }

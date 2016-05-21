@@ -37,6 +37,8 @@ public class JsonAnalizerBase {
 		}
 	}
 
+
+
 	public JsonAnalizerBase() {
 		super();
 	}

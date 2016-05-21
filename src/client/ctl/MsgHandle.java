@@ -2,6 +2,7 @@ package client.ctl;
 
 import java.io.IOException;
 
+import base.JsonBuilderBase;
 import client.intf.IAddMsgToUI;
 import client.intf.ILoginWindow;
 import client.intf.IMsgHandle;
@@ -55,31 +56,15 @@ public class MsgHandle implements IMsgHandle{
 		IAddMsgToUI iAddMsgToUi;
 		try{
 			if(msg instanceof java.lang.String){
-//				iAddMsgToUi = new AddStrMsgToUI();
 				
 				String jsonStr = (String)msg;
-				if(jsonStr.equals(JsonBuilderClient.getReloginRequestJson())){
+				if(JsonBuilderBase.relogin.equals(JsonAnalizerClient.getMessageContent(jsonStr))){
 					new WindowJumpFromMsgToLogin().jump(imw, new LoginWindow());
-//					imw.toCloseWindow();
-//					ILoginWindow ilw = new LoginWindow();
-//					ilw.setTip("redo login!");
-//					ilw.toShowWindow();
-//					ClientLogger.setIsLogin(false);
-//					new Thread(new Runnable(){
-//
-//						@Override
-//						public void run() {
-//							// TODO Auto-generated method stub
-//							new WindowJumpFromMsgToLogin().jump(imw, new LoginWindow());
-//						}
-//						
-//					});
 				}
 				else{
 					iAddMsgToUi = new AddJsonMsgToUI();
 					iAddMsgToUi.addMsg(imw, msg);
 				}
-				
 			}
 			else{
 				iAddMsgToUi = new AddStrMsgToUI();
