@@ -11,6 +11,7 @@ import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
 import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 
+@Deprecated
 class ServerEntityOld extends Thread {
 	private SocketWrapper socketController;
 	private MessageController messageController;

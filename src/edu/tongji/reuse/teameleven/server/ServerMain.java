@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import edu.tongji.reuse.teameleven.server.transport.ServerEntry;
+import edu.tongji.reuse.teameleven.server.transport.ServerEntryOld;
 
 public class ServerMain {
 
@@ -15,7 +15,7 @@ public class ServerMain {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) {
-		ServerEntry serverEntry = new ServerEntry();
+		ServerEntryOld serverEntry = new ServerEntryOld();
 		serverEntry.start();
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
