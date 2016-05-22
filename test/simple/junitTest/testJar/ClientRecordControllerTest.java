@@ -10,7 +10,7 @@ public class ClientRecordControllerTest {
 	public void test() throws InterruptedException {
 		//fail("Not yet implemented");
 //		ClientRecordController crc = ClientRecordController.getInstance();
-//		crc.setUser("hello");
+//		crc.setUserId("hello");
 //		crc.setAndStart(1);
 //		for(int i = 0; i < 100; i++){
 //			TimeUnit.MILLISECONDS.sleep(50);

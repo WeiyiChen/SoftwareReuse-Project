@@ -102,7 +102,7 @@ public class LoginWindow implements ILoginWindow {
 				}
 				
 //					ClientRecordController crc = ClientRecordController.getInstance();
-//					crc.setUser(usr);
+//					crc.setUserId(usr);
 					if (logInResult) {
 //						IJump2MsgWindow windowJump = new JumpToMsgWindowOld();
 //						windowJump.startMsgWindow(usr);

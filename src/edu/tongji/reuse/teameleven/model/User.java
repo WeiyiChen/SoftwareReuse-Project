@@ -4,15 +4,16 @@ package edu.tongji.reuse.teameleven.model;
  * Created by daidongyang on 5/21/16.
  */
 public class User {
-    private String user = "";
+    private String userId = "";
     private String group = "";
+    private boolean isOnLine = false;
 
-    public String getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getGroup() {
@@ -23,11 +24,20 @@ public class User {
         this.group = group;
     }
 
+    public boolean isOnLine() {
+        return isOnLine;
+    }
+
+    public void setOnLine(boolean onLine) {
+        isOnLine = onLine;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "user='" + user + '\'' +
+                "userId='" + userId + '\'' +
                 ", group='" + group + '\'' +
+                ", isOnLine=" + isOnLine +
                 '}';
     }
 }

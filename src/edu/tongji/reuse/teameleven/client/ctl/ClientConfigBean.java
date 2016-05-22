@@ -1,4 +1,4 @@
-package edu.tongji.reuse.teameleven.client.transport;
+package edu.tongji.reuse.teameleven.client.ctl;
 
 public class ClientConfigBean {
 	public String host;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import edu.tongji.reuse.teameleven.client.ctl.ClientConfigBean;
 import octoteam.tahiti.config.ConfigManager;
 import octoteam.tahiti.config.loader.JsonAdapter;
 /**

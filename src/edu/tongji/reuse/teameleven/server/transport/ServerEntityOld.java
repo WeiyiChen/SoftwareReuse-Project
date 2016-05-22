@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.tongji.reuse.teameleven.base.JsonBuilderBase;
-import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
+import edu.tongji.reuse.teameleven.server.ctrl.MessageControllerOld;
 import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 
 @Deprecated
 class ServerEntityOld extends Thread {
 	private SocketWrapper socketController;
-	private MessageController messageController;
+	private MessageControllerOld messageController;
 	private List<ServerEntityOld> socketControllerList;
 	private List<String> serverReceiveMsgList;
 	private boolean continueToWork;
@@ -23,7 +23,7 @@ class ServerEntityOld extends Thread {
 						   List<ServerEntityOld> socketList) {
 		this.socketController = socketP;
 		this.socketControllerList = socketList;
-		this.messageController = new MessageController();
+		this.messageController = new MessageControllerOld();
 		continueToWork = true;
 		serverReceiveMsgList = new ArrayList<String>();
 	}

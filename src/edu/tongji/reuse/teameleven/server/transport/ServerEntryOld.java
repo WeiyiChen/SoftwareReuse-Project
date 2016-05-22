@@ -7,7 +7,7 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
+import edu.tongji.reuse.teameleven.server.ctrl.MessageControllerOld;
 
 @Deprecated
 public class ServerEntryOld extends Thread {
@@ -31,7 +31,7 @@ public class ServerEntryOld extends Thread {
 	@Override
 	public void run() {
 		continueToRun = true;
-		MessageController.startRecordThread();
+		MessageControllerOld.startRecordThread();
 		try {
 			serverSocket = new ServerSocket(port);
 			serverSocket.setSoTimeout(1000);
@@ -60,7 +60,7 @@ public class ServerEntryOld extends Thread {
 		} finally {
 			try {
 				serverSocket.close();
-				MessageController.quit();
+				MessageControllerOld.quit();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -73,7 +73,7 @@ public class ServerEntryOld extends Thread {
 		for (ServerEntityOld serverEntity : socketServerList) {
 			serverEntity.quit();
 		}
-		MessageController.quit();
+		MessageControllerOld.quit();
 		System.out.println("server socket exit");
 	}
 

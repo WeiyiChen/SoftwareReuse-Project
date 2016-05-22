@@ -1,132 +1,151 @@
 package edu.tongji.reuse.teameleven.server.ctrl;
 
-import java.io.IOException;
-
 import edu.tongji.reuse.teameleven.base.JsonBuilderBase;
+import edu.tongji.reuse.teameleven.encrypt.message.EncryptImpl;
+import edu.tongji.reuse.teameleven.encrypt.message.IEncrypt;
+import edu.tongji.reuse.teameleven.model.User;
 import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
+import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 import octoteam.tahiti.config.ConfigManager;
 import octoteam.tahiti.config.loader.JsonAdapter;
-import packedEncrypt.EncryptImpl;
-import packedEncrypt.IEncrypt;
-import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
-
-import teamEleven.pwdCtrl.PasswordController;
 import teamEleven.groupCtrl.GroupController;
+import teamEleven.pwdCtrl.PasswordController;
 
+import java.io.IOException;
+
+// todo move static fields to a new class using singleton pattern
 public class MessageController {
+    private static PasswordController passwordController = new PasswordController(
+            ServerConfigEnum.defaultUserPwdMap
+    );
 
-	private static PasswordController passwordController = new PasswordController(
-			ServerConfigEnum.defaultUserPwdMap);
-	private static GroupController groupController = new GroupController(
-			ServerConfigEnum.defaultUserGroupMap);
+    private static GroupController groupController = new GroupController(
+            ServerConfigEnum.defaultUserGroupMap
+    );
 
-	private static int maxMessagePerLogin;
-	private static int maxMessagePerSecond;
-	private static int saveCycle;
-	private static ConfigManager configManager = new ConfigManager(
-			new JsonAdapter(), "data/config.json");
-	private static ServerConfigBean configBean;
-	private static ZipLogController zipLogController = new ZipLogController();
-	private static ReZipLogController reZipLogController = new ReZipLogController();
+//    private static int maxMessagePerLogin;
+//
+//    private static int maxMessagePerSecond;
+//
+//    private static int saveCycle;
 
-	private static IEncrypt encrypt = new EncryptImpl();
+    private static ConfigManager configManager = new ConfigManager(
+            new JsonAdapter(), "data/config.json"
+    );
 
-	private LicenseCtrl licenseController;
-	private String currentUser;
+    private static ServerConfigBean configBean;
 
-	static {
-		try {
-			configBean = configManager.loadToBean(ServerConfigBean.class);
-			maxMessagePerLogin = configBean.getMaxMessagesPerLogin();
-			maxMessagePerSecond = configBean.getMaxMessagesPerSecond();
-			saveCycle = configBean.getSaveCycle();
-			ServerMonitorController.setSaveCycle(saveCycle);
-			// license = new License(License.LicenseType.BOTH,
-			// maxMessagePerLogin, maxMessagePerSecond);
-			LicenseCtrl.setLimit(maxMessagePerLogin, maxMessagePerSecond);
-			zipLogController.setAndStart(86400);
-			reZipLogController.setAndStart(86400*7);
-		} catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+    private static ZipLogController zipLogController = new ZipLogController();
 
-	}
+    private static ReZipLogController reZipLogController = new ReZipLogController();
 
-	public MessageController() {
-		// licenseController = new LicenseController();
-		licenseController = new LicenseCtrl();
-		this.currentUser = "";
-	}
+    private static IEncrypt encrypt = new EncryptImpl();
 
-	public String dealWithMessage(String jsonString) {
-		String type = JsonAnalizerServer.getMessageType(jsonString);
-		if (type.equals(JsonBuilderBase.message)) {
-			return this.dealWithTextMessage(jsonString);
-		}
-		if (type.equals(JsonBuilderBase.password)) {
-			return this.dealWithPassword(jsonString);
-		}
-		return JsonBuilderServer.getTypeNoFoundError();
-	}
+    static{
+        try{
+            configBean = configManager.loadToBean(ServerConfigBean.class);
+//            maxMessagePerLogin = configBean.getMaxMessagesPerLogin();
+//            maxMessagePerSecond = configBean.getMaxMessagesPerSecond();
+//            saveCycle = configBean.getSaveCycle();
+            ServerMonitorController.setSaveCycle(configBean.getSaveCycle());
+            LicenseCtrl.setLimit(configBean.getMaxMessagesPerLogin(), configBean.getMaxMessagesPerSecond());
+            zipLogController.setAndStart(configBean.getZipCycle());
+            reZipLogController.setAndStart(configBean.getReZipCycle());
+        }catch(IOException ioe){
+            throw new RuntimeException(ioe);
+        }
+    }
 
-	public static void startRecordThread() {
-		ServerMonitorController.startRecord();
-	}
+    public static void startRecordThread(){
+        ServerMonitorController.startRecord();
+    }
 
-	private String dealWithTextMessage(String jsonString) {
-		String user = JsonAnalizerServer.getUser(jsonString);
-		int licenseResult = licenseController.receivedMessage(user);
-		if (licenseResult != 0) {
-			// recordController.ignoredNumberAdd();
-			currentUser = "";
-			ServerMonitorController.increaseIgnoredNumber();
-			if (licenseResult == 1) {
-				return JsonBuilderServer.getMessageBusyError();
-			}
-			if (licenseResult == 2) {
-				return JsonBuilderServer.getNeedReloginError();
-			}
-			if (licenseResult == 3) {
-				// how can this happens, I don't know.
-				licenseController.stopCounting();
-				return JsonBuilderServer.getNeedReloginError();
-			}
-		}
-		ServerMonitorController.increaseReceivedNumber();
-		return jsonString;
-	}
+    private LicenseCtrl licenseController;
 
-	private String dealWithPassword(String jsonString) {
-		String user = JsonAnalizerServer.getUser(jsonString);
-		String password = encrypt.decryptToTMD5(JsonAnalizerServer
-				.getPassword(jsonString));
+    private User user;
 
-		if (passwordController.passwordCheck(user, password)) {
-			licenseController.reset(user);
-			ServerMonitorController.increaseLogfailedNumber();
-			this.currentUser = user;
-			return JsonBuilderServer.getLoginSucceedJson();
-		}
-		ServerMonitorController.increaseLogfailedNumber();
-		return JsonBuilderServer.getLoginFailedJson();
-	}
+    public MessageController(){
+        licenseController = new LicenseCtrl();
+        user = new User();
+    }
 
-	public void addSendRecord() {
-		ServerMonitorController.increaseForwardedNumber();
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public String getGroup() {
-		return groupController.getGroup(this.currentUser);
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public boolean hasCurrentUser() {
-		return this.currentUser != "";
-	}
+    public String dealWithMessage(String jsonString){
+        String type = JsonAnalizerServer.getMessageType(jsonString);
+        if(type.equals(JsonBuilderBase.message)){
+            return this.dealWithTextMessage(jsonString);
+        }
+        if(type.equals(JsonBuilderBase.password)){
+            return this.dealWithPwdMessage(jsonString);
+        }
+        return JsonBuilderServer.getTypeNoFoundError();
+    }
 
-	public static void quit() {
-		ServerMonitorController.getMonitor().stop();
-		passwordController.quit();
-		groupController.quit();
-		zipLogController.quit();
-	}
+    public String dealWithTextMessage(String jsonString){
+        String user = JsonAnalizerServer.getUser(jsonString);
+        int licenseResult = licenseController.receivedMessage(user);
+        if (licenseResult != 0) {
+            // recordController.ignoredNumberAdd();
+            ServerMonitorController.increaseIgnoredNumber();
+            if (licenseResult == 1) {
+                return JsonBuilderServer.getMessageBusyError();
+            }
+            if (licenseResult == 2) {
+                return JsonBuilderServer.getNeedReloginError();
+            }
+            if (licenseResult == 3) {
+                // how can this happens, I don't know.
+                licenseController.stopCounting();
+                return JsonBuilderServer.getNeedReloginError();
+            }
+        }
+        ServerMonitorController.increaseReceivedNumber();
+        return jsonString;
+    }
+
+    public String dealWithPwdMessage(String jsonString){
+        String user = JsonAnalizerServer.getUser(jsonString);
+        String password = encrypt.decryptToTMD5(JsonAnalizerServer.getPassword(jsonString));
+        if(passwordController.passwordCheck(user, password)){
+            licenseController.reset(user);
+            this.user.setUserId(user);
+            String group = groupController.getGroup(user);
+            this.user.setGroup(group);
+            this.user.setOnLine(true);
+            ServerMonitorController.increaseLogsucceedNumber();
+            return JsonBuilderServer.getLoginSucceedJson();
+        }
+        ServerMonitorController.increaseLogfailedNumber();
+        return JsonBuilderServer.getLoginFailedJson();
+    }
+
+    public void addSendRecord(){
+        ServerMonitorController.increaseLogfailedNumber();
+    }
+
+    public String getGroup(){
+        return this.user.getGroup();
+    }
+
+    public boolean hasCurrentUser(){
+        return ("").equals(this.user.getUserId());
+    }
+
+    public static void quit(){
+        ServerMonitorController.getMonitor().stop();
+        passwordController.quit();
+        groupController.quit();
+        zipLogController.quit();
+        reZipLogController.quit();
+    }
+
+
+
 }

@@ -26,17 +26,17 @@ public void setAndStart(int saveCycle){
 #### license.ctrl-1.0.jar用于许可管理
 
 ```
-public void reset(String user)
+public void reset(String userId)
 public static void setLimit(int msgsPerLogin, int msgsPerSecong)
 
 /**
-	 * @param user String of user's ID
+	 * @param userId String of userId's ID
 	 * @return
 	 * 0 for receive the massage normally. <br>
 	 * 1 for reaching the limit of max number of message in one second. <br>
 	 * 2 for reaching the limit of max number of message of one author authorization.
 	 */
-public int receivedMessage(String user)
+public int receivedMessage(String userId)
 ```
 
 [文档](http://weiyichen.github.io/SoftwareReuse-Project/lincense.ctrl-1.0-doc/index.html)
@@ -44,8 +44,8 @@ public int receivedMessage(String user)
 #### pwd.ctrl-1.0.jar用于与用户数据库有关的相关操作，可用于验证密码是否正确，以及新建用户。用户数据库为一json文件，因此该包也依赖于org.json.jar包
 
 ```
-public boolean passwordCheck(String user, String password)
-public boolean addUser(String user, String password)
+public boolean passwordCheck(String userId, String password)
+public boolean addUser(String userId, String password)
 ```
 
 [文档](http://weiyichen.github.io/SoftwareReuse-Project/pwd.ctrl-1.0-doc/index.html)

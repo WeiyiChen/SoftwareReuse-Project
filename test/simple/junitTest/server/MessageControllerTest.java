@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.tongji.reuse.teameleven.client.ctl.JsonBuilderClient;
-import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
+import edu.tongji.reuse.teameleven.server.ctrl.MessageControllerOld;
 
 public class MessageControllerTest {
 
@@ -14,7 +14,7 @@ public class MessageControllerTest {
 
 	@Test
 	public void testDealWithMessage() {
-		MessageController msgs = new MessageController();
+		MessageControllerOld msgs = new MessageControllerOld();
 		System.out.println(msgs.dealWithMessage(JsonBuilderClient.getPasswordJson("qyd", "12525")));
 		System.out.println(msgs.dealWithMessage(JsonBuilderClient.getPasswordJson("qyd", "1252865")));
 		try{
