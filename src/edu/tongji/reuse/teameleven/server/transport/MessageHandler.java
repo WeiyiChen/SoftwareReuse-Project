@@ -8,6 +8,7 @@ import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +25,7 @@ public class MessageHandler extends SafeQuiteThread{
         this.socketWrapper = socketWrapper;
         this.messageDispatcher = messageDispatcher;
         messageController = new MessageController();
+        msgsToStored = new ArrayList<String>();
     }
 
     public MessageController getMessageController() {
@@ -52,12 +54,13 @@ public class MessageHandler extends SafeQuiteThread{
 
     @Override
     public void run(){
-        BufferedReader reader = null;
-            reader = socketWrapper.getBufferedReader();
-            String message = null;
+
+//            String message = null;
             while(!Thread.currentThread().isInterrupted()){
                 try {
-                    message = reader.readLine();
+
+                    String message = socketWrapper.getBufferedReader().readLine();
+                    System.out.println(message);
 
                     // todo improve the store message method
                     msgsToStored.add(message);
@@ -67,7 +70,8 @@ public class MessageHandler extends SafeQuiteThread{
 
                     // why ?
                     if(message == null){
-                        break;
+//                        break;
+                        safeQuit();
                     }
 
                     if(message.equals("bye")){

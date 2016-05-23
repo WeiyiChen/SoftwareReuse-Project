@@ -110,3 +110,5 @@ zipclient/*
 junittestDir/
 
 client_msg.txt
+
+DeleteBackup/

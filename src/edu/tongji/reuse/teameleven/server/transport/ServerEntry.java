@@ -38,11 +38,12 @@ public class ServerEntry extends SafeQuiteThread{
 
             while(!Thread.currentThread().isInterrupted()){
                 try{
+
                     Socket socket = serverSocket.accept();
                     SocketWrapper socketWrapper = new SocketWrapper(socket);
-                    System.out.println("Client connected to the server!"
+                    System.out.println("Client connected to the server! "
                             + socket.getLocalAddress().toString());
-
+//
                     // allocate a server for new socket
                     MessageHandler messageHandler = new MessageHandler(socketWrapper, messageDispatcher);
                     messageDispatcher.addMessageHandler(messageHandler);

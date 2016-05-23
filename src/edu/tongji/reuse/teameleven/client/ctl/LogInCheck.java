@@ -37,6 +37,7 @@ public class LogInCheck implements ILogInCheck{
 		String secretPassword = encrypt.encrypt(pwd);
 		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, secretPassword);
 		IMsgSender msgSender = new JsonMsgSender();
+		System.out.println(jsonStr);
 		msgSender.send(jsonStr);
 		
 		Thread t = new Thread(new Runnable(){
