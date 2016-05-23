@@ -69,7 +69,6 @@ public class ClientReZipLogController {
 			String path = System.getProperties().getProperty("user.dir");
 			
 			for(int i = 0; i < files.length - 1; i++){
-				
 				path = path + File.separator + files[i];
 				File Folder = new File(path);
 				if (!Folder.exists() || !Folder.isDirectory()) {

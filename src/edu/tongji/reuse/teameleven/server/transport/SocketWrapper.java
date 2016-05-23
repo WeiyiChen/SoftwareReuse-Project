@@ -30,9 +30,16 @@ public class SocketWrapper {
 		return pw;
 	}
 	
-	public void sendText(String strToSend){
-		pw.println(strToSend);
-		pw.flush();
+	public void sendText(final String strToSend){
+//		pw.println(strToSend);
+//		pw.flush();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                pw.println(strToSend);
+                pw.flush();
+            }
+        }).start();
 	}
 	
 	public void quit() throws IOException{

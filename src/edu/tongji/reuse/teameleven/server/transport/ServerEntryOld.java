@@ -36,10 +36,10 @@ public class ServerEntryOld extends Thread {
 			serverSocket = new ServerSocket(port);
 			serverSocket.setSoTimeout(1000);
 			socketServerList = new ArrayList<ServerEntityOld>();
-			Socket socket = null;
+//			Socket socket = null;
 			while (continueToRun) {
 				try {
-					socket = serverSocket.accept();
+                    Socket socket = serverSocket.accept();
 					SocketWrapper socketWrapper = new SocketWrapper(socket);
 					System.out.println("Client connected to the server!"
 							+ socket.getLocalAddress().toString());
@@ -51,7 +51,7 @@ public class ServerEntryOld extends Thread {
 					// add the socket to all socket list
 					socketServerList.add(severEntity);
 				} catch (SocketTimeoutException ste) {
-                    ste.printStackTrace();
+//                    ste.printStackTrace();
 					continue;
 				}
 			}

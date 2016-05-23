@@ -1,21 +1,37 @@
 package edu.tongji.reuse.teameleven.server.transport;
 
-import edu.tongji.reuse.teameleven.model.User;
+import edu.tongji.reuse.teameleven.base.JsonBuilderBase;
+import edu.tongji.reuse.teameleven.base.SafeQuiteThread;
+import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
+import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
+import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 
-/**
- * Created by daidongyang on 5/22/16.
- */
-public class MessageHandler{
-    private User user;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.List;
+
+
+public class MessageHandler extends SafeQuiteThread{
+
     private SocketWrapper socketWrapper;
     private MessageDispatcher messageDispatcher;
+    private MessageController messageController;
+    private List<String> msgsToStored;
 
-    public User getUser() {
-        return user;
+
+    public MessageHandler(SocketWrapper socketWrapper, MessageDispatcher messageDispatcher){
+        super();
+        this.socketWrapper = socketWrapper;
+        this.messageDispatcher = messageDispatcher;
+        messageController = new MessageController();
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public MessageController getMessageController() {
+        return messageController;
+    }
+
+    public void setMessageController(MessageController messageController) {
+        this.messageController = messageController;
     }
 
     public SocketWrapper getSocketWrapper() {
@@ -33,4 +49,95 @@ public class MessageHandler{
     public void setMessageDispatcher(MessageDispatcher messageDispatcher) {
         this.messageDispatcher = messageDispatcher;
     }
+
+    @Override
+    public void run(){
+        BufferedReader reader = null;
+            reader = socketWrapper.getBufferedReader();
+            String message = null;
+            while(!Thread.currentThread().isInterrupted()){
+                try {
+                    message = reader.readLine();
+
+                    // todo improve the store message method
+                    msgsToStored.add(message);
+                    saveServerMsg(msgsToStored);
+
+                    System.out.println("receive: " + message);
+
+                    // why ?
+                    if(message == null){
+                        break;
+                    }
+
+                    if(message.equals("bye")){
+                        safeQuit();
+                    }
+
+                    String result = messageController.dealWithMessage(message);
+
+                    if(result.equals(JsonBuilderServer.getNeedReloginError())){
+                        result = JsonBuilderServer.getReloginRequestJson();
+                    }
+
+                    if(result.equals(JsonBuilderServer.getMessageBusyError())){
+                        continue;
+                    }
+
+                    System.out.println("Send : " + result);
+
+                    processMessage(result);
+                    messageController.addSendRecord();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    break;
+                }
+
+            }
+
+    }
+
+    @Override
+    public void safeQuit() {
+        try{
+            socketWrapper.quit();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        messageDispatcher.removeMessageHandler(this);
+        interrupt();
+    }
+
+    public void notified(String jsonString){
+        socketWrapper.sendText(jsonString);
+    }
+
+    public void notified(String jsonString, String flag, MessageNotifyType notifyType){
+        if(notifyType == MessageNotifyType.GROUP){
+            if(flag.equals(messageController.getUser().getGroup())){
+                socketWrapper.sendText(jsonString);
+            }
+        }else if(notifyType == MessageNotifyType.USER){
+            if(flag.equals(messageController.getUser().getUserId())){
+                socketWrapper.sendText(jsonString);
+            }
+        }
+    }
+
+    public void saveServerMsg(List<String> msgs){
+
+    }
+
+    public void processMessage(String message){
+        // todo add process for get online users
+        if(JsonAnalizerServer.getMessageType(message).equals(JsonBuilderBase.message)){
+            messageDispatcher.notify(message,
+                    messageController.getUser().getGroup(), MessageNotifyType.GROUP);
+        }else{
+            socketWrapper.sendText(message);
+        }
+    }
+
+
+
 }
