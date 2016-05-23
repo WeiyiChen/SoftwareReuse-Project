@@ -1,1 +1,1 @@
-{"MaxMessagesPerLogin":"6","SaveCycle":"2","MaxMessagesPerSecond":"5"}
+{"maxMessagesPerLogin":6,"saveCycle":2,"maxMessagesPerSecond":5,"port":2345,"zipCycle":86400,"reZipCycle":604800}

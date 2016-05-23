@@ -3,7 +3,7 @@
 
 ## Directory-based project format
 .idea/
-# if you remove the above rule, at least ignore user-specific stuff:
+# if you remove the above rule, at least ignore userId-specific stuff:
 # .idea/workspace.xml
 # .idea/tasks.xml
 # and these sensitive or high-churn files:
@@ -94,7 +94,7 @@ local.properties
 compiler.xml
 .idea
 
-# user define ignore file
+# userId define ignore file
 
 *log.txt
 data/recoder.txt
@@ -110,3 +110,5 @@ zipclient/*
 junittestDir/
 
 client_msg.txt
+
+DeleteBackup/
