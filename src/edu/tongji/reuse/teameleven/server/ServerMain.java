@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import edu.tongji.reuse.teameleven.server.transport.ServerEntry;
-import edu.tongji.reuse.teameleven.server.transport.ServerEntryOld;
+
 
 public class ServerMain {
 

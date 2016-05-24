@@ -1,19 +1,18 @@
 package edu.tongji.reuse.teameleven.server.transport;
 
 import edu.tongji.reuse.teameleven.base.JsonBuilderBase;
-import edu.tongji.reuse.teameleven.base.SafeQuiteThread;
+import edu.tongji.reuse.teameleven.base.LoopThread;
 import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
 import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class MessageHandler extends SafeQuiteThread{
+public class MessageHandler extends LoopThread {
 
     private SocketWrapper socketWrapper;
     private MessageDispatcher messageDispatcher;
