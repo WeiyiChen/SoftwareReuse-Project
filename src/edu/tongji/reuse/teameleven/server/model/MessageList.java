@@ -11,6 +11,7 @@ public class MessageList extends LinkedList<MessageListItem> {
     private int groupSize;
 
     public MessageList(String group, int groupSize) {
+        super();
         this.group = group;
         this.groupSize = groupSize;
     }
@@ -49,6 +50,15 @@ public class MessageList extends LinkedList<MessageListItem> {
             }
         }
         return msgs;
+    }
+
+    @Override
+    public boolean add(MessageListItem messageListItem){
+        // if send message to itself
+        messageListItem.setRemainCount(groupSize);
+        // if ignore the message to client itself
+        // messageListItem.setRemainCount(groupSize-1);
+        return super.add(messageListItem);
     }
 
 }
