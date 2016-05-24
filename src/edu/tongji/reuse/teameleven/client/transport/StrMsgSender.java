@@ -11,7 +11,7 @@ import edu.tongji.reuse.teameleven.client.intf.IMsgSender;
  * @author Dai
  *
  */
-public class JsonMsgSender implements IMsgSender {
+public class StrMsgSender implements IMsgSender {
 
 	@Override
 	public boolean send(Object msg) {

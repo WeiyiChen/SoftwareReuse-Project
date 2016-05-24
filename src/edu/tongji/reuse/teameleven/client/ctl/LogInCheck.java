@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import edu.tongji.reuse.teameleven.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.client.transport.ClientSocket;
-import edu.tongji.reuse.teameleven.client.transport.JsonMsgSender;
+import edu.tongji.reuse.teameleven.client.transport.StrMsgSender;
 import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
 import edu.tongji.reuse.teameleven.client.intf.ILogInCheck;
@@ -36,7 +36,7 @@ public class LogInCheck implements ILogInCheck{
 		result = false;
 		String secretPassword = encrypt.encrypt(pwd);
 		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, secretPassword);
-		IMsgSender msgSender = new JsonMsgSender();
+		IMsgSender msgSender = new StrMsgSender();
 		System.out.println(jsonStr);
 		msgSender.send(jsonStr);
 		
@@ -94,8 +94,9 @@ public class LogInCheck implements ILogInCheck{
 						return false;
 					}
 					else{
-						System.err.println("unknown login result");
-						break;
+						System.out.println("unknown login result");
+						// ignore other kind of message
+						continue;
 					}
 					
 //					break;
