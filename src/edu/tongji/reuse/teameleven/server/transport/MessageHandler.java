@@ -19,6 +19,7 @@ public class MessageHandler extends SafeQuiteThread{
     private MessageDispatcher messageDispatcher;
     private MessageController messageController;
     private List<String> msgsToStored;
+    private boolean isIgnoreNotify = false;
 
 
     public MessageHandler(SocketWrapper socketWrapper, MessageDispatcher messageDispatcher){
@@ -51,6 +52,14 @@ public class MessageHandler extends SafeQuiteThread{
 
     public void setMessageDispatcher(MessageDispatcher messageDispatcher) {
         this.messageDispatcher = messageDispatcher;
+    }
+
+    public boolean isIgnoreNotify() {
+        return isIgnoreNotify;
+    }
+
+    public void setIgnoreNotify(boolean ignoreNotify) {
+        isIgnoreNotify = ignoreNotify;
     }
 
     @Override
@@ -120,6 +129,7 @@ public class MessageHandler extends SafeQuiteThread{
     }
 
     public void notified(String jsonString, String flag, MessageNotifyType notifyType){
+
         if(notifyType == MessageNotifyType.GROUP){
             if(flag.equals(messageController.getUser().getGroup())){
                 socketWrapper.sendText(jsonString);
@@ -166,6 +176,11 @@ public class MessageHandler extends SafeQuiteThread{
     }
 
     private void sendInitContacts(final List<String> contacts) {
+        System.out.print("contacts size : ");
+        System.out.println(contacts.size());
+        if(contacts.size()<1){
+            return;
+        }
         new Thread(new Runnable(){
 
             @Override
@@ -173,12 +188,13 @@ public class MessageHandler extends SafeQuiteThread{
                 try {
                     TimeUnit.MILLISECONDS.sleep(1000);
                     String jsonMessage = JsonBuilderServer.getInitContactsJson(contacts);
+                    System.out.println(jsonMessage);
                     socketWrapper.sendText(jsonMessage);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        });
+        }).start();
     }
 
     public void setUserOnLine(boolean isOnLine){
@@ -200,6 +216,7 @@ public class MessageHandler extends SafeQuiteThread{
     public String getUserGroup(){
         return messageController.getUser().getGroup();
     }
+
 
 
 }

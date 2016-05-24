@@ -83,6 +83,7 @@ public class MsgHandle implements IMsgHandle {
             imw.removeContact(JsonAnalizerClient.getString(jsonString, JsonBuilderBase.content));
         } else if (JsonBuilderBase.init.equals(op)) {
             List<String> contacts = JsonAnalizerClient.getInitContacts(jsonString);
+            System.out.println(contacts);
             for (String user : contacts) {
                 imw.addContact(user);
             }
