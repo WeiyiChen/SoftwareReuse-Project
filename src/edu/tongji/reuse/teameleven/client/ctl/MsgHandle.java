@@ -7,7 +7,7 @@ import edu.tongji.reuse.teameleven.client.intf.IAddMsgToUI;
 import edu.tongji.reuse.teameleven.client.intf.IMsgHandle;
 import edu.tongji.reuse.teameleven.client.intf.IMsgSender;
 import edu.tongji.reuse.teameleven.client.intf.IMsgWindow;
-import edu.tongji.reuse.teameleven.client.transport.JsonMsgSender;
+import edu.tongji.reuse.teameleven.client.transport.StrMsgSender;
 import edu.tongji.reuse.teameleven.client.ui.LoginWindow;
 
 /**
@@ -33,7 +33,7 @@ public class MsgHandle implements IMsgHandle {
     public void sendMessage(Object msg) {
 
         boolean result = false;
-        IMsgSender msgSender = new JsonMsgSender();
+        IMsgSender msgSender = new StrMsgSender();
         result = msgSender.send(msg);
         if (result) {
 //			ClientLogger.increaseSendNum();
@@ -83,6 +83,7 @@ public class MsgHandle implements IMsgHandle {
             imw.removeContact(JsonAnalizerClient.getString(jsonString, JsonBuilderBase.content));
         } else if (JsonBuilderBase.init.equals(op)) {
             List<String> contacts = JsonAnalizerClient.getInitContacts(jsonString);
+            System.out.println(contacts);
             for (String user : contacts) {
                 imw.addContact(user);
             }

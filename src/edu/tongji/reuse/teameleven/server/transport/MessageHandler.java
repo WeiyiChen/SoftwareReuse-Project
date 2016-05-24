@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class MessageHandler extends SafeQuiteThread{
@@ -18,6 +19,7 @@ public class MessageHandler extends SafeQuiteThread{
     private MessageDispatcher messageDispatcher;
     private MessageController messageController;
     private List<String> msgsToStored;
+    private boolean isIgnoreNotify = false;
 
 
     public MessageHandler(SocketWrapper socketWrapper, MessageDispatcher messageDispatcher){
@@ -52,6 +54,14 @@ public class MessageHandler extends SafeQuiteThread{
         this.messageDispatcher = messageDispatcher;
     }
 
+    public boolean isIgnoreNotify() {
+        return isIgnoreNotify;
+    }
+
+    public void setIgnoreNotify(boolean ignoreNotify) {
+        isIgnoreNotify = ignoreNotify;
+    }
+
     @Override
     public void run(){
 
@@ -68,14 +78,20 @@ public class MessageHandler extends SafeQuiteThread{
 
                     System.out.println("receive: " + message);
 
-                    // why ?
+                    // the client has been closed
                     if(message == null){
 //                        break;
+                        messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                                this.getUserGroup(), MessageNotifyType.GROUP);
                         safeQuit();
+                        continue;
                     }
 
                     if(message.equals("bye")){
+                        messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                                this.getUserGroup(), MessageNotifyType.GROUP);
                         safeQuit();
+                        continue;
                     }
 
                     String result = messageController.dealWithMessage(message);
@@ -117,6 +133,7 @@ public class MessageHandler extends SafeQuiteThread{
     }
 
     public void notified(String jsonString, String flag, MessageNotifyType notifyType){
+
         if(notifyType == MessageNotifyType.GROUP){
             if(flag.equals(messageController.getUser().getGroup())){
                 socketWrapper.sendText(jsonString);
@@ -128,6 +145,13 @@ public class MessageHandler extends SafeQuiteThread{
         }
     }
 
+    public void notified(String jsonString, String flag, MessageNotifyType notifyType, MessageHandler sender) {
+        if(sender == this){
+            return;
+        }
+        notified(jsonString, flag, notifyType);
+    }
+
     public void saveServerMsg(List<String> msgs){
 
     }
@@ -137,9 +161,71 @@ public class MessageHandler extends SafeQuiteThread{
         if(JsonAnalizerServer.getMessageType(message).equals(JsonBuilderBase.message)){
             messageDispatcher.notify(message,
                     messageController.getUser().getGroup(), MessageNotifyType.GROUP);
-        }else{
+        }else if((JsonBuilderServer.getReloginRequestJson()).equals(message)){
+
+            // add update user contact list command
+            messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                    this.getUserGroup(), MessageNotifyType.GROUP,this);
+
+            // relogin
+            setUserOnLine(false);
+            socketWrapper.sendText(message);
+        }else if((JsonBuilderBase.getLoginSucceedJson()).equals(message)){
+            socketWrapper.sendText(message);
+            List<String> contacts = messageDispatcher.getOnLineUsersWithGroup(this.getUserGroup());
+            this.sendInitContacts(contacts);
+
+            messageDispatcher.notify(JsonBuilderServer.getAddContactsJson(this.getUserId()),
+                    this.getUserGroup(), MessageNotifyType.GROUP, this);
+
+        }
+        else{
+            System.out.print("Listener's size : ");
+            System.out.println(messageDispatcher.getMessageHandlers().size());
             socketWrapper.sendText(message);
         }
+    }
+
+    private void sendInitContacts(final List<String> contacts) {
+        System.out.print("contacts size : ");
+        System.out.println(contacts.size());
+        if(contacts.size()<1){
+            return;
+        }
+        new Thread(new Runnable(){
+
+            @Override
+            public void run() {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1000);
+                    String jsonMessage = JsonBuilderServer.getInitContactsJson(contacts);
+                    System.out.println(jsonMessage);
+                    socketWrapper.sendText(jsonMessage);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void setUserOnLine(boolean isOnLine){
+        messageController.getUser().setOnLine(isOnLine);
+    }
+
+    public boolean isUserOnLine(){
+        try{
+            return messageController.getUser().isOnLine();
+        }catch(NullPointerException e){
+            return false;
+        }
+    }
+
+    public String getUserId(){
+        return messageController.getUser().getUserId();
+    }
+
+    public String getUserGroup(){
+        return messageController.getUser().getGroup();
     }
 
 
