@@ -1,4 +1,4 @@
-package edu.tongji.reuse.teameleven.client.ctl;
+package edu.tongji.reuse.teameleven.client.ctrl;
 
 import java.io.BufferedReader;
 import java.io.IOException;

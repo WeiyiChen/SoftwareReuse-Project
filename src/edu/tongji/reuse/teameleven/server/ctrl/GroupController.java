@@ -38,5 +38,15 @@ public class GroupController extends KeyValueController {
         super.refresh();
     }
 
+    public int getGroupSize(String group){
+        int groupSize = 0;
+        for(String str : super.getUserMap().values()){
+            if(group.equals(str)){
+                groupSize++;
+            }
+        }
+        return groupSize;
+    }
+
 }
 

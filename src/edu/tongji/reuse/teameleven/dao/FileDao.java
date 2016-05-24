@@ -32,7 +32,7 @@ public abstract class FileDao<T> {
             File dataFile = new File(getPathName());
             if(!dataFile.exists() || !dataFile.isFile()){
                 dataFile.createNewFile();
-                teamEleven.userKeyValueCtrl.FileAccess.fileOverWrite(getPathName(), getBasicString());
+                FileAccess.fileOverWrite(getPathName(), getBasicString());
             }
         }catch(IOException ioe){
             ioe.printStackTrace();

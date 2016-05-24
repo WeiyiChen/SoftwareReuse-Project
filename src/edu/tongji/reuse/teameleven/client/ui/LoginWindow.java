@@ -10,9 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import edu.tongji.reuse.teameleven.client.ctl.ClientMonitorController;
-import edu.tongji.reuse.teameleven.client.ctl.LogInCheck;
-import edu.tongji.reuse.teameleven.client.ctl.WindowJumpFromLoginToMsg;
+import edu.tongji.reuse.teameleven.client.ctrl.ClientMonitorController;
+import edu.tongji.reuse.teameleven.client.ctrl.LogInCheck;
+import edu.tongji.reuse.teameleven.client.ctrl.WindowJumpFromLoginToMsg;
 import edu.tongji.reuse.teameleven.client.intf.ILogInCheck;
 import edu.tongji.reuse.teameleven.client.intf.ILoginWindow;
 import edu.tongji.reuse.teameleven.client.intf.IMsgWindow;

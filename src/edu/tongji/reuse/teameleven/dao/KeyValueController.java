@@ -69,4 +69,7 @@ public class KeyValueController{
         userMap = userDao.read();
     }
 
+    public Map<String, String> getUserMap() {
+        return userMap;
+    }
 }
