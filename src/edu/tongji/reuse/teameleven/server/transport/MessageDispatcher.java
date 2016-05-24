@@ -50,6 +50,12 @@ public class MessageDispatcher {
         }
     }
 
+    public void notify(String jsonString, String flag, MessageNotifyType notifyType, MessageHandler sender){
+        for(MessageHandler mhl : messageHandlers){
+            mhl.notified(jsonString, flag, notifyType, sender);
+        }
+    }
+
     public List<String> getOnLineUsersWithGroup(String userGroup) {
         List<String> contacts = new ArrayList<String>();
         for(MessageHandler messageHandler : messageHandlers){

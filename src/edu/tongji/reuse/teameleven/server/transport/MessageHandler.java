@@ -81,11 +81,15 @@ public class MessageHandler extends SafeQuiteThread{
                     // the client has been closed
                     if(message == null){
 //                        break;
+                        messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                                this.getUserGroup(), MessageNotifyType.GROUP);
                         safeQuit();
                         continue;
                     }
 
                     if(message.equals("bye")){
+                        messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                                this.getUserGroup(), MessageNotifyType.GROUP);
                         safeQuit();
                         continue;
                     }
@@ -141,6 +145,13 @@ public class MessageHandler extends SafeQuiteThread{
         }
     }
 
+    public void notified(String jsonString, String flag, MessageNotifyType notifyType, MessageHandler sender) {
+        if(sender == this){
+            return;
+        }
+        notified(jsonString, flag, notifyType);
+    }
+
     public void saveServerMsg(List<String> msgs){
 
     }
@@ -154,7 +165,7 @@ public class MessageHandler extends SafeQuiteThread{
 
             // add update user contact list command
             messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
-                    this.getUserGroup(), MessageNotifyType.GROUP);
+                    this.getUserGroup(), MessageNotifyType.GROUP,this);
 
             // relogin
             setUserOnLine(false);
@@ -165,7 +176,7 @@ public class MessageHandler extends SafeQuiteThread{
             this.sendInitContacts(contacts);
 
             messageDispatcher.notify(JsonBuilderServer.getAddContactsJson(this.getUserId()),
-                    this.getUserGroup(), MessageNotifyType.GROUP);
+                    this.getUserGroup(), MessageNotifyType.GROUP, this);
 
         }
         else{
