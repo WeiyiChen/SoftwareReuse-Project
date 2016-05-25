@@ -16,7 +16,7 @@ public class SocketWrapper {
 		this.socket =  socket;
 		try{
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			pw = new  PrintWriter(socket.getOutputStream());
+			pw = new PrintWriter(socket.getOutputStream());
 		}catch(IOException ioe){
 			ioe.printStackTrace();
 		}
@@ -31,8 +31,6 @@ public class SocketWrapper {
 	}
 	
 	public void sendText(final String strToSend){
-//		pw.println(strToSend);
-//		pw.flush();
         new Thread(new Runnable() {
             @Override
             public void run() {

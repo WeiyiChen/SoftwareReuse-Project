@@ -3,6 +3,7 @@ package edu.tongji.reuse.teameleven.server.transport;
 import edu.tongji.reuse.teameleven.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.base.LoopThread;
 import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
+import edu.tongji.reuse.teameleven.server.ctrl.MissedMsgsCtrl;
 import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 
@@ -124,6 +125,7 @@ public class MessageHandler extends LoopThread {
             e.printStackTrace();
         }
         messageDispatcher.removeMessageHandler(this);
+        MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
         interrupt();
     }
 
@@ -160,6 +162,7 @@ public class MessageHandler extends LoopThread {
         if(JsonAnalizerServer.getMessageType(message).equals(JsonBuilderBase.message)){
             messageDispatcher.notify(message,
                     messageController.getUser().getGroup(), MessageNotifyType.GROUP);
+            MissedMsgsCtrl.getInstance().addMessage(this.getUserGroup(), message);
         }else if((JsonBuilderServer.getReloginRequestJson()).equals(message)){
 
             // add update user contact list command
@@ -171,8 +174,15 @@ public class MessageHandler extends LoopThread {
             socketWrapper.sendText(message);
         }else if((JsonBuilderBase.getLoginSucceedJson()).equals(message)){
             socketWrapper.sendText(message);
+
+            // init contacts
             List<String> contacts = messageDispatcher.getOnLineUsersWithGroup(this.getUserGroup());
             this.sendInitContacts(contacts);
+
+            // send missed messages
+            MissedMsgsCtrl.getInstance().initMsgList(this.getUserGroup(), contacts.size());
+            List<String> jsonMsgs =
+                    MissedMsgsCtrl.getInstance().getMissedMsgsAndUpdateUser(messageController.getUser());
 
             messageDispatcher.notify(JsonBuilderServer.getAddContactsJson(this.getUserId()),
                     this.getUserGroup(), MessageNotifyType.GROUP, this);
