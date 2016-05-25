@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import edu.tongji.reuse.teameleven.client.ctl.JsonBuilderClient;
-import edu.tongji.reuse.teameleven.client.ctl.MsgHandle;
+import edu.tongji.reuse.teameleven.client.ctrl.JsonBuilderClient;
+import edu.tongji.reuse.teameleven.client.ctrl.MsgHandle;
 import edu.tongji.reuse.teameleven.client.intf.IMsgHandle;
 import edu.tongji.reuse.teameleven.client.intf.IMsgWindow;
 

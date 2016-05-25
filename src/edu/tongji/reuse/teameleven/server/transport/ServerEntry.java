@@ -1,17 +1,15 @@
 package edu.tongji.reuse.teameleven.server.transport;
 
 
-import edu.tongji.reuse.teameleven.base.SafeQuiteThread;
+import edu.tongji.reuse.teameleven.base.LoopThread;
 import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.LinkedList;
-import java.util.List;
 
-public class ServerEntry extends SafeQuiteThread{
+public class ServerEntry extends LoopThread {
 
     private int port = 2345;
 

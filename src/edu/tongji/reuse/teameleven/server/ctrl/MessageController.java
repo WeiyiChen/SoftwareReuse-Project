@@ -8,10 +8,9 @@ import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 import octoteam.tahiti.config.ConfigManager;
 import octoteam.tahiti.config.loader.JsonAdapter;
-import teamEleven.groupCtrl.GroupController;
-import teamEleven.pwdCtrl.PasswordController;
 
 import java.io.IOException;
+import java.util.Date;
 
 // todo move static fields to a new class using singleton pattern
 public class MessageController {
@@ -23,11 +22,6 @@ public class MessageController {
             ServerConfigEnum.defaultUserGroupMap
     );
 
-//    private static int maxMessagePerLogin;
-//
-//    private static int maxMessagePerSecond;
-//
-//    private static int saveCycle;
 
     private static ConfigManager configManager = new ConfigManager(
             new JsonAdapter(), "data/config.json"
@@ -44,9 +38,6 @@ public class MessageController {
     static{
         try{
             configBean = configManager.loadToBean(ServerConfigBean.class);
-//            maxMessagePerLogin = configBean.getMaxMessagesPerLogin();
-//            maxMessagePerSecond = configBean.getMaxMessagesPerSecond();
-//            saveCycle = configBean.getSaveCycle();
             ServerMonitorController.setSaveCycle(configBean.getSaveCycle());
             LicenseCtrl.setLimit(configBean.getMaxMessagesPerLogin(), configBean.getMaxMessagesPerSecond());
             zipLogController.setAndStart(configBean.getZipCycle());
@@ -119,6 +110,7 @@ public class MessageController {
             String group = groupController.getGroup(user);
             this.user.setGroup(group);
             this.user.setOnLine(true);
+            this.user.setLoginTime(new Date().getTime());
             ServerMonitorController.increaseLogsucceedNumber();
             return JsonBuilderServer.getLoginSucceedJson();
         }

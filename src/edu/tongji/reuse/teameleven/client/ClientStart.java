@@ -3,11 +3,11 @@ package edu.tongji.reuse.teameleven.client;
 import java.awt.EventQueue;
 import java.io.IOException;
 
-import edu.tongji.reuse.teameleven.client.ctl.ClientMonitorController;
-import edu.tongji.reuse.teameleven.client.ctl.ClientReZipLogController;
-import edu.tongji.reuse.teameleven.client.ctl.ClientZipLogController;
+import edu.tongji.reuse.teameleven.client.ctrl.ClientMonitorController;
+import edu.tongji.reuse.teameleven.client.ctrl.ClientReZipLogController;
+import edu.tongji.reuse.teameleven.client.ctrl.ClientZipLogController;
 import edu.tongji.reuse.teameleven.client.intf.ILoginWindow;
-import edu.tongji.reuse.teameleven.client.ctl.ClientConfigBean;
+import edu.tongji.reuse.teameleven.client.ctrl.ClientConfigBean;
 import edu.tongji.reuse.teameleven.client.transport.ClientSocket;
 import edu.tongji.reuse.teameleven.client.ui.LoginWindow;
 //import teamEleven.record.ClientRecordController;

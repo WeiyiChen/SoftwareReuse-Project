@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class MessageDispatcher {
     private List<MessageHandler> messageHandlers;
-    private Map<String, List<String>> groupUsesrMap;
+
 
 
     public MessageDispatcher() {

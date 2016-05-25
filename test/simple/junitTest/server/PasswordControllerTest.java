@@ -3,10 +3,11 @@ package simple.junitTest.server;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.tongji.reuse.teameleven.server.ctrl.PasswordController;
 import org.junit.Test;
 import org.junit.BeforeClass;
-import edu.tongji.reuse.teameleven.client.ctl.JsonBuilderClient;
-import teamEleven.pwdCtrl.PasswordController;
+import edu.tongji.reuse.teameleven.client.ctrl.JsonBuilderClient;
+//import teamEleven.pwdCtrl.PasswordController;
 import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
 
@@ -31,7 +32,7 @@ public class PasswordControllerTest {
 		System.out.println(ie.decryptToTMD5("766a60c2153ea0ab9f2970b48134c63b248"));
 
 	}
-	
+
 	//@Test
 	public void testaddUser() {
 		PasswordController pwdCtrl = new PasswordController(defMap);
