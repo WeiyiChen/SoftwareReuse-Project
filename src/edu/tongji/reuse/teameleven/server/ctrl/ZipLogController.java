@@ -94,7 +94,12 @@ public class ZipLogController {
 				String destFile = folderOfZippedLog + File.separator
 						+ "log" + format.format(cal.getTime());
 				Zip2.zip(logForder, destFile, fileLimit);
-				FileUtils.deleteDirectory(new File(logForder));
+				try{
+					FileUtils.deleteDirectory(new File(logForder));
+				}catch(IOException ee){
+					ee.printStackTrace(System.out);
+				}
+
 			}catch (IOException e) {
 				new RuntimeException(e);
 			}			

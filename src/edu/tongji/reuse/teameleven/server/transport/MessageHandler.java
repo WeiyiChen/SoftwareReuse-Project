@@ -9,6 +9,7 @@ import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -81,15 +82,27 @@ public class MessageHandler extends LoopThread {
                     // the client has been closed
                     if(message == null){
 //                        break;
-                        messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
-                                this.getUserGroup(), MessageNotifyType.GROUP);
+                        if(this.getUserGroup()!=null){
+                            // remove the user in other's contact
+                            messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                                    this.getUserGroup(), MessageNotifyType.GROUP);
+                            // subtract the
+                            MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+                        }
+
                         safeQuit();
                         continue;
                     }
 
                     if(message.equals("bye")){
-                        messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
-                                this.getUserGroup(), MessageNotifyType.GROUP);
+                        if(this.getUserGroup()!=null){
+                            // remove the user in other's contact
+                            messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                                    this.getUserGroup(), MessageNotifyType.GROUP);
+                            // sub the online count
+                            MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+                        }
+
                         safeQuit();
                         continue;
                     }
@@ -125,7 +138,7 @@ public class MessageHandler extends LoopThread {
             e.printStackTrace();
         }
         messageDispatcher.removeMessageHandler(this);
-        MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+//        MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
         interrupt();
     }
 
@@ -162,6 +175,7 @@ public class MessageHandler extends LoopThread {
         if(JsonAnalizerServer.getMessageType(message).equals(JsonBuilderBase.message)){
             messageDispatcher.notify(message,
                     messageController.getUser().getGroup(), MessageNotifyType.GROUP);
+
             MissedMsgsCtrl.getInstance().addMessage(this.getUserGroup(), message);
         }else if((JsonBuilderServer.getReloginRequestJson()).equals(message)){
 
@@ -171,6 +185,8 @@ public class MessageHandler extends LoopThread {
 
             // relogin
             setUserOnLine(false);
+
+            MissedMsgsCtrl.getInstance().setLogoutTime(this.getUserId(), new Date().getTime());
             socketWrapper.sendText(message);
         }else if((JsonBuilderBase.getLoginSucceedJson()).equals(message)){
             socketWrapper.sendText(message);
@@ -179,13 +195,19 @@ public class MessageHandler extends LoopThread {
             List<String> contacts = messageDispatcher.getOnLineUsersWithGroup(this.getUserGroup());
             this.sendInitContacts(contacts);
 
+            // tell other client to add this user
+            messageDispatcher.notify(JsonBuilderServer.getAddContactsJson(this.getUserId()),
+                    this.getUserGroup(), MessageNotifyType.GROUP, this);
+
             // send missed messages
             MissedMsgsCtrl.getInstance().initMsgList(this.getUserGroup(), contacts.size());
+
             List<String> jsonMsgs =
                     MissedMsgsCtrl.getInstance().getMissedMsgsAndUpdateUser(messageController.getUser());
 
-            messageDispatcher.notify(JsonBuilderServer.getAddContactsJson(this.getUserId()),
-                    this.getUserGroup(), MessageNotifyType.GROUP, this);
+            socketWrapper.sendTexts(jsonMsgs);
+
+
 
         }
         else{

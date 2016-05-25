@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
 
 // make the socket handy to send and receive text message
 public class SocketWrapper {
@@ -44,5 +45,20 @@ public class SocketWrapper {
 		br.close();
 		pw.close();
 		socket.close();
+	}
+
+	public void sendTexts(final List<String> jsonMsgs) {
+		if(jsonMsgs == null){
+			return;
+		}
+		new Thread(new Runnable(){
+			@Override
+			public void run(){
+				for(String jsonMsg : jsonMsgs){
+					pw.println(jsonMsg);
+				}
+				pw.flush();
+			}
+		}).start();
 	}
 }

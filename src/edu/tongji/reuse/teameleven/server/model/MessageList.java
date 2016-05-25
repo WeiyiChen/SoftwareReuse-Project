@@ -58,6 +58,9 @@ public class MessageList extends LinkedList<MessageListItem> {
     // get lost message according to logoutTime and login time
     public List<String> getMissedMsgs(long logoutTime, long loginTime){
         List<String> msgs = new ArrayList<>();
+        System.out.println("message list: " + super.toString());
+        System.out.println("longoutTime : " + super.toString());
+        System.out.println("loginTime : " + super.toString());
         for(MessageListItem messageListItem : new ArrayList<MessageListItem>(this)){
             if(logoutTime < messageListItem.getPosixTime() && loginTime >= messageListItem.getPosixTime()){
                 msgs.add(messageListItem.getJsonMsg());
@@ -85,5 +88,7 @@ public class MessageList extends LinkedList<MessageListItem> {
         messageListItem.setRemainCount(remainCount);
         return super.add(messageListItem);
     }
+
+
 
 }
