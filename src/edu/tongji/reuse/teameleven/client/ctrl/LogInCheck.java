@@ -59,8 +59,8 @@ public class LogInCheck implements ILogInCheck{
 		});
 		t.start();
 		try {
-			for(int i = 0; i < 100; i++){
-				TimeUnit.MILLISECONDS.sleep(10);
+			for(int i = 0; i < 500; i++){
+				TimeUnit.MILLISECONDS.sleep(2);
 				if(isReceived)
 					break;
 			}

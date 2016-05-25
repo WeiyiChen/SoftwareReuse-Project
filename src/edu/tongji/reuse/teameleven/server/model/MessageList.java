@@ -59,16 +59,18 @@ public class MessageList extends LinkedList<MessageListItem> {
     public List<String> getMissedMsgs(long logoutTime, long loginTime){
         List<String> msgs = new ArrayList<>();
         System.out.println("message list: " + super.toString());
-        System.out.println("longoutTime : " + super.toString());
-        System.out.println("loginTime : " + super.toString());
+        System.out.println("longoutTime : " + logoutTime);
+        System.out.println("loginTime : " + loginTime);
         for(MessageListItem messageListItem : new ArrayList<MessageListItem>(this)){
             if(logoutTime < messageListItem.getPosixTime() && loginTime >= messageListItem.getPosixTime()){
                 msgs.add(messageListItem.getJsonMsg());
                 if(!messageListItem.subRemainCount()){
-                    this.remove(messageListItem);
+                    super.remove(messageListItem);
+//                    this.remove(messageListItem);
                 }
             }
         }
+        System.out.println("messages : " + msgs);
         return msgs;
     }
 

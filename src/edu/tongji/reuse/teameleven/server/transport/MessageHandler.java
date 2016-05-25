@@ -214,6 +214,7 @@ public class MessageHandler extends LoopThread {
             List<String> jsonMsgs =
                     MissedMsgsCtrl.getInstance().getMissedMsgsAndUpdateUser(messageController.getUser());
 
+            System.out.println("missed messages : " + jsonMsgs);
             socketWrapper.sendTexts(jsonMsgs);
 
 

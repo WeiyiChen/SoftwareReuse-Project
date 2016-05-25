@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 // make the socket handy to send and receive text message
 public class SocketWrapper {
@@ -54,6 +55,11 @@ public class SocketWrapper {
 		new Thread(new Runnable(){
 			@Override
 			public void run(){
+				try {
+					TimeUnit.MILLISECONDS.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				for(String jsonMsg : jsonMsgs){
 					pw.println(jsonMsg);
 				}

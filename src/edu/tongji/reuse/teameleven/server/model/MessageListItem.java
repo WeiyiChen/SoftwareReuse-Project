@@ -62,4 +62,14 @@ public class MessageListItem {
         remainCount--;
         return remainCount<=0?false:true;
     }
+
+    @Override
+    public String toString() {
+        return "MessageListItem{" +
+                "jsonMsg='" + jsonMsg + '\'' +
+                ", remainCount=" + remainCount +
+                ", posixTime=" + posixTime +
+                ", sender=" + sender +
+                '}';
+    }
 }
