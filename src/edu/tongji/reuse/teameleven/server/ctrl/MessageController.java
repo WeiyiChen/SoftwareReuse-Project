@@ -10,6 +10,7 @@ import octoteam.tahiti.config.ConfigManager;
 import octoteam.tahiti.config.loader.JsonAdapter;
 
 import java.io.IOException;
+import java.util.Date;
 
 // todo move static fields to a new class using singleton pattern
 public class MessageController {
@@ -109,6 +110,7 @@ public class MessageController {
             String group = groupController.getGroup(user);
             this.user.setGroup(group);
             this.user.setOnLine(true);
+            this.user.setLoginTime(new Date().getTime());
             ServerMonitorController.increaseLogsucceedNumber();
             return JsonBuilderServer.getLoginSucceedJson();
         }

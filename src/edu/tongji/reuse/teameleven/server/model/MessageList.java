@@ -9,6 +9,7 @@ public class MessageList extends LinkedList<MessageListItem> {
 
     private String group;
     private int groupSize;
+    private int groupOnlineCount;
 
     public MessageList(String group, int groupSize) {
         super();
@@ -38,11 +39,27 @@ public class MessageList extends LinkedList<MessageListItem> {
         this.groupSize = groupSize;
     }
 
-    // get lost message according to logoutTime
-    public List<String> getMissedMsg(long logoutTime){
+    public int getGroupOnlineCount() {
+        return groupOnlineCount;
+    }
+
+    public void setGroupOnlineCount(int groupOnlineCount) {
+        this.groupOnlineCount = groupOnlineCount;
+    }
+
+    public void addGroupOnLineCount(){
+        groupOnlineCount++;
+    }
+
+    public void subGroupConLineCount(){
+        groupOnlineCount--;
+    }
+
+    // get lost message according to logoutTime and login time
+    public List<String> getMissedMsgs(long logoutTime, long loginTime){
         List<String> msgs = new ArrayList<>();
         for(MessageListItem messageListItem : new ArrayList<MessageListItem>(this)){
-            if(logoutTime < messageListItem.getPosixTime()){
+            if(logoutTime < messageListItem.getPosixTime() && loginTime >= messageListItem.getPosixTime()){
                 msgs.add(messageListItem.getJsonMsg());
                 if(!messageListItem.subRemainCount()){
                     this.remove(messageListItem);
@@ -52,12 +69,20 @@ public class MessageList extends LinkedList<MessageListItem> {
         return msgs;
     }
 
+    public boolean addMessage(String jsonMsg){
+        MessageListItem messageListItem = new MessageListItem(jsonMsg);
+        return this.add(messageListItem);
+    }
+
     @Override
     public boolean add(MessageListItem messageListItem){
-        // if send message to itself
-        messageListItem.setRemainCount(groupSize);
-        // if ignore the message to client itself
-        // messageListItem.setRemainCount(groupSize-1);
+        int remainCount = groupSize - groupOnlineCount;
+        if(remainCount == 0){
+            return true;
+        }else if(remainCount < 0){
+            return false;
+        }
+        messageListItem.setRemainCount(remainCount);
         return super.add(messageListItem);
     }
 

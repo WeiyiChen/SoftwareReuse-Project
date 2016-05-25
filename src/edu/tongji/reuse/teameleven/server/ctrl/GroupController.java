@@ -2,6 +2,7 @@ package edu.tongji.reuse.teameleven.server.ctrl;
 
 import edu.tongji.reuse.teameleven.dao.KeyValueController;
 
+import java.util.List;
 import java.util.Map;
 
 public class GroupController extends KeyValueController {
@@ -47,6 +48,7 @@ public class GroupController extends KeyValueController {
         }
         return groupSize;
     }
+
 
 }
 
