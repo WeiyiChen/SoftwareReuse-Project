@@ -88,6 +88,8 @@ public class MessageHandler extends LoopThread {
                                     this.getUserGroup(), MessageNotifyType.GROUP);
                             // subtract the
                             MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+                            // mark the user logout time
+                            MissedMsgsCtrl.getInstance().setLogoutTime(this.getUserId());
                         }
 
                         safeQuit();
@@ -101,6 +103,8 @@ public class MessageHandler extends LoopThread {
                                     this.getUserGroup(), MessageNotifyType.GROUP);
                             // sub the online count
                             MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+                            // mark the user's logout time
+                            MissedMsgsCtrl.getInstance().setLogoutTime(this.getUserId());
                         }
 
                         safeQuit();
@@ -186,7 +190,12 @@ public class MessageHandler extends LoopThread {
             // relogin
             setUserOnLine(false);
 
+            // mark the user's logout time
             MissedMsgsCtrl.getInstance().setLogoutTime(this.getUserId(), new Date().getTime());
+
+            // sub the online user's count
+            MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+
             socketWrapper.sendText(message);
         }else if((JsonBuilderBase.getLoginSucceedJson()).equals(message)){
             socketWrapper.sendText(message);
