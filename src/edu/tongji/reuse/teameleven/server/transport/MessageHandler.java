@@ -3,11 +3,13 @@ package edu.tongji.reuse.teameleven.server.transport;
 import edu.tongji.reuse.teameleven.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.base.LoopThread;
 import edu.tongji.reuse.teameleven.server.ctrl.MessageController;
+import edu.tongji.reuse.teameleven.server.ctrl.MissedMsgsCtrl;
 import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.server.json.JsonBuilderServer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -80,15 +82,31 @@ public class MessageHandler extends LoopThread {
                     // the client has been closed
                     if(message == null){
 //                        break;
-                        messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
-                                this.getUserGroup(), MessageNotifyType.GROUP);
+                        if(this.getUserGroup()!=null){
+                            // remove the user in other's contact
+                            messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                                    this.getUserGroup(), MessageNotifyType.GROUP);
+                            // subtract the
+                            MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+                            // mark the user logout time
+                            MissedMsgsCtrl.getInstance().setLogoutTime(this.getUserId());
+                        }
+
                         safeQuit();
                         continue;
                     }
 
                     if(message.equals("bye")){
-                        messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
-                                this.getUserGroup(), MessageNotifyType.GROUP);
+                        if(this.getUserGroup()!=null){
+                            // remove the user in other's contact
+                            messageDispatcher.notify(JsonBuilderServer.getRmContactsJson(this.getUserId()),
+                                    this.getUserGroup(), MessageNotifyType.GROUP);
+                            // sub the online count
+                            MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+                            // mark the user's logout time
+                            MissedMsgsCtrl.getInstance().setLogoutTime(this.getUserId());
+                        }
+
                         safeQuit();
                         continue;
                     }
@@ -124,6 +142,7 @@ public class MessageHandler extends LoopThread {
             e.printStackTrace();
         }
         messageDispatcher.removeMessageHandler(this);
+//        MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
         interrupt();
     }
 
@@ -160,6 +179,8 @@ public class MessageHandler extends LoopThread {
         if(JsonAnalizerServer.getMessageType(message).equals(JsonBuilderBase.message)){
             messageDispatcher.notify(message,
                     messageController.getUser().getGroup(), MessageNotifyType.GROUP);
+
+            MissedMsgsCtrl.getInstance().addMessage(this.getUserGroup(), message);
         }else if((JsonBuilderServer.getReloginRequestJson()).equals(message)){
 
             // add update user contact list command
@@ -168,14 +189,35 @@ public class MessageHandler extends LoopThread {
 
             // relogin
             setUserOnLine(false);
+
+            // mark the user's logout time
+            MissedMsgsCtrl.getInstance().setLogoutTime(this.getUserId(), new Date().getTime());
+
+            // sub the online user's count
+            MissedMsgsCtrl.getInstance().subGroupOnLineCount(this.getUserGroup());
+
             socketWrapper.sendText(message);
         }else if((JsonBuilderBase.getLoginSucceedJson()).equals(message)){
             socketWrapper.sendText(message);
+
+            // init contacts
             List<String> contacts = messageDispatcher.getOnLineUsersWithGroup(this.getUserGroup());
             this.sendInitContacts(contacts);
 
+            // tell other client to add this user
             messageDispatcher.notify(JsonBuilderServer.getAddContactsJson(this.getUserId()),
                     this.getUserGroup(), MessageNotifyType.GROUP, this);
+
+            // send missed messages
+            MissedMsgsCtrl.getInstance().initMsgList(this.getUserGroup(), contacts.size());
+
+            List<String> jsonMsgs =
+                    MissedMsgsCtrl.getInstance().getMissedMsgsAndUpdateUser(messageController.getUser());
+
+            System.out.println("missed messages : " + jsonMsgs);
+            socketWrapper.sendTexts(jsonMsgs);
+
+
 
         }
         else{

@@ -57,6 +57,9 @@ public class ClientReciever extends Thread {
 	}
 	
 	private void saveClientMsgToFile(ArrayList<String> msg) throws IOException {
+		if(msg == null){
+			return;
+		}
 		String clientSavedMsgPath = "record/client/client_msg.txt";
 		File file = new File(clientSavedMsgPath);
 		if(!file.getParentFile().exists()){

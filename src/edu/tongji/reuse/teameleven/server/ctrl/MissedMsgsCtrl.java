@@ -89,14 +89,26 @@ public class MissedMsgsCtrl {
         return getMissedMsgs(user.getGroup(), logoutTime, user.getLoginTime());
     }
 
-    public boolean addMessage(String group, String jsonMsg, int groupOnlineCount){
-        MessageList messageList = groupMsgs.get(group);
-        if(messageList == null){
-            int groupSize = new GroupController().getGroupSize(group);
-            messageList = new MessageList(group, groupSize);
-            messageList.setGroupOnlineCount(groupOnlineCount);
-            groupMsgs.put(group, messageList);
+    public void initMsgList(String group, int groupOnlineCount){
+        if(groupMsgs.containsKey(group)){
+            setGroupOnLineCount(group, groupOnlineCount);
+            return;
         }
+        int groupSize = new GroupController().getGroupSize(group);
+        System.out.println("group size : " + groupSize);
+        MessageList messageList = new MessageList(group, groupSize);
+        messageList.setGroupOnlineCount(groupOnlineCount);
+        groupMsgs.put(group, messageList);
+        return;
+    }
+
+    public boolean addMessage(String group, String jsonMsg){
+        if(group == null){
+            System.err.println("group is null when add json msg for missedMsgsCtrl!");
+            return false;
+        }
+        MessageList messageList = groupMsgs.get(group);
+//        System.out.println(group);
         return messageList.addMessage(jsonMsg);
     }
 
@@ -104,4 +116,22 @@ public class MissedMsgsCtrl {
         MessageList messageList = groupMsgs.get(group);
         messageList.setGroupOnlineCount(groupOnlineCount);
     }
+
+    public void addGroupOnLineCount(String group){
+        MessageList messageList = groupMsgs.get(group);
+        messageList.addGroupOnLineCount();
+    }
+
+    public void subGroupOnLineCount(String group){
+        MessageList messageList = groupMsgs.get(group);
+        try{
+            messageList.subGroupConLineCount();
+        }catch(NullPointerException e){
+            // the messageList may be null, which means
+            // the client hasn't log in when exiting.
+            e.printStackTrace(System.out);
+        }
+    }
+
+
 }

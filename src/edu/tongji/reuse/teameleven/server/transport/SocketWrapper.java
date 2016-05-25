@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 // make the socket handy to send and receive text message
 public class SocketWrapper {
@@ -16,7 +18,7 @@ public class SocketWrapper {
 		this.socket =  socket;
 		try{
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			pw = new  PrintWriter(socket.getOutputStream());
+			pw = new PrintWriter(socket.getOutputStream());
 		}catch(IOException ioe){
 			ioe.printStackTrace();
 		}
@@ -31,8 +33,6 @@ public class SocketWrapper {
 	}
 	
 	public void sendText(final String strToSend){
-//		pw.println(strToSend);
-//		pw.flush();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -46,5 +46,25 @@ public class SocketWrapper {
 		br.close();
 		pw.close();
 		socket.close();
+	}
+
+	public void sendTexts(final List<String> jsonMsgs) {
+		if(jsonMsgs == null){
+			return;
+		}
+		new Thread(new Runnable(){
+			@Override
+			public void run(){
+				try {
+					TimeUnit.MILLISECONDS.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				for(String jsonMsg : jsonMsgs){
+					pw.println(jsonMsg);
+				}
+				pw.flush();
+			}
+		}).start();
 	}
 }

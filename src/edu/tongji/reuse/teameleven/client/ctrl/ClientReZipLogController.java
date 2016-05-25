@@ -112,8 +112,12 @@ public class ClientReZipLogController {
 					Zip2.unZip(srcFolderPath + File.separator + srcFileName, tmpFolderPath);
 				}
 			}
-			
-			FileUtils.deleteDirectory(new File(srcFolderPath));
+			try{
+				FileUtils.deleteDirectory(new File(srcFolderPath));
+			}catch(IOException e){
+				e.printStackTrace(System.out);
+			}
+
 			
 		}
 		
@@ -124,7 +128,12 @@ public class ClientReZipLogController {
 			Zip2.zip(tmpFolderPath,this.zipedLogZipPrex + format.format(cal.getTime()), fileLimit);
 			File oriFolder  = new File(this.originLogForder);
 			synchronized(oriFolder){
-				FileUtils.deleteDirectory(oriFolder);
+				try{
+					FileUtils.deleteDirectory(oriFolder);
+				}catch(IOException e){
+					e.printStackTrace(System.out);
+				}
+
 			}
 			
 			FileUtils.deleteDirectory(new File(tmpFolderPath));
