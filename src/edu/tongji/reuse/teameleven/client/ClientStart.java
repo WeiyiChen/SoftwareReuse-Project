@@ -8,7 +8,7 @@ import edu.tongji.reuse.teameleven.client.ctrl.ClientReZipLogController;
 import edu.tongji.reuse.teameleven.client.ctrl.ClientZipLogController;
 import edu.tongji.reuse.teameleven.client.intf.ILoginWindow;
 import edu.tongji.reuse.teameleven.client.ctrl.ClientConfigBean;
-import edu.tongji.reuse.teameleven.client.transport.ClientSocket;
+import edu.tongji.reuse.teameleven.client.transport.ClientLoginSocket;
 import edu.tongji.reuse.teameleven.client.ui.LoginWindow;
 //import teamEleven.record.ClientRecordController;
 import octoteam.tahiti.config.ConfigManager;
@@ -66,7 +66,7 @@ public class ClientStart {
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	        public void run() {
 	            try {
-					ClientSocket.getSocket().close();
+					ClientLoginSocket.getSocket().close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

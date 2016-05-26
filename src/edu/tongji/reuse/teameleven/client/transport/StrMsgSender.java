@@ -18,7 +18,7 @@ public class StrMsgSender implements IMsgSender {
 		// TODO Auto-generated method stub		
 		PrintWriter writer;
 		try {
-			Socket socket = ClientSocket.getSocket();
+			Socket socket = ClientLoginSocket.getSocket();
 			writer = new PrintWriter(socket.getOutputStream());
 			String jsonString = (String)msg;
 			writer.println(jsonString);

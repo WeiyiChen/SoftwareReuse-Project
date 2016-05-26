@@ -12,7 +12,7 @@ import octoteam.tahiti.config.loader.JsonAdapter;
  * @author Dai
  *
  */
-public class ClientSocket {
+public class ClientLoginSocket {
 	private static Socket socket = null;
 	
 	/**
@@ -38,8 +38,8 @@ public class ClientSocket {
 	 * @throws IOException
 	 */
 	public static Socket getSocket() throws UnknownHostException, IOException{
-		if(socket == null){			
-				return createSocket();
+		if(null == socket){
+			socket = createSocket();
 		}
 		return socket;
 	}

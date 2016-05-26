@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
 import edu.tongji.reuse.teameleven.base.JsonBuilderBase;
-import edu.tongji.reuse.teameleven.client.transport.ClientSocket;
+import edu.tongji.reuse.teameleven.client.transport.ClientLoginSocket;
 import edu.tongji.reuse.teameleven.client.transport.StrMsgSender;
 import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
@@ -47,7 +47,7 @@ public class LogInCheck implements ILogInCheck{
 				// TODO Auto-generated method stub
 				try {
 					isReceived = false;
-					result = receiveLogInResult(ClientSocket.getSocket());
+					result = receiveLogInResult(ClientLoginSocket.getSocket());
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
