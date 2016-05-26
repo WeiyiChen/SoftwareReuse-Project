@@ -15,7 +15,7 @@
 ## File-based project format
 *.ipr
 *.iws
-#*.iml
+*.iml
 
 ## Additional for IntelliJ
 out/
@@ -111,4 +111,4 @@ junittestDir/
 
 client_msg.txt
 
-
+DeleteBackup/
