@@ -31,7 +31,6 @@ public class JsonDao extends FileDao<Map<String, String>>{
 
     @Override
     public boolean save(Map<String, String> userMap) {
-        // TODO Auto-generated method stub
         JSONObject jsonObj = new JSONObject(userMap);
         checkOrCreateFile();
         return FileAccess.fileOverWrite(getPathName(), jsonObj.toString());
@@ -39,7 +38,6 @@ public class JsonDao extends FileDao<Map<String, String>>{
 
     @Override
     public Map<String, String> read() {
-        // TODO Auto-generated method stub
 //		return null;
         checkOrCreateFile();
         String jsonString = FileAccess.readFile(getPathName());
@@ -64,20 +62,17 @@ public class JsonDao extends FileDao<Map<String, String>>{
 
     @Override
     protected void checkOrCreateFile() {
-        // TODO Auto-generated method stub
         super.checkOrMk();
     }
 
     @Override
     protected String getFileName() {
-        // TODO Auto-generated method stub
 
         return fileName;
     }
 
     @Override
     protected String getBasicString() {
-        // TODO Auto-generated method stub
 //		return null;
         JSONObject jo = new JSONObject(defaultContentMap);
         return jo.toString();

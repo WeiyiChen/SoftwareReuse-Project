@@ -1,10 +1,11 @@
 package edu.tongji.reuse.teameleven.server.ctrl;
 
+import edu.tongji.reuse.teameleven.rls.encrypt.message.EncryptImpl;
+import edu.tongji.reuse.teameleven.rls.encrypt.message.IEncrypt;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import packedEncrypt.EncryptImpl;
-import packedEncrypt.IEncrypt;
 
 public class ServerConfigEnum {
 

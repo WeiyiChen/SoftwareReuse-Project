@@ -90,7 +90,7 @@ public class ReZipLogController {
 
 				FileUtils.deleteDirectory(new File(folderPath));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}

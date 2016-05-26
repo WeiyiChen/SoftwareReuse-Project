@@ -47,7 +47,6 @@ public class ClientStart {
 			internalCompressSecs = configBean.getInternalCompressSeconds();
 			zipPrex = configBean.getCompressPathPrex();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -69,7 +68,6 @@ public class ClientStart {
 	            try {
 					ClientLoginSocket.getSocket().close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 	        }

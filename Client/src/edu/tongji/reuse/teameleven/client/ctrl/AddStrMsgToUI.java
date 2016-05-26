@@ -12,7 +12,7 @@ public class AddStrMsgToUI implements IAddMsgToUI{
 
 	@Override
 	public void addMsg(IMsgWindow imw, Object msg) throws ClassCastException{
-		// TODO Auto-generated method stub
+
 		imw.appendMsgRecord((String)msg);
 	}
 

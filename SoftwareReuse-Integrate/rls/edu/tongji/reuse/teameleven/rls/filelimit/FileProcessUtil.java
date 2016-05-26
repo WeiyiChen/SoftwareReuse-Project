@@ -147,7 +147,7 @@ public class FileProcessUtil {
 
 			@Override
 			public boolean accept(File dir, String name) {
-				// TODO Auto-generated method stub
+
 				if(name.contains(appendIdentifier)){
 					return false;
 				}

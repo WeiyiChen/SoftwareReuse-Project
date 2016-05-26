@@ -97,7 +97,6 @@ public class LoginWindow implements ILoginWindow {
 				try {
 					logInResult = logInCheck.check(usr, pwd);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
@@ -140,20 +139,17 @@ public class LoginWindow implements ILoginWindow {
 
 	@Override
 	public void setTip(String tip) {
-		// TODO Auto-generated method stub
 		lblTip.setText(tip);
 
 	}
 
 	@Override
 	public void toShowWindow() {
-		// TODO Auto-generated method stub
 		frame.setVisible(true);
 	}
 
 	@Override
 	public void toCloseWindow() {
-		// TODO Auto-generated method stub
 		frame.dispose();
 	}
 

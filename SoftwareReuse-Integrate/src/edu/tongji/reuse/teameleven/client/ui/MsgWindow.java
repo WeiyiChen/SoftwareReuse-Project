@@ -90,7 +90,7 @@ public class MsgWindow extends JFrame implements IMsgWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
 				sendMsg();
 			}
 			
@@ -107,7 +107,7 @@ public class MsgWindow extends JFrame implements IMsgWindow {
 
 	@Override
 	public void appendMsgRecord(String singleLineMsg) {
-		// TODO Auto-generated method stub
+
 		textArea.append(singleLineMsg + "\n");
 		sp.getViewport().setViewPosition(new Point(0, sp.getVerticalScrollBar().getMaximum()));
 	}
@@ -128,19 +128,19 @@ public class MsgWindow extends JFrame implements IMsgWindow {
 
 	@Override
 	public void toShowWindow() {
-		// TODO Auto-generated method stub
+
 		setVisible(true);
 	}
 
 	@Override
 	public void toCloseWindow() {
-		// TODO Auto-generated method stub
+
 		dispose();
 	}
 
 	@Override
 	public IMsgHandle getMsgHandle() {
-		// TODO Auto-generated method stub
+
 		return imh;
 	}
 

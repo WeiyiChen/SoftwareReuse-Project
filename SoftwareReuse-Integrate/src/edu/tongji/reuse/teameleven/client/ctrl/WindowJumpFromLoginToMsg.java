@@ -20,7 +20,7 @@ public class WindowJumpFromLoginToMsg implements IWindowJump {
 	 */
 	@Override
 	public boolean jump(IClientWindow from, IClientWindow to) {
-		// TODO Auto-generated method stub
+
 		boolean result = false;
 		try{
 			IMsgWindow imw = (IMsgWindow)to;

@@ -15,7 +15,7 @@ public class AddJsonMsgToUI implements IAddMsgToUI{
 
 	@Override
 	public void addMsg(IMsgWindow imw, Object msg) throws ClassCastException {
-		// TODO Auto-generated method stub
+
 		String jsonString = (String)msg;
 		String sender = JsonAnalizerClient.getUser(jsonString);
 		String content = JsonAnalizerClient.getMessageContent(jsonString);

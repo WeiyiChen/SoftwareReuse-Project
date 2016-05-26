@@ -15,7 +15,7 @@ public class StrMsgSender implements IMsgSender {
 
 	@Override
 	public boolean send(Object msg) {
-		// TODO Auto-generated method stub		
+
 		PrintWriter writer;
 		try {
 			Socket socket = ClientLoginSocket.getSocket();
@@ -25,7 +25,6 @@ public class StrMsgSender implements IMsgSender {
 			writer.flush();
 			return true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;

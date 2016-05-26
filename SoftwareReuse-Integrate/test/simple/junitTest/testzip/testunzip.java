@@ -16,7 +16,7 @@ public class testunzip {
 			Zip.zip("tmp", "junittest/test.zip");
 //			Zip.unZip("zipclient"+ File.separator +"bar-2016-04-27 01:27:26", "");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}

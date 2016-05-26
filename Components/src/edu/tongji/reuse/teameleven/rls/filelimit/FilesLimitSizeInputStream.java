@@ -27,13 +27,13 @@ public class FilesLimitSizeInputStream extends SequenceInputStream {
 
 		@Override
 		public boolean hasMoreElements() {
-			// TODO Auto-generated method stub
+
 			return index < fileStreams.length;
 		}
 
 		@Override
 		public FileInputStream nextElement() {
-			// TODO Auto-generated method stub
+
 //			FileInputStream fis = FileStreams
 			return fileStreams[index++];
 		}		
@@ -49,7 +49,7 @@ public class FilesLimitSizeInputStream extends SequenceInputStream {
 
 	public FilesLimitSizeInputStream(Enumeration<? extends InputStream> e) {
 		super(e);
-		// TODO Auto-generated constructor stub
+
 	}
 
 }

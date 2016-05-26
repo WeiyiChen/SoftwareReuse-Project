@@ -4,12 +4,17 @@ import edu.tongji.reuse.teameleven.coserver.dao.KeyValueController;
 
 import java.util.Map;
 
+/**
+ * check if user and password combination is correct
+ * notice: the password has been encryted by md5
+ */
 public class PasswordController extends KeyValueController {
 
     public PasswordController(Map<String, String> defaultUserMap){
         super(defaultUserMap, "userpwd.json");
     }
 
+    // todo add more default password, there is only one password encryted from '111' now
     public boolean passwordCheck(String user, String password) {
         if(user == null || password ==null){
             return false;

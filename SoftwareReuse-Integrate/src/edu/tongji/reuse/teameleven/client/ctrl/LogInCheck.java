@@ -12,8 +12,8 @@ import edu.tongji.reuse.teameleven.client.transport.ClientLoginSocket;
 import edu.tongji.reuse.teameleven.client.transport.StrMsgSender;
 import edu.tongji.reuse.teameleven.client.intf.ILogInCheck;
 import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
-import packedEncrypt.EncryptImpl;
-import packedEncrypt.IEncrypt;
+import edu.tongji.reuse.teameleven.rls.encrypt.message.EncryptImpl;
+import edu.tongji.reuse.teameleven.rls.encrypt.message.IEncrypt;
 
 /**
  * check if the usr and password is correct
@@ -32,7 +32,7 @@ public class LogInCheck implements ILogInCheck {
 	 */
 	@Override
 	public boolean check(String usrName, String pwd) throws UnknownHostException, IOException {
-		// TODO Auto-generated method stub
+
 		result = false;
 		String secretPassword = encrypt.encrypt(pwd);
 		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, secretPassword);
@@ -44,13 +44,13 @@ public class LogInCheck implements ILogInCheck {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
+
 				try {
 					isReceived = false;
 					result = receiveLogInResult(ClientLoginSocket.getSocket());
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					result = false;
 					e.printStackTrace();
 				}
@@ -66,7 +66,6 @@ public class LogInCheck implements ILogInCheck {
 			}
 			
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			
 			e1.printStackTrace();
 		}
@@ -103,7 +102,6 @@ public class LogInCheck implements ILogInCheck {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
