@@ -3,8 +3,8 @@ package simple.junitTest.server;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.tongji.reuse.teameleven.base.JsonAnalizerBase;
-import edu.tongji.reuse.teameleven.server.json.JsonAnalizerServer;
+import edu.tongji.reuse.teameleven.rls.codependent.base.JsonAnalizerBase;
+import edu.tongji.reuse.teameleven.rls.server.json.JsonAnalizerServer;
 
 public class JsonAnalizerServerTest extends JsonAnalizerBase{
 

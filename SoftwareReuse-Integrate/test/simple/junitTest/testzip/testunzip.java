@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import edu.tongji.reuse.teameleven.zip.Zip;
+import edu.tongji.reuse.teameleven.rls.zip.Zip;
 
 public class testunzip {
 

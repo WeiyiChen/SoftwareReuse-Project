@@ -3,10 +3,10 @@ package simple.junitTest.server;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.tongji.reuse.teameleven.server.ctrl.PasswordController;
+import edu.tongji.reuse.teameleven.rls.server.ctrl.PasswordController;
 import org.junit.Test;
 import org.junit.BeforeClass;
-import edu.tongji.reuse.teameleven.client.ctrl.JsonBuilderClient;
+import edu.tongji.reuse.teameleven.rls.client.ctrl.JsonBuilderClient;
 //import teamEleven.pwdCtrl.PasswordController;
 import packedEncrypt.EncryptImpl;
 import packedEncrypt.IEncrypt;
