@@ -3,7 +3,7 @@ package simple.junitTest.client;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.tongji.reuse.teameleven.rls.client.ctrl.JsonAnalizerClient;
+import edu.tongji.reuse.teameleven.client.ctrl.JsonAnalizerClient;
 
 public class JsonAnalizerClientTest {
 

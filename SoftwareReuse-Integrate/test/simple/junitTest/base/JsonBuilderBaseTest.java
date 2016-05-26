@@ -3,7 +3,7 @@ package simple.junitTest.base;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.tongji.reuse.teameleven.rls.codependent.base.JsonBuilderBase;
+import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 
 public class JsonBuilderBaseTest extends JsonBuilderBase{
 
