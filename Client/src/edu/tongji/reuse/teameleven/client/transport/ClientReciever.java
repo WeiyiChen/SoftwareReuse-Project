@@ -7,15 +7,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ClientReciever extends Thread {
-	private static boolean isExit = false;
+
 	private Socket socket;
 	private IMsgHandle imh;
 
 	// clientReceiveMsg is used to save message as file
 	private ArrayList<String> clientReceiveMsg = new ArrayList<String>();
 
-	public static void exit(){
-		isExit = true;
+	public void exit(){
+		this.interrupt();
 	}
 	
 	public ClientReciever(Socket socket) {
@@ -32,7 +32,7 @@ public class ClientReciever extends Thread {
 			reader = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
 			String message = null;
-			while (true) {
+			while (!Thread.currentThread().isInterrupted()) {
 				message = reader.readLine();
 				//System.out.println(message);
 				clientReceiveMsg.add(message);
@@ -43,17 +43,22 @@ public class ClientReciever extends Thread {
 				if(message.equals("bye")){
 					break;
 				}
-				if(isExit){
-					isExit = false;
-					break;
-				}
+
 			}
-			
 		} catch (IOException e) {
-			if (!socket.isClosed()) {
-				e.printStackTrace();
+			e.printStackTrace();
+		} finally{
+			if(!socket.isClosed()){
+				try{
+					socket.shutdownInput();
+					socket.shutdownOutput();
+					socket.close();
+				}catch(IOException e){
+					e.printStackTrace();
+				}
+
 			}
-		} 
+		}
 	}
 	
 	private void saveClientMsgToFile(ArrayList<String> msg) throws IOException {

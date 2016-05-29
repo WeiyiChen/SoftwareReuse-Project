@@ -4,6 +4,7 @@ import edu.tongji.reuse.teameleven.client.intf.IMsgWindow;
 import edu.tongji.reuse.teameleven.client.intf.IWindowJump;
 import edu.tongji.reuse.teameleven.client.intf.IClientWindow;
 import edu.tongji.reuse.teameleven.client.transport.ClientLoginSocket;
+import edu.tongji.reuse.teameleven.client.transport.ClientMsgSocket;
 import edu.tongji.reuse.teameleven.client.transport.ClientReciever;
 
 import java.net.UnknownHostException;
@@ -25,6 +26,8 @@ public class WindowJumpFromLoginToMsg implements IWindowJump {
 			IMsgWindow imw = (IMsgWindow)to;
 			imw.toShowWindow();
 			new ClientReciever(ClientLoginSocket.getSocket(), imw.getMsgHandle()).start();
+			// todo add msg receiver
+			// new ClientReciever(ClientMsgSocket.getSocket(), imw.getMsgHandle()).start();
 			result = true;
 		}catch(ClassCastException e1){
 			e1.printStackTrace();

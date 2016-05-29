@@ -30,7 +30,7 @@ public class WindowJumpFromMsgToLogin implements IWindowJump {
 //			ClientRecordController crc = ClientRecordController.getInstance();
 //			crc.reset();
 			ClientMonitorController.reset();
-			ClientReciever.exit();
+//			ClientReciever.exit();
 		}catch(ClassCastException e1){
 			e1.printStackTrace();
 		}catch(Exception e2){
