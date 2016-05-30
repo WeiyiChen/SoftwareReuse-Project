@@ -55,6 +55,10 @@ public class MsgHandle implements IMsgHandle {
         ClientMonitorController.increaseReceiveNum();
         IAddMsgToUI iAddMsgToUi;
         try {
+            if(msg == null){
+                // todo close the socket
+                return;
+            }
             if (msg instanceof String) {
 
                 String jsonStr = (String) msg;

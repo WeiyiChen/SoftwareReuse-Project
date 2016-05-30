@@ -1,6 +1,6 @@
 package edu.tongji.reuse.teameleven.processor.model;
 
-import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
+import edu.tongji.reuse.teameleven.processor.ctrl.GroupController;
 
 import java.util.HashMap;
 import java.util.List;

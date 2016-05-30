@@ -21,6 +21,7 @@ import java.util.Date;
 public class LoginMsgHandler extends Thread {
     SocketWrapper socketWrapper;
     SocketListener socketListener;
+    User user;
 
     public LoginMsgHandler(SocketWrapper socketWrapper, SocketListener socketListener){
         this.socketWrapper = socketWrapper;
@@ -57,10 +58,10 @@ public class LoginMsgHandler extends Thread {
                             .decryptToTMD5(JsonAnalizerServer.getPassword(jsonString));
 
                     if(PasswordController.getInstance().passwordCheck(userId, password)){
-                        User user = new User();
+                        user = new User();
                         user.setLoginTime(new Date().getTime());
                         user.setUserId(userId);
-                        user.setGroup(GroupController.getInstance().getGroup(userId));
+//                        user.setGroup(GroupController.getInstance().getGroup(userId));
                         user.setOnLine(true);
 
                         // todo setuser for other modules
