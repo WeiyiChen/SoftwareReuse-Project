@@ -10,6 +10,6 @@ import java.util.List;
  * Created by daidongyang on 5/29/16.
  */
 public interface ContactsCtrlIntf extends Remote{
-    public List<String> getInitContacts(User u) throws RemoteException;
-    public void addUser(User u) throws RemoteException;
+    public List<String> getInitContacts(String u) throws RemoteException;
+    public void addUser(String u) throws RemoteException;
 }

@@ -23,7 +23,7 @@ import java.util.List;
 public class LoginMsgHandler extends Thread {
     SocketWrapper socketWrapper;
     SocketListener socketListener;
-    User user;
+    String user;
 
     public LoginMsgHandler(SocketWrapper socketWrapper, SocketListener socketListener){
         this.socketWrapper = socketWrapper;
@@ -75,11 +75,7 @@ public class LoginMsgHandler extends Thread {
                             .decryptToTMD5(JsonAnalizerServer.getPassword(jsonString));
 
                     if(PasswordController.getInstance().passwordCheck(userId, password)){
-                        user = new User();
-                        user.setLoginTime(new Date().getTime());
-                        user.setUserId(userId);
-//                        user.setGroup(GroupController.getInstance().getGroup(userId));
-                        user.setOnLine(true);
+                        user = userId;
 
                         // todo setuser for other modules
 

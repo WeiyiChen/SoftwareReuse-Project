@@ -21,19 +21,19 @@ public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
     }
 
     @Override
-    public List<String> getInitContacts(User u) throws RemoteException{
-        String group = GroupController.getInstance().getGroup(u.getUserId());
+    public List<String> getInitContacts(String u) throws RemoteException{
+        String group = GroupController.getInstance().getGroup(u);
         return groupOnLineUsers.get(group);
     }
 
     @Override
-    public void addUser(User u) throws RemoteException {
-        String group = GroupController.getInstance().getGroup(u.getUserId());
+    public void addUser(String u) throws RemoteException {
+        String group = GroupController.getInstance().getGroup(u);
         List<String> contacts = groupOnLineUsers.get(group);
         if(contacts == null){
             contacts = new LinkedList<String>();
         }
-        contacts.add(u.getUserId());
+        contacts.add(u);
         groupOnLineUsers.put("group", contacts);
 
         // todo send message to every client in the same group
