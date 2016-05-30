@@ -1,6 +1,7 @@
 package edu.tongji.reuse.teameleven.authentication.ctrl;
 
 import edu.tongji.reuse.teameleven.coserver.dao.KeyValueController;
+import edu.tongji.reuse.teameleven.coserver.util.ServerConfigEnum;
 
 import java.util.Map;
 
@@ -9,6 +10,19 @@ import java.util.Map;
  * notice: the password has been encryted by md5
  */
 public class PasswordController extends KeyValueController {
+
+    private static PasswordController passwordController;
+
+    public static PasswordController getInstance(){
+        if(null == passwordController){
+            synchronized (PasswordController.class){
+                if(null == passwordController){
+                    passwordController = new PasswordController(ServerConfigEnum.defaultUserPwdMap);
+                }
+            }
+        }
+        return passwordController;
+    }
 
     public PasswordController(Map<String, String> defaultUserMap){
         super(defaultUserMap, "userpwd.json");

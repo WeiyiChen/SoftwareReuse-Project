@@ -15,9 +15,9 @@ public class JsonAnalizerClient extends JsonAnalizerBase {
 	}
 
 	/**
-	 * Get a contact list to init
+	 * Get a contact list to beforeLoop
 	 * @param jsonString - json message
-	 * @return - a contact list to init
+	 * @return - a contact list to beforeLoop
      */
 	public static List<String> getInitContacts(String jsonString){
 		List<String> strings = new ArrayList<String>();

@@ -11,13 +11,14 @@ import java.util.Scanner;
  */
 public class Entry {
     public static void main(String[] args){
-
-        try {
-            // todo port should be read from config file
-            ServerSocket serverSocket = new ServerSocket(15501);
-            Socket socket = serverSocket.accept();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            String s = scanner.nextLine();
+            if("quit".equals(s)){
+                // todo add code for end other thread
+                System.exit(0);
+            }
         }
+
     }
 }

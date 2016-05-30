@@ -7,9 +7,19 @@ public abstract class LoopThread extends Thread {
 
     @Override
     public void run(){
+        beforeLoop();
         while(!Thread.currentThread().isInterrupted()){
             loop();
         }
+        afterLoop();
+    }
+
+
+    /**
+     * you can init some variables before loop
+     */
+    public void beforeLoop(){
+
     }
 
     /**
@@ -17,6 +27,13 @@ public abstract class LoopThread extends Thread {
      * a client socket
      */
     public void loop(){
+
+    }
+
+    /**
+     * you can do something after the loop
+     */
+    public void afterLoop(){
 
     }
 
