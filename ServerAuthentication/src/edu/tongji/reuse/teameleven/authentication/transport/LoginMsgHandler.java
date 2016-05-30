@@ -5,15 +5,17 @@ import edu.tongji.reuse.teameleven.codependent.base.JsonAnalizerBase;
 import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.codependent.model.NetInfo;
 import edu.tongji.reuse.teameleven.codependent.model.User;
-import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
 import edu.tongji.reuse.teameleven.coserver.util.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.coserver.util.JsonBuilderServer;
 import edu.tongji.reuse.teameleven.coserver.util.ServerConfigEnum;
 import edu.tongji.reuse.teameleven.coserver.util.SocketWrapper;
+import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by daidongyang on 5/29/16.
@@ -31,7 +33,22 @@ public class LoginMsgHandler extends Thread {
     @Override
     public void run(){
         if(checkpwd()){
-            // todo add init contacts and lost messages, and quit loginSocket safely
+            // todo add init lost messages, and quit loginSocket safely
+            if(user == null){
+                return;
+            }
+            ContactsCtrlIntf contactsCtrl = ProcessorRef.getContactsCtrl();
+            try{
+                List<String> contacts = contactsCtrl.getInitContacts(user);
+                contactsCtrl.addUser(user);
+                if(contacts != null){
+                    String jsonString = JsonBuilderServer.getInitContactsJson(contacts);
+                    socketWrapper.sendText(jsonString, 1000);
+                }
+
+            }catch(RemoteException e){
+                e.printStackTrace();
+            }
 
         }
     }

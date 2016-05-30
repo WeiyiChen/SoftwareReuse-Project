@@ -35,5 +35,7 @@ public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
         }
         contacts.add(u.getUserId());
         groupOnLineUsers.put("group", contacts);
+
+        // todo send message to every client in the same group
     }
 }

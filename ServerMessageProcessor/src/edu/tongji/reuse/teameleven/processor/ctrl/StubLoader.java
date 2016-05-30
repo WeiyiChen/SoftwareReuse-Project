@@ -29,7 +29,7 @@ public class StubLoader {
 
             // port for registry: 15820
             Registry registry = LocateRegistry.createRegistry(15820);
-            registry.rebind("contactsCtrlIntf", contactsCtrlIntf);
+            registry.rebind("contactsCtrl", contactsCtrlIntf);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

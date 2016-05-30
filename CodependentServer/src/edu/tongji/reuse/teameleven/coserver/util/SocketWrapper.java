@@ -31,11 +31,23 @@ public class SocketWrapper {
 	public PrintWriter getPrintWtiter(){
 		return pw;
 	}
+
+    public void sendText(final String strToSend){
+        new Thread(()->{
+                pw.println(strToSend);
+                pw.flush();
+        }).start();
+    }
 	
-	public void sendText(final String strToSend){
+	public void sendText(final String strToSend, final int waitTime){
         new Thread(new Runnable() {
             @Override
             public void run() {
+                try{
+                    TimeUnit.MILLISECONDS.sleep(waitTime);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
                 pw.println(strToSend);
                 pw.flush();
             }
