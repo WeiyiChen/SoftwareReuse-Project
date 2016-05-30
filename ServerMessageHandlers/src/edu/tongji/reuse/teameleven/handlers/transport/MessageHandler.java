@@ -1,5 +1,6 @@
 package edu.tongji.reuse.teameleven.handlers.transport;
 
+import edu.tongji.reuse.teameleven.coserver.util.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.coserver.util.SocketWrapper;
 
 import java.io.BufferedReader;
@@ -12,7 +13,7 @@ public class MessageHandler extends Thread{
     private HandlersManager handlersManager;
     private SocketWrapper socketWrapper;
     private String user;
-    private boolean isAddedToManager = false;
+//    private boolean isAddedToManager = false;
 
     public MessageHandler(HandlersManager handlersManager, SocketWrapper socketWrapper) {
         super();
@@ -34,11 +35,13 @@ public class MessageHandler extends Thread{
                     safeQuit();
                     return;
                 }
+                checkUser(jsonMsg);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
 
     public void safeQuit() {
         handlersManager.removeUserHandler(user);
@@ -52,5 +55,12 @@ public class MessageHandler extends Thread{
 
     public void sendText(String jsonMsg) {
         socketWrapper.sendText(jsonMsg);
+    }
+
+    private void checkUser(String jsonString){
+        if(user == null){
+            user = JsonAnalizerServer.getUser(jsonString);
+            handlersManager.addUserHandler(this);
+        }
     }
 }

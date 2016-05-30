@@ -10,7 +10,7 @@ import java.rmi.registry.Registry;
 /**
  * Created by daidongyang on 5/30/16.
  */
-public class ProcessorRef {
+public class RefsInAuth {
     private static ContactsCtrlIntf contactsCtrl;
 
     public static synchronized void createContactsCtrl(){

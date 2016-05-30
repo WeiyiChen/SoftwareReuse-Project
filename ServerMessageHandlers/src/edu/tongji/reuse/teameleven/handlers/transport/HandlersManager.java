@@ -26,6 +26,10 @@ public class HandlersManager extends LoopThread {
         userHandlers.remove(user);
     }
 
+    public MessageHandler getMessageHandler(String user){
+        return userHandlers.get(user);
+    }
+
     public void sendMsgs(List<String> tagets, String jsonMsg){
         for(String user : tagets){
             try{

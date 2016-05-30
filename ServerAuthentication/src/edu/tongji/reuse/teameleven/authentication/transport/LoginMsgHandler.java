@@ -4,7 +4,6 @@ import edu.tongji.reuse.teameleven.authentication.ctrl.PasswordController;
 import edu.tongji.reuse.teameleven.codependent.base.JsonAnalizerBase;
 import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.codependent.model.NetInfo;
-import edu.tongji.reuse.teameleven.codependent.model.User;
 import edu.tongji.reuse.teameleven.coserver.util.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.coserver.util.JsonBuilderServer;
 import edu.tongji.reuse.teameleven.coserver.util.ServerConfigEnum;
@@ -14,7 +13,6 @@ import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,7 +37,7 @@ public class LoginMsgHandler extends Thread {
             if(user == null){
                 return;
             }
-            ContactsCtrlIntf contactsCtrl = ProcessorRef.getContactsCtrl();
+            ContactsCtrlIntf contactsCtrl = RefsInAuth.getContactsCtrl();
             try{
                 List<String> contacts = contactsCtrl.getInitContacts(user);
                 contactsCtrl.addUser(user);
