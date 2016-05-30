@@ -4,6 +4,7 @@ import edu.tongji.reuse.teameleven.codependent.model.User;
 import edu.tongji.reuse.teameleven.processor.ctrl.GroupController;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
 
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -20,13 +21,13 @@ public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
     }
 
     @Override
-    public List<String> getInitContacts(User u) {
+    public List<String> getInitContacts(User u) throws RemoteException{
         String group = GroupController.getInstance().getGroup(u.getUserId());
         return groupOnLineUsers.get(group);
     }
 
     @Override
-    public void addUser(User u) {
+    public void addUser(User u) throws RemoteException {
         String group = GroupController.getInstance().getGroup(u.getUserId());
         List<String> contacts = groupOnLineUsers.get(group);
         if(contacts == null){
