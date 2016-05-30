@@ -22,7 +22,13 @@ public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
 
     @Override
     public List<String> getInitContacts(String u) throws RemoteException{
+        // todo delete the System.out code after debug
+//        System.out.println(u);
         String group = GroupController.getInstance().getGroup(u);
+
+        // todo delete the System.out code after debug
+//        System.out.println(group);
+//        System.out.println(groupOnLineUsers.get(group));
         return groupOnLineUsers.get(group);
     }
 
@@ -34,7 +40,10 @@ public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
             contacts = new LinkedList<String>();
         }
         contacts.add(u);
-        groupOnLineUsers.put("group", contacts);
+        groupOnLineUsers.put(group, contacts);
+
+        // todo delte the Sytem.out code after debug
+//        System.out.println(groupOnLineUsers);
 
         // todo send message to every client in the same group
     }
