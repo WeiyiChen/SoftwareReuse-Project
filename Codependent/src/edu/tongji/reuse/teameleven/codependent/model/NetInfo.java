@@ -39,9 +39,9 @@ public class NetInfo implements Jsonable {
     public String toJsonString() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("type","netinfo");
-            jsonObject.put("ip",ip);
-            jsonObject.put("port",port);
+            jsonObject.put("Type","netinfo");
+            jsonObject.put("Ip",ip);
+            jsonObject.put("Port",port);
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -53,8 +53,8 @@ public class NetInfo implements Jsonable {
     public void setByJsonString(String jsonString) {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
-            this.ip = jsonObject.getString("ip");
-            this.port = jsonObject.getInt("port");
+            this.ip = jsonObject.getString("Ip");
+            this.port = jsonObject.getInt("Port");
         } catch (JSONException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

@@ -28,7 +28,7 @@ public class LogInCheck implements ILogInCheck {
 	private boolean loginResult = false;
     private boolean isReceivedNetInfo = false;
     private boolean isLoopReceive = true;
-//	private static boolean isReceived = false;
+	private boolean isReceived = false;
 	private static IEncrypt encrypt = new EncryptImpl();
 	
 	/**
@@ -66,8 +66,9 @@ public class LogInCheck implements ILogInCheck {
 		try {
 			for(int i = 0; i < 500; i++){
 				TimeUnit.MILLISECONDS.sleep(2);
-//				if(isReceived)
-//					break;
+                if(isReceived){
+                    break;
+                }
 			}
 
 		} catch (InterruptedException e1) {
@@ -75,9 +76,7 @@ public class LogInCheck implements ILogInCheck {
 			e1.printStackTrace();
 		}
         isLoopReceive = false;
-//		t.stop();
-//		isReceived = false;
-		return loginResult;
+		return loginResult&&isReceivedNetInfo;
 	}
 	
 	private boolean receiveLogInResult(Socket socket){
@@ -96,25 +95,34 @@ public class LogInCheck implements ILogInCheck {
 						loginResult = true;
 					}
 					else if(JsonBuilderBase.getLoginFailedJson().equals(msg)){
-						return false;
+//                        isReceived = true;
+                        loginResult = false;
+//						return false;
 					}
                     else if(JsonAnalizerBase.getMessageType(msg).equals("netinfo")){
                         NetInfo netInfo = new NetInfo();
                         netInfo.setByJsonString(msg);
                         ClientMsgSocket.setIPAndPort(netInfo.getIp(), netInfo.getPort());
+                        isReceivedNetInfo = true;
                     }
 					else{
 						System.out.println("unknown login loginResult");
+                        System.out.println(msg);
 						// ignore other kind of message
 						continue;
 					}
+
 					
 //					break;
 				}
                 else{
                     return false;
                 }
+                if(loginResult && isReceivedNetInfo){
+                    break;
+                }
 			}
+            isReceived = true;
 		} catch (IOException e) {
 
 			e.printStackTrace();

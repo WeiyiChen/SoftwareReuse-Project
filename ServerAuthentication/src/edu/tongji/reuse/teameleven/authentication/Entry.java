@@ -1,5 +1,7 @@
 package edu.tongji.reuse.teameleven.authentication;
 
+import edu.tongji.reuse.teameleven.authentication.transport.SocketListener;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,6 +13,8 @@ import java.util.Scanner;
  */
 public class Entry {
     public static void main(String[] args){
+        SocketListener socketListener = new SocketListener();
+        socketListener.start();
         Scanner scanner = new Scanner(System.in);
         while(true){
             String s = scanner.nextLine();

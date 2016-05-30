@@ -51,7 +51,7 @@ public class LoginMsgHandler extends Thread {
                     break;
                 }
 
-                if(JsonAnalizerBase.getMessageType(jsonString).equals(JsonBuilderBase.authorization)){
+                if(JsonAnalizerBase.getMessageType(jsonString).equals(JsonBuilderBase.password)){
                     String userId = JsonAnalizerServer.getUser(jsonString);
                     String password = ServerConfigEnum.encrypt
                             .decryptToTMD5(JsonAnalizerServer.getPassword(jsonString));

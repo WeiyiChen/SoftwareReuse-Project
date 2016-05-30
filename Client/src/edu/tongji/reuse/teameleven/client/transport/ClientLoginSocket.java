@@ -23,10 +23,11 @@ public class ClientLoginSocket {
 	 * @throws IOException
 	 */
 	private synchronized static Socket createSocket() throws UnknownHostException, IOException{
-		ConfigManager configManager = new ConfigManager(new JsonAdapter(),"data/clientconfig.json");
+		ConfigManager configManager = new ConfigManager(new JsonAdapter(),"Client/data/clientconfig.json");
 		ClientConfigBean configBean = configManager.loadToBean(ClientConfigBean.class);
 		String ip = configBean.getHost();
 		int port = configBean.getPort();
+		System.out.println(port);
 		socket = new Socket(ip, port);
 		System.out.println("create socket\n");
 		return socket;

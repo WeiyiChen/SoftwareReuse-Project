@@ -31,6 +31,7 @@ public class SocketListener extends LoopThread {
         // todo make the listen port configurable
         try {
             serverSocket = new ServerSocket(15501);
+            System.out.println(serverSocket);
         } catch (IOException e) {
             e.printStackTrace();
         }
