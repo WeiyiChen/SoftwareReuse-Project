@@ -54,7 +54,7 @@ public class FilesLimitSizeOutputStream extends OutputStream {
 
 	@Override
 	public void write(int b) throws IOException {
-		// TODO Auto-generated method stub
+
 		if(f.length() >= fileSizeLimit - 1){
 			updateOutputFile();
 		}
@@ -64,7 +64,7 @@ public class FilesLimitSizeOutputStream extends OutputStream {
 	
 	@Override
 	public void write(byte[] b) throws IOException {
-		// TODO Auto-generated method stub
+
 //		super.write(b);
 		if(f.length() >= fileSizeLimit - b.length){
 			updateOutputFile();
@@ -75,7 +75,7 @@ public class FilesLimitSizeOutputStream extends OutputStream {
 
 	@Override
 	public void write(byte[] b, int off, int len) throws IOException {
-		// TODO Auto-generated method stub
+
 //		super.write(b, off, len);
 		if(f.length() >= fileSizeLimit - len){
 			updateOutputFile();
@@ -86,13 +86,13 @@ public class FilesLimitSizeOutputStream extends OutputStream {
 
 	@Override
 	public void flush() throws IOException {
-		// TODO Auto-generated method stub
+
 		fos.flush();
 	}
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
+
 		fos.close();
 	}
 

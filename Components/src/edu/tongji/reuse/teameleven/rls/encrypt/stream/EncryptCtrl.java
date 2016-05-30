@@ -41,7 +41,7 @@ public class EncryptCtrl {
 			keyGenerator.init(new SecureRandom());
 			key = keyGenerator.generateKey();
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}			
@@ -59,7 +59,7 @@ public class EncryptCtrl {
 			enCipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
 			cis = new CipherInputStream(in, enCipher);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -78,7 +78,7 @@ public class EncryptCtrl {
 			deCipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
 			cis = new CipherInputStream(in, deCipher);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -97,7 +97,7 @@ public class EncryptCtrl {
 			cipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
 			cos = new CipherOutputStream(out, cipher);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -116,7 +116,7 @@ public class EncryptCtrl {
 			cipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
 			cos = new CipherOutputStream(out, cipher);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -143,7 +143,7 @@ public class EncryptCtrl {
 			cos.flush();
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException 
 				| InvalidKeyException | InvalidAlgorithmParameterException | IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}finally{

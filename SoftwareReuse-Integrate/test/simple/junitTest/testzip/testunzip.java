@@ -1,10 +1,9 @@
 package simple.junitTest.testzip;
 
-import java.io.IOException;
-
+import edu.tongji.reuse.teameleven.rls.zip.Zip;
 import org.junit.Test;
 
-import edu.tongji.reuse.teameleven.rls.zip.Zip;
+import java.io.IOException;
 
 public class testunzip {
 
@@ -16,7 +15,6 @@ public class testunzip {
 			Zip.zip("tmp", "junittest/test.zip");
 //			Zip.unZip("zipclient"+ File.separator +"bar-2016-04-27 01:27:26", "");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
