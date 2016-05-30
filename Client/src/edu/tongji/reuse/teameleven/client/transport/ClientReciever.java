@@ -36,7 +36,7 @@ public class ClientReciever extends Thread {
 				message = reader.readLine();
 				//System.out.println(message);
 				clientReceiveMsg.add(message);
-				saveClientMsgToFile(clientReceiveMsg);
+//				saveClientMsgToFile(clientReceiveMsg);
 				if(imh != null){
 					imh.receiveAndUpdateMsg(message);
 				}

@@ -55,7 +55,6 @@ public class LogInCheck implements ILogInCheck {
 					loginResult = receiveLogInResult(ClientLoginSocket.getSocket());
 
 				} catch (IOException e) {
-
 					loginResult = false;
 					e.printStackTrace();
 				}
@@ -76,7 +75,7 @@ public class LogInCheck implements ILogInCheck {
 			e1.printStackTrace();
 		}
         isLoopReceive = false;
-		return loginResult&&isReceivedNetInfo;
+		return loginResult;
 	}
 	
 	private boolean receiveLogInResult(Socket socket){
@@ -90,12 +89,12 @@ public class LogInCheck implements ILogInCheck {
 				if(msg != null){
 //					isReceived = true;
 //					System.out.println("receive login loginResult");
-//					System.out.println(msg);
+					System.out.println("receive : " + msg);
 					if(JsonBuilderBase.getLoginSucceedJson().equals(msg)){
 						loginResult = true;
 					}
 					else if(JsonBuilderBase.getLoginFailedJson().equals(msg)){
-//                        isReceived = true;
+                        isReceived = true;
                         loginResult = false;
 //						return false;
 					}
@@ -111,23 +110,21 @@ public class LogInCheck implements ILogInCheck {
 						// ignore other kind of message
 						continue;
 					}
-
-					
-//					break;
 				}
                 else{
                     return false;
                 }
                 if(loginResult && isReceivedNetInfo){
+                    isReceived = true;
                     break;
                 }
 			}
-            isReceived = true;
+
 		} catch (IOException e) {
 
 			e.printStackTrace();
 		}
-		return false;
+		return loginResult && isReceivedNetInfo;
 		
 	}
 	

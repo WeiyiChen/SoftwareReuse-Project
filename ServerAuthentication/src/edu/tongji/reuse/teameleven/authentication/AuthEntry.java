@@ -11,7 +11,7 @@ import java.util.Scanner;
  * authentication module's0 entry
  * Created by daidongyang on 5/27/16.
  */
-public class Entry {
+public class AuthEntry {
     public static void main(String[] args){
         SocketListener socketListener = new SocketListener();
         socketListener.start();

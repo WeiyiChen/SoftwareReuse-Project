@@ -27,7 +27,7 @@ public class ClientLoginSocket {
 		ClientConfigBean configBean = configManager.loadToBean(ClientConfigBean.class);
 		String ip = configBean.getHost();
 		int port = configBean.getPort();
-		System.out.println(port);
+//		System.out.println(port);
 		socket = new Socket(ip, port);
 		System.out.println("create socket\n");
 		return socket;

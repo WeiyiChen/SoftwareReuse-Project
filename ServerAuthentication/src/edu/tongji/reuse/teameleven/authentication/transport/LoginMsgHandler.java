@@ -44,7 +44,7 @@ public class LoginMsgHandler extends Thread {
         while(!Thread.currentThread().isInterrupted()){
             try{
                 String jsonString = bufferedReader.readLine();
-
+                System.out.println("Receive : " + jsonString);
                 // the client has been closed
                 if(null == jsonString){
                     safeClose();
@@ -72,12 +72,15 @@ public class LoginMsgHandler extends Thread {
                         netInfo.setIp("127.0.0.1");
                         netInfo.setPort(15601);
 
+                        System.out.println("send : " + netInfo.toJsonString());
                         socketWrapper.sendText(netInfo.toJsonString());
 
+                        System.out.println("send : " + JsonBuilderBase.getLoginSucceedJson());
                         socketWrapper.sendText(JsonBuilderServer.getLoginSucceedJson());
 
                         return true;
                     }else{
+                        System.out.println("send : " + JsonBuilderBase.getLoginFailedJson());
                         socketWrapper.sendText(JsonBuilderBase.getLoginFailedJson());
                     }
                 }
