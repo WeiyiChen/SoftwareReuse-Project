@@ -26,8 +26,10 @@ public class LoginMsgHandler extends Thread {
     String user;
 
     public LoginMsgHandler(SocketWrapper socketWrapper, SocketListener socketListener){
+        super();
         this.socketWrapper = socketWrapper;
         this.socketListener = socketListener;
+
     }
 
     @Override
