@@ -41,6 +41,8 @@ public class JsonDao extends FileDao<Map<String, String>>{
 //		return null;
         checkOrCreateFile();
         String jsonString = FileAccess.readFile(getPathName());
+        // todo comment below system.out
+        System.out.println(getPathName());
         Map<String, String> userMap = new HashMap<String, String>();
         if(jsonString.equals("")){
             return userMap;
