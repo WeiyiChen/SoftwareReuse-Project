@@ -78,6 +78,5 @@ public class ClientReciever extends Thread {
           writer.write(str);
         }
         writer.close();
-	    
 	}
 }

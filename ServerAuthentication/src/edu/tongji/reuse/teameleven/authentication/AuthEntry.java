@@ -18,7 +18,7 @@ public class AuthEntry {
         Scanner scanner = new Scanner(System.in);
         while(true){
             String s = scanner.nextLine();
-            if("quit".equals(s)){
+            if("close".equals(s)){
                 // todo add code for end other thread
                 System.exit(0);
             }

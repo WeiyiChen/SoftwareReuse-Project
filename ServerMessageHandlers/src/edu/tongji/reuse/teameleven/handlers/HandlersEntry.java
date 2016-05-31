@@ -18,7 +18,7 @@ public class HandlersEntry {
         while(true){
             Scanner scanner = new Scanner(System.in);
             String str = scanner.nextLine();
-            if(str.equals("quit")){
+            if(str.equals("close")){
                 handlersManager.safeQuit();
                 break;
             }

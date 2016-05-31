@@ -14,7 +14,7 @@ public class HolderEntry {
         while(true){
             Scanner scanner = new Scanner(System.in);
             String str = scanner.nextLine();
-            if(str.equals("quit")){
+            if(str.equals("close")){
                 System.out.println("Holder module is exiting! Bye!");
                 System.exit(0);
             }

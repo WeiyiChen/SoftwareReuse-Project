@@ -47,7 +47,7 @@ public class MessageHandler extends Thread{
         handlersManager.removeUserHandler(user);
         this.interrupt();
         try{
-            socketWrapper.quit();
+            socketWrapper.close();
         }catch(IOException e){
             e.printStackTrace();
         }

@@ -54,10 +54,12 @@ public class SocketWrapper {
         }).start();
 	}
 	
-	public void quit() throws IOException{
+	public void close() throws IOException{
 		br.close();
 		pw.close();
-		socket.close();
+		if(!socket.isClosed()){
+			socket.close();
+		}
 	}
 
 	public void sendTexts(final List<String> jsonMsgs) {

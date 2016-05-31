@@ -17,7 +17,7 @@ public class ProcessorEntry {
         while(true){
             Scanner scanner = new Scanner(System.in);
             String str = scanner.nextLine();
-            if(str.equals("quit")){
+            if(str.equals("close")){
                 System.out.println("bye!");
                 System.exit(0);
             }

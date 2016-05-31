@@ -40,7 +40,7 @@ public class ClientLoginSocket {
 	 * @throws IOException
 	 */
 	public static Socket getSocket() throws UnknownHostException, IOException{
-		if(null == socket){
+		if(null == socket || socket.isClosed()){
 			socket = createSocket();
 		}
 		return socket;

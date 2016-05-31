@@ -26,7 +26,7 @@ public class ClientMsgSocket {
         if(port == 0){
             return null;
         }
-        if(null == clientMsgSocket){
+        if(null == clientMsgSocket || clientMsgSocket.isClosed()){
             return createSocket(ip, port);
         }
         return clientMsgSocket;

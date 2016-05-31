@@ -37,7 +37,7 @@ public class LoginMsgHandler extends Thread {
     @Override
     public void run(){
         if(checkpwd()){
-            // todo add init lost messages, and quit loginSocket safely
+            // todo add init lost messages, and close loginSocket safely
             if(user == null){
                 return;
             }
@@ -123,7 +123,7 @@ public class LoginMsgHandler extends Thread {
     public void safeClose(){
         try {
 
-            socketWrapper.quit();
+            socketWrapper.close();
             socketListener.removeHandler(this);
         } catch (IOException e) {
             e.printStackTrace();
