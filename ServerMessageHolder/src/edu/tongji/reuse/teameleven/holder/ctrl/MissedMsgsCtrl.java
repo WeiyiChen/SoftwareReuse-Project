@@ -13,8 +13,6 @@ import java.util.Map;
  * Created by daidongyang on 5/24/16.
  */
 public class MissedMsgsCtrl {
-    private Map<String, Long> userLogout;
-    private Map<String, MessageList> groupMsgs;
 
     private static MissedMsgsCtrl lostMsgsCtrl = null;
 
@@ -28,6 +26,15 @@ public class MissedMsgsCtrl {
         }
         return lostMsgsCtrl;
     }
+
+    // key:userId, value:logouttime
+    private Map<String, Long> userLogout;
+
+    // key: group name, value : a lost messageList related to group
+    private Map<String, MessageList> groupMsgs;
+
+    // key: group name, value : group size
+    private Map<String, Integer> groupSizes;
 
     private MissedMsgsCtrl(){
         userLogout = new HashMap<>();
@@ -50,6 +57,14 @@ public class MissedMsgsCtrl {
         this.groupMsgs = groupMsgs;
     }
 
+    public Map<String, Integer> getGroupSizes() {
+        return groupSizes;
+    }
+
+    public void setGroupSizes(Map<String, Integer> groupSizes) {
+        this.groupSizes = groupSizes;
+    }
+
     public void setLogoutTime(String user, Long time){
         userLogout.put(user, time);
     }
@@ -58,6 +73,15 @@ public class MissedMsgsCtrl {
         setLogoutTime(user, new Date().getTime());
     }
 
+    public void updateGroupSizes(String group, Integer size){
+        groupSizes.put(group, size);
+    }
+
+    /**
+     *
+     * @param user - userId
+     * @return - logout time
+     */
     public Long rmLogoutTime(String user){
         return userLogout.remove(user);
     }
@@ -74,6 +98,7 @@ public class MissedMsgsCtrl {
         return messageList.getMissedMsgs(logoutTime, loginTime);
     }
 
+
     public List<String> getMissedMsgs(User user){
         Long logoutTime = userLogout.get(user.getUserId());
         if(logoutTime == null){
@@ -82,12 +107,25 @@ public class MissedMsgsCtrl {
         return getMissedMsgs(user.getGroup(), logoutTime, user.getLoginTime());
     }
 
+
     public List<String> getMissedMsgsAndUpdateUser(User user){
-        Long logoutTime = userLogout.get(user.getUserId());
+        // todo check is right below
+        Long logoutTime = userLogout.remove(user.getUserId());
         if(logoutTime == null){
             return null;
         }
         return getMissedMsgs(user.getGroup(), logoutTime, user.getLoginTime());
+    }
+
+    public boolean addMessage(String group, String jsonMsg, int groupOnlineCount){
+        MessageList messageList = groupMsgs.get(group);
+        if(messageList == null){
+            int groupSize = groupSizes.get(group);
+            messageList = new MessageList(group, groupSize);
+        }
+        messageList.setGroupOnlineCount(groupOnlineCount);
+        groupMsgs.put(group, messageList);
+        return messageList.addMessage(jsonMsg);
     }
 
 //    public void initMsgList(String group, int groupOnlineCount){
@@ -103,36 +141,38 @@ public class MissedMsgsCtrl {
 //        return;
 //    }
 
-    public boolean addMessage(String group, String jsonMsg){
-        if(group == null){
-            System.err.println("group is null when add json msg for missedMsgsCtrl!");
-            return false;
-        }
-        MessageList messageList = groupMsgs.get(group);
-//        System.out.println(group);
-        return messageList.addMessage(jsonMsg);
-    }
 
-    public void setGroupOnLineCount(String group, int groupOnlineCount){
-        MessageList messageList = groupMsgs.get(group);
-        messageList.setGroupOnlineCount(groupOnlineCount);
-    }
 
-    public void addGroupOnLineCount(String group){
-        MessageList messageList = groupMsgs.get(group);
-        messageList.addGroupOnLineCount();
-    }
-
-    public void subGroupOnLineCount(String group){
-        MessageList messageList = groupMsgs.get(group);
-        try{
-            messageList.subGroupConLineCount();
-        }catch(NullPointerException e){
-            // the messageList may be null, which means
-            // the client hasn't log in when exiting.
-            e.printStackTrace(System.out);
-        }
-    }
+//    public boolean addMessage(String group, String jsonMsg){
+//        if(group == null){
+//            System.err.println("group is null when add json msg for missedMsgsCtrl!");
+//            return false;
+//        }
+//        MessageList messageList = groupMsgs.get(group);
+////        System.out.println(group);
+//        return messageList.addMessage(jsonMsg);
+//    }
+//
+//    public void setGroupOnLineCount(String group, int groupOnlineCount){
+//        MessageList messageList = groupMsgs.get(group);
+//        messageList.setGroupOnlineCount(groupOnlineCount);
+//    }
+//
+//    public void addGroupOnLineCount(String group){
+//        MessageList messageList = groupMsgs.get(group);
+//        messageList.addGroupOnLineCount();
+//    }
+//
+//    public void subGroupOnLineCount(String group){
+//        MessageList messageList = groupMsgs.get(group);
+//        try{
+//            messageList.subGroupConLineCount();
+//        }catch(NullPointerException e){
+//            // the messageList may be null, which means
+//            // the client hasn't log in when exiting.
+//            e.printStackTrace(System.out);
+//        }
+//    }
 
 
 }

@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface ProcessMsgIntf extends Remote {
     void processMsg(String jsonString) throws RemoteException;
+    void logoutUser(String user) throws RemoteException;
 }

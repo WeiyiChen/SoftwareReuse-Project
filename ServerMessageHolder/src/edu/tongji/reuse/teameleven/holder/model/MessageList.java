@@ -11,17 +11,20 @@ public class MessageList extends LinkedList<MessageListItem> {
     private int groupSize;
     private int groupOnlineCount;
 
+    public MessageList(String group, int groupSize, int groupOnlineCount){
+        super();
+        this.group = group;
+        this.groupSize = groupSize;
+        this.groupOnlineCount = groupOnlineCount;
+    }
+
     public MessageList(String group, int groupSize) {
         super();
         this.group = group;
         this.groupSize = groupSize;
     }
 
-    public MessageList(Collection<? extends MessageListItem> c, String group, int groupSize) {
-        super(c);
-        this.group = group;
-        this.groupSize = groupSize;
-    }
+
 
     public String getGroup() {
         return group;

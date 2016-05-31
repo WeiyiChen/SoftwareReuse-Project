@@ -10,7 +10,7 @@ public class MessageListItem {
     private String jsonMsg;
     private int remainCount;
     private long posixTime;
-    private User sender;
+    private String sender;
 
     public MessageListItem(){
         super();
@@ -19,7 +19,7 @@ public class MessageListItem {
         super();
         this.jsonMsg = jsonMsg;
         this.posixTime = JsonAnalizerBase.getTime(jsonMsg);
-//        this.sender = JsonAnalizerBase.getUser(jsonMsg);
+        this.sender = JsonAnalizerBase.getUser(jsonMsg);
     }
 
     public String getJsonMsg() {
@@ -46,11 +46,11 @@ public class MessageListItem {
         this.posixTime = posixTime;
     }
 
-    public User getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
