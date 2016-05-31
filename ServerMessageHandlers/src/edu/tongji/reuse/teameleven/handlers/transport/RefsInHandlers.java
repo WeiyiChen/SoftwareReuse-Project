@@ -1,5 +1,6 @@
 package edu.tongji.reuse.teameleven.handlers.transport;
 
+import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.processor.stub.ProcessMsgIntf;
 
 import java.rmi.NotBoundException;
@@ -15,8 +16,12 @@ public class RefsInHandlers {
     public static synchronized void createProcessMsgRef(){
         if(null == processMsgIntfImpl){
             try {
-                Registry registry = LocateRegistry.getRegistry("127.0.0.1", 15820);
-                processMsgIntfImpl = (ProcessMsgIntf)registry.lookup("processMsgIntf");
+                String processIp = ConfigCtrl.getConfig().getProcessorIP();
+                int processRegPort = ConfigCtrl.getConfig().getProcessorRegistryPort();
+                Registry registry = LocateRegistry.getRegistry(processIp, processRegPort);
+
+                String processMsgRegKey = ConfigCtrl.getConfig().getProcessorProcessMsgRegKey();
+                processMsgIntfImpl = (ProcessMsgIntf)registry.lookup(processMsgRegKey);
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (NotBoundException e) {

@@ -1,5 +1,6 @@
 package edu.tongji.reuse.teameleven.holder.ctrl;
 
+import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.holder.impl.GetMissedMsgsIntfImpl;
 import edu.tongji.reuse.teameleven.holder.impl.MissedMsgsIntfImpl;
 import edu.tongji.reuse.teameleven.holder.stub.GetMissedMsgsIntf;
@@ -15,17 +16,26 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class StubLoader {
     public void load(){
-
+        GetMissedMsgsIntfImpl getMissedMsgsIntfImpl = new GetMissedMsgsIntfImpl();
+        MissedMsgsIntfImpl missedMsgsIntfImpl = new MissedMsgsIntfImpl();
         try {
-            GetMissedMsgsIntfImpl getMissedMsgsIntfImpl = new GetMissedMsgsIntfImpl();
+
+            int getMissedMsgsInvokePort = ConfigCtrl.getConfig().getHolderGetMissedMsgsInvokePort();
             GetMissedMsgsIntf getMissedMsgsIntf = (GetMissedMsgsIntf)
-                    UnicastRemoteObject.exportObject(getMissedMsgsIntfImpl, 15841);
-            MissedMsgsIntfImpl missedMsgsIntfImpl = new MissedMsgsIntfImpl();
+                    UnicastRemoteObject.exportObject(getMissedMsgsIntfImpl, getMissedMsgsInvokePort);
+
+            int missedMsgsInvokePort = ConfigCtrl.getConfig().getHolderMissedMsgsInvokePort();
             MissedMsgsIntf missedMsgsIntf = (MissedMsgsIntf)
-                    UnicastRemoteObject.exportObject(missedMsgsIntfImpl, 15842);
-            Registry registry = LocateRegistry.createRegistry(15840);
-            registry.rebind("getMissedMsgsIntf", getMissedMsgsIntf);
-            registry.rebind("missedMsgsIntf", missedMsgsIntf);
+                    UnicastRemoteObject.exportObject(missedMsgsIntfImpl, missedMsgsInvokePort);
+
+            int holderRegPort = ConfigCtrl.getConfig().getHolderRegistryPort();
+            Registry registry = LocateRegistry.createRegistry(holderRegPort);
+
+            String getMissedMsgsRegKey = ConfigCtrl.getConfig().getHolderGetMissedMsgsRegKey();
+            registry.rebind(getMissedMsgsRegKey, getMissedMsgsIntf);
+
+            String missedMsgsRegKey = ConfigCtrl.getConfig().getHolderMissedMsgsRegKey();
+            registry.rebind(missedMsgsRegKey, missedMsgsIntf);
             System.out.println("Holder module stub load successfully!");
         } catch (RemoteException e) {
             e.printStackTrace();

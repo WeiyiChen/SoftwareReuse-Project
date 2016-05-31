@@ -15,6 +15,13 @@ public class ClientReciever extends Thread {
 //	private ArrayList<String> clientReceiveMsg = new ArrayList<String>();
 
 	public void exit(){
+        if(!socket.isClosed()){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 		this.interrupt();
 	}
 	
@@ -34,33 +41,27 @@ public class ClientReciever extends Thread {
 			String message = null;
 			while (!Thread.currentThread().isInterrupted()) {
 				message = reader.readLine();
-
+				System.out.println("in clientReceiver receive : " + message);
 				if(message == null){
 					System.out.println("server closed connection");
+					if(!socket.isClosed()){
+						socket.close();
+					}
 					break;
 				}
 				if(message.equals("bye")){
+					if(!socket.isClosed()){
+						socket.close();
+					}
 					break;
 				}
                 if(imh != null){
                     imh.receiveAndUpdateMsg(message);
                 }
 
-
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally{
-			if(!socket.isClosed()){
-				try{
-					socket.shutdownInput();
-					socket.shutdownOutput();
-					socket.close();
-				}catch(IOException e){
-					e.printStackTrace();
-				}
-
-			}
 		}
 	}
 	

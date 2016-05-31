@@ -2,6 +2,7 @@ package edu.tongji.reuse.teameleven.processor.impl;
 
 import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
 import edu.tongji.reuse.teameleven.coserver.util.JsonBuilderServer;
+import edu.tongji.reuse.teameleven.processor.ctrl.LicenseCtrl;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
 import edu.tongji.reuse.teameleven.processor.transport.RefsInProcessor;
 
@@ -17,9 +18,10 @@ import java.util.concurrent.TimeUnit;
 public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
 
     private Map<String, List<String>> groupOnLineUsers;
-
-    public ContactsCtrlIntfImpl(Map<String, List<String>> groupOnLineUsers){
+    private LicenseCtrl licenseCtrl;
+    public ContactsCtrlIntfImpl(Map<String, List<String>> groupOnLineUsers, LicenseCtrl licenseCtrl){
         this.groupOnLineUsers = groupOnLineUsers;
+        this.licenseCtrl = licenseCtrl;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
         }
         contacts.add(u);
         groupOnLineUsers.put(group, contacts);
-
+        licenseCtrl.addUser(u);
         final String userId = u;
         final List<String> finalContacts = contacts;
         new Thread(()->{
