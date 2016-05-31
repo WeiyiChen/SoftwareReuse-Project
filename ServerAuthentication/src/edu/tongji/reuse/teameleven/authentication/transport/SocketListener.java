@@ -1,6 +1,7 @@
 package edu.tongji.reuse.teameleven.authentication.transport;
 
 import edu.tongji.reuse.teameleven.codependent.base.LoopThread;
+import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.coserver.util.SocketWrapper;
 
 import java.io.IOException;
@@ -30,7 +31,8 @@ public class SocketListener extends LoopThread {
     public void beforeLoop(){
         // todo make the listen port configurable
         try {
-            serverSocket = new ServerSocket(15501);
+            int authListenPort = ConfigCtrl.getConfig().getAuthListenPort();
+            serverSocket = new ServerSocket(authListenPort);
             System.out.println(serverSocket);
         } catch (IOException e) {
             e.printStackTrace();

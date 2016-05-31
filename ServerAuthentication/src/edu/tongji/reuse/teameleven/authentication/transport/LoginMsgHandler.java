@@ -5,6 +5,7 @@ import edu.tongji.reuse.teameleven.codependent.base.JsonAnalizerBase;
 import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.codependent.model.NetInfo;
 import edu.tongji.reuse.teameleven.codependent.model.User;
+import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
 import edu.tongji.reuse.teameleven.coserver.util.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.coserver.util.JsonBuilderServer;
@@ -98,8 +99,10 @@ public class LoginMsgHandler extends Thread {
                     NetInfo netInfo = new NetInfo();
 
                     // todo make the port configurable
-                    netInfo.setIp("127.0.0.1");
-                    netInfo.setPort(15601);
+                    String handlersIp = ConfigCtrl.getConfig().getHandlersIP();
+                    int handlersListenPort = ConfigCtrl.getConfig().getHandlersListenPort();
+                    netInfo.setIp(handlersIp);
+                    netInfo.setPort(handlersListenPort);
 
                     System.out.println("send : " + netInfo.toJsonString());
                     socketWrapper.sendText(netInfo.toJsonString());

@@ -1,6 +1,7 @@
 package edu.tongji.reuse.teameleven.handlers.transport;
 
 import edu.tongji.reuse.teameleven.codependent.base.LoopThread;
+import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.coserver.util.SocketWrapper;
 
 import java.io.IOException;
@@ -46,7 +47,8 @@ public class HandlersManager extends LoopThread {
     public void beforeLoop(){
 //        userHandlers = new HashMap<>();
         try {
-            serverSocket = new ServerSocket(15601);
+            int handlersListenPort = ConfigCtrl.getConfig().getHandlersListenPort();
+            serverSocket = new ServerSocket(handlersListenPort);
         } catch (IOException e) {
             e.printStackTrace();
             safeQuit();

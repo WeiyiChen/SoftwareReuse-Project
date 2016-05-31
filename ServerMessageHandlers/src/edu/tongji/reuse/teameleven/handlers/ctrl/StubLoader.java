@@ -1,5 +1,6 @@
 package edu.tongji.reuse.teameleven.handlers.ctrl;
 
+import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.handlers.impl.HandlersIntfImpl;
 import edu.tongji.reuse.teameleven.handlers.stub.HandlersIntf;
 import edu.tongji.reuse.teameleven.handlers.transport.HandlersManager;
@@ -16,9 +17,15 @@ public class StubLoader {
     public void load(HandlersManager handlersManager){
         HandlersIntfImpl handlersIntfImpl = new HandlersIntfImpl(handlersManager);
         try {
-            HandlersIntf handlersIntf = (HandlersIntf) UnicastRemoteObject.exportObject(handlersIntfImpl, 15701);
-            Registry registry = LocateRegistry.createRegistry(15700);
-            registry.rebind("handlers", handlersIntf);
+            int handlersRegPort = ConfigCtrl.getConfig().getHandlersRegistryPort();
+
+            int handlersInvokePort = ConfigCtrl.getConfig().getHandlersInvokePort();
+            HandlersIntf handlersIntf = (HandlersIntf)
+                    UnicastRemoteObject.exportObject(handlersIntfImpl, handlersInvokePort);
+            Registry registry = LocateRegistry.createRegistry(handlersRegPort);
+
+            String handlersRegKey = ConfigCtrl.getConfig().getHandlersRegKey();
+            registry.rebind(handlersRegKey, handlersIntf);
         } catch (RemoteException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
