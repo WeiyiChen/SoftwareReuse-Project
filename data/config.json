@@ -1,5 +1,5 @@
 {
-    "maxMessagesPerLogin":6,
+    "maxMessagesPerLogin":3,
     "saveCycle":2,
     "maxMessagesPerSecond":5,
     "zipCycle":86400,

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by daidongyang on 5/29/16.
@@ -28,7 +29,7 @@ public class LoginMsgHandler extends Thread {
     SocketListener socketListener;
     User user;
 
-    public LoginMsgHandler(SocketWrapper socketWrapper, SocketListener socketListener){
+    public LoginMsgHandler(SocketWrapper socketWrapper, SocketListener socketListener) {
         super();
         this.socketWrapper = socketWrapper;
         this.socketListener = socketListener;
@@ -36,42 +37,52 @@ public class LoginMsgHandler extends Thread {
     }
 
     @Override
-    public void run(){
-        if(checkpwd()){
+    public void run() {
 
-            if(user == null){
+        if (checkpwd()) {
+            if (user == null) {
+                safeClose();
                 return;
             }
             ContactsCtrlIntf contactsCtrl = RefsInAuth.getContactsCtrl();
             GetMissedMsgsIntf getMissedMsgs = RefsInAuth.getGetMissedMsgs();
-            try{
+            try {
                 List<String> contacts = contactsCtrl.getInitContacts(user.getUserId());
-                if(contacts != null){
+                if (contacts != null) {
                     String jsonString = JsonBuilderServer.getInitContactsJson(contacts);
                     socketWrapper.sendText(jsonString, 1000);
                 }
                 contactsCtrl.addUser(user.getUserId());
 
                 List<String> missedMesages = getMissedMsgs.getMissedMsgs(user);
-                if(missedMesages != null){
+                if (missedMesages != null) {
                     socketWrapper.sendTexts(missedMesages, 1000);
+                }
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(2000);
+                    safeClose();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
 //                socketWrapper.sendText(JsonBuilderServer.getAddContactsJson(user.getUserId()));
 
-            }catch(RemoteException e){
+            } catch (RemoteException e) {
                 e.printStackTrace();
             }
 
         }
     }
 
+
     /**
-     *
      * @return - is continue with last produces
      */
-    public boolean checkpwd(){
+    public boolean checkpwd() {
+        // todo delete System.out
+        System.out.println("in checkpwd");
         BufferedReader bufferedReader = socketWrapper.getBufferedReader();
-        while(!Thread.currentThread().isInterrupted()) try {
+        while (!Thread.currentThread().isInterrupted()) try {
             String jsonString = bufferedReader.readLine();
             System.out.println("Receive : " + jsonString);
             // the client has been closed
@@ -79,7 +90,6 @@ public class LoginMsgHandler extends Thread {
                 safeClose();
                 break;
             }
-
             if (JsonAnalizerBase.getMessageType(jsonString).equals(JsonBuilderBase.password)) {
                 String userId = JsonAnalizerServer.getUser(jsonString);
                 String password = ServerConfigEnum.encrypt
@@ -125,11 +135,11 @@ public class LoginMsgHandler extends Thread {
         return false;
     }
 
-    public void safeClose(){
+    public void safeClose() {
         try {
-
             socketWrapper.close();
             socketListener.removeHandler(this);
+            this.interrupt();
         } catch (IOException e) {
             e.printStackTrace();
         }

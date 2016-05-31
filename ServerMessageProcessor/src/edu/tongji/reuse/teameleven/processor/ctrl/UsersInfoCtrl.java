@@ -1,4 +1,4 @@
-package edu.tongji.reuse.teameleven.processor.model;
+package edu.tongji.reuse.teameleven.processor.ctrl;
 
 import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
 
@@ -10,11 +10,11 @@ import java.util.Map;
 /**
  * Created by daidongyang on 5/30/16.
  */
-public class UsersInfo {
+public class UsersInfoCtrl {
     private Map<String, List<String>> groupOnLineUsers;
     private Map<String, Integer> groupCounts;
 
-    public UsersInfo(){
+    public UsersInfoCtrl(){
         groupOnLineUsers = new HashMap<>();
         updateGroupCount();
     }

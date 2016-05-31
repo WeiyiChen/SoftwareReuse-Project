@@ -43,6 +43,7 @@ public class SocketListener extends LoopThread {
     public void loop(){
         try {
             Socket socket = serverSocket.accept();
+            System.out.println("new socket : " + socket);
             SocketWrapper socketWrapper = new SocketWrapper(socket);
 //            LoginMsgHandler loginMsgHandler = new LoginMsgHandler();
             LoginMsgHandler loginMsgHandler = new LoginMsgHandler(socketWrapper, this);

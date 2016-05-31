@@ -63,7 +63,11 @@ public class MsgHandle implements IMsgHandle {
             if (msg instanceof String) {
 
                 String jsonStr = (String) msg;
+                // todo delete System.out code
+                System.out.println("Receive : " + jsonStr);
+
                 if (jsonStr.equals(JsonBuilderBase.getReloginRequestJson())) {
+                    // todo when the message socket is closed, jump automatically
                     new WindowJumpFromMsgToLogin().jump(imw, new LoginWindow());
                 } else if (JsonBuilderBase.contacts.equals(JsonAnalizerClient.getString(jsonStr, JsonBuilderBase.type))) {
                     handleContactsMsg(jsonStr);
@@ -94,6 +98,8 @@ public class MsgHandle implements IMsgHandle {
             }
         }
     }
+
+
 
 
 }

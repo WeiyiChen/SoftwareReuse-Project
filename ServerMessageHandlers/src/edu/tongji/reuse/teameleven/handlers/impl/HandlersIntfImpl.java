@@ -6,6 +6,7 @@ import edu.tongji.reuse.teameleven.handlers.transport.MessageHandler;
 
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by daidongyang on 5/31/16.
@@ -38,9 +39,18 @@ public class HandlersIntfImpl implements HandlersIntf {
     @Override
     public void relogin(String jsonMsg, String userId) throws RemoteException {
         try{
-            MessageHandler messageHandler = handlersManager.getMessageHandler(userId);
+            final MessageHandler messageHandler = handlersManager.getMessageHandler(userId);
+            System.out.println("Send : " + jsonMsg);
             messageHandler.sendText(jsonMsg);
-            messageHandler.safeQuit();
+            new Thread(()->{
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                messageHandler.safeQuit();
+            }).start();
+
         }catch(NullPointerException e){
             e.printStackTrace();
         }

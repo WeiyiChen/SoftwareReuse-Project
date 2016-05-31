@@ -62,15 +62,16 @@ public class ClientStart {
 //		System.out.println("after start client rezip");
 
 		
-		// close the socket when exit the program
-		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-	        public void run() {
-	            try {
-					ClientLoginSocket.getSocket().close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        }
-	    }, "Shutdown-thread"));
+//		// close the socket when exit the program
+//		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+//	        public void run() {
+//	            try {
+//					if()
+//					ClientLoginSocket.getSocket().close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//	        }
+//	    }, "Shutdown-thread"));
 	}
 }
