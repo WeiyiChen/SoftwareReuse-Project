@@ -1,8 +1,9 @@
 package edu.tongji.reuse.teameleven.processor.model;
 
-import edu.tongji.reuse.teameleven.processor.ctrl.GroupController;
+import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,31 @@ public class UsersInfo {
 
     public Map<String, Integer> getGroupCounts() {
         return groupCounts;
+    }
+
+    public void loginUser(String userId){
+        String group = GroupController.getInstance().getGroup(userId);
+        List<String> onLineUsers = groupOnLineUsers.get(group);
+        if(onLineUsers == null){
+            onLineUsers = new LinkedList<>();
+            groupOnLineUsers.put(group, onLineUsers);
+        }
+        onLineUsers.add(userId);
+    }
+
+    public List<String> getOnlineGroupMates(String userId){
+        String group = GroupController.getInstance().getGroup(userId);
+        return groupOnLineUsers.get(group);
+    }
+
+    public void logoutUser(String userId){
+        String group = GroupController.getInstance().getGroup(userId);
+        List<String> onLineUsers = groupOnLineUsers.get(group);
+        if(onLineUsers == null){
+            System.out.println("cannot remove this online users, because it's group doesn't exit!");
+            return;
+        }
+        onLineUsers.remove(userId);
     }
 
     public void updateGroupCount(){

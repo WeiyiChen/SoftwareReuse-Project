@@ -7,6 +7,8 @@ import edu.tongji.reuse.teameleven.client.intf.ILoginWindow;
 import edu.tongji.reuse.teameleven.client.intf.IMsgWindow;
 import edu.tongji.reuse.teameleven.client.intf.IWindowJump;
 import edu.tongji.reuse.teameleven.client.ctrl.LogInCheck;
+import edu.tongji.reuse.teameleven.client.transport.StrMsgSender;
+import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -106,8 +108,13 @@ public class LoginWindow implements ILoginWindow {
 						windowJump.jump(null, ims);
 						ims.setUsr(usr);
 						frame.dispose();
-						
+
 						ClientMonitorController.increaseLoginTimes();
+
+						final String userId = usr;
+						new Thread(()->{
+							new StrMsgSender().send(JsonBuilderBase.getFirstMsgJson(userId));
+						}).start();
 
 //						ClientLogger.updateUsr(usr);
 //						ClientLogger.writeLoginSuccessful(usr);

@@ -23,6 +23,7 @@ public class JsonBuilderBase {
 	public static final String message = "Message";
 	public static final String password = "Password";
     public static final String contacts = "Contacts";
+	public static final String firstMsg = "FirstMsg";
 	
 	//content
 	public static final String loginFailed = "LoginFailed";
@@ -98,6 +99,18 @@ public class JsonBuilderBase {
 
 	public static String getReloginRequestJson() {
 		return getTypeContentJson(JsonBuilderBase.authorization, JsonBuilderBase.relogin);
+	}
+
+	public static String getFirstMsgJson(String userId){
+		try{
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put(JsonBuilderBase.type, JsonBuilderBase.firstMsg);
+            jsonObject.put(JsonBuilderBase.user, userId);
+            return jsonObject.toString();
+		}catch(JSONException e){
+            e.printStackTrace();
+        }
+        return "{\"Type\":\"Error\"}";
 	}
 
 

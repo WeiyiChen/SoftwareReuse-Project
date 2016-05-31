@@ -1,13 +1,15 @@
 package edu.tongji.reuse.teameleven.processor.impl;
 
-import edu.tongji.reuse.teameleven.codependent.model.User;
-import edu.tongji.reuse.teameleven.processor.ctrl.GroupController;
+import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
+import edu.tongji.reuse.teameleven.coserver.util.JsonBuilderServer;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
+import edu.tongji.reuse.teameleven.processor.transport.RefsInProcessor;
 
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by daidongyang on 5/30/16.
@@ -41,6 +43,21 @@ public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
         }
         contacts.add(u);
         groupOnLineUsers.put(group, contacts);
+
+        final String userId = u;
+        final List<String> finalContacts = contacts;
+        new Thread(()->{
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+                RefsInProcessor.getHandlersIntf().sendMsgs(finalContacts, JsonBuilderServer.getAddContactsJson(userId));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+
 
         // todo delte the Sytem.out code after debug
 //        System.out.println(groupOnLineUsers);

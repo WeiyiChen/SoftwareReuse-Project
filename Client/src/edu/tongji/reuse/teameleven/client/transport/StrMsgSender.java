@@ -7,27 +7,23 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- * Send json type message by socket
- * @author Dai
- *
+ * Created by daidongyang on 5/31/16.
  */
-public class StrMsgSender implements IMsgSender {
+public class StrMsgSender implements IMsgSender{
+    @Override
+    public boolean send(Object msg) {
 
-	@Override
-	public boolean send(Object msg) {
-
-		PrintWriter writer;
-		try {
-			Socket socket = ClientLoginSocket.getSocket();
-			writer = new PrintWriter(socket.getOutputStream());
-			String jsonString = (String)msg;
-			writer.println(jsonString);
-			writer.flush();
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
+        PrintWriter writer;
+        try {
+            Socket socket = ClientMsgSocket.getSocket();
+            writer = new PrintWriter(socket.getOutputStream());
+            String jsonString = (String)msg;
+            writer.println(jsonString);
+            writer.flush();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

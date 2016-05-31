@@ -4,7 +4,7 @@ import edu.tongji.reuse.teameleven.client.intf.ILogInCheck;
 import edu.tongji.reuse.teameleven.client.intf.IMsgSender;
 import edu.tongji.reuse.teameleven.client.transport.ClientLoginSocket;
 import edu.tongji.reuse.teameleven.client.transport.ClientMsgSocket;
-import edu.tongji.reuse.teameleven.client.transport.StrMsgSender;
+import edu.tongji.reuse.teameleven.client.transport.StrLoginMsgSender;
 import edu.tongji.reuse.teameleven.codependent.base.JsonAnalizerBase;
 import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.codependent.model.NetInfo;
@@ -41,7 +41,7 @@ public class LogInCheck implements ILogInCheck {
 		loginResult = false;
 		String secretPassword = encrypt.encrypt(pwd);
 		String jsonStr = JsonBuilderClient.getPasswordJson(usrName, secretPassword);
-		IMsgSender msgSender = new StrMsgSender();
+		IMsgSender msgSender = new StrLoginMsgSender();
 		System.out.println(jsonStr);
 		msgSender.send(jsonStr);
 

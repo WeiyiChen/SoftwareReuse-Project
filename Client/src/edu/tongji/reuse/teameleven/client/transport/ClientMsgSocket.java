@@ -24,9 +24,10 @@ public class ClientMsgSocket {
 
     public static Socket getSocket() throws IOException{
         if(port == 0){
+            System.out.println("plase init ip and port");
             return null;
         }
-        if(null == clientMsgSocket){
+        if(null == clientMsgSocket || clientMsgSocket.isClosed()){
             return createSocket(ip, port);
         }
         return clientMsgSocket;

@@ -26,6 +26,8 @@ public class WindowJumpFromMsgToLogin implements IWindowJump {
 			result = true;
 			
 			imw.toCloseWindow();
+			ClientRecievers.loginReceiver.exit();
+			ClientRecievers.msgReceiver.exit();
 //			ClientLogger.setIsLogin(false);
 //			ClientRecordController crc = ClientRecordController.getInstance();
 //			crc.reset();

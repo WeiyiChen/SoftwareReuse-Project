@@ -1,9 +1,11 @@
 package edu.tongji.reuse.teameleven.codependent.model;
 
+import java.io.Serializable;
+
 /**
  * Created by daidongyang on 5/21/16.
  */
-public class User{
+public class User implements Serializable{
     private String userId = "";
     private String group = "";
     private String pwd = "";
