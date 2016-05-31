@@ -42,6 +42,15 @@ public class UsersInfoCtrl {
         return groupOnLineUsers.get(group);
     }
 
+    public Integer getOnlineUsers(String group){
+        List<String> onLineUsers = groupOnLineUsers.get(group);
+        if(onLineUsers == null){
+            System.err.println("onlineUsers == null!");
+            return -1;
+        }
+        return onLineUsers.size();
+    }
+
     public void logoutUser(String userId){
         String group = GroupController.getInstance().getGroup(userId);
         List<String> onLineUsers = groupOnLineUsers.get(group);

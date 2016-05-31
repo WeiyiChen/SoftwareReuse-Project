@@ -59,4 +59,11 @@ public class RefsInProcessor {
             }
         }
     }
+
+    public static MissedMsgsIntf getMissedMsgsRef(){
+        if(null == missedMsgsRef){
+            createMissedMsgsRef();
+        }
+        return missedMsgsRef;
+    }
 }

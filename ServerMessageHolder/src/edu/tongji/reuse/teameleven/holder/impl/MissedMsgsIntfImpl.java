@@ -21,6 +21,9 @@ public class MissedMsgsIntfImpl implements MissedMsgsIntf {
 
     @Override
     public void addMissedMsg(String group, String jsonMsg, int groupOnlineCount) throws RemoteException {
+        if(groupOnlineCount == -1){
+            return;
+        }
         MissedMsgsCtrl.getInstance().addMessage(group, jsonMsg, groupOnlineCount);
     }
 
