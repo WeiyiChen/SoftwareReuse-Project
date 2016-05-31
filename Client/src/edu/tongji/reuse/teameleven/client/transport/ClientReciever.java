@@ -12,7 +12,7 @@ public class ClientReciever extends Thread {
 	private IMsgHandle imh;
 
 	// clientReceiveMsg is used to save message as file
-	private ArrayList<String> clientReceiveMsg = new ArrayList<String>();
+//	private ArrayList<String> clientReceiveMsg = new ArrayList<String>();
 
 	public void exit(){
 		this.interrupt();
@@ -34,15 +34,18 @@ public class ClientReciever extends Thread {
 			String message = null;
 			while (!Thread.currentThread().isInterrupted()) {
 				message = reader.readLine();
-				//System.out.println(message);
-				clientReceiveMsg.add(message);
-//				saveClientMsgToFile(clientReceiveMsg);
-				if(imh != null){
-					imh.receiveAndUpdateMsg(message);
+
+				if(message == null){
+					System.out.println("server closed connection");
+					break;
 				}
 				if(message.equals("bye")){
 					break;
 				}
+                if(imh != null){
+                    imh.receiveAndUpdateMsg(message);
+                }
+
 
 			}
 		} catch (IOException e) {

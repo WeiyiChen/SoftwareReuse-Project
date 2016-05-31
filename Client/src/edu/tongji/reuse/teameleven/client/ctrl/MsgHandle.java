@@ -2,10 +2,11 @@ package edu.tongji.reuse.teameleven.client.ctrl;
 
 import edu.tongji.reuse.teameleven.client.intf.IMsgHandle;
 import edu.tongji.reuse.teameleven.client.intf.IMsgWindow;
+import edu.tongji.reuse.teameleven.client.transport.StrMsgSender;
 import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.client.intf.IAddMsgToUI;
 import edu.tongji.reuse.teameleven.client.intf.IMsgSender;
-import edu.tongji.reuse.teameleven.client.transport.StrMsgSender;
+import edu.tongji.reuse.teameleven.client.transport.StrLoginMsgSender;
 import edu.tongji.reuse.teameleven.client.ui.LoginWindow;
 
 import java.util.List;

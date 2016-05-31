@@ -25,9 +25,8 @@ public class WindowJumpFromLoginToMsg implements IWindowJump {
 		try{
 			IMsgWindow imw = (IMsgWindow)to;
 			imw.toShowWindow();
-			new ClientReciever(ClientLoginSocket.getSocket(), imw.getMsgHandle()).start();
-			// todo add msg receiver
-			// new ClientReciever(ClientMsgSocket.getSocket(), imw.getMsgHandle()).start();
+			ClientRecievers.loginReceiver = new ClientReciever(ClientLoginSocket.getSocket(), imw.getMsgHandle());
+			ClientRecievers.msgReceiver = new ClientReciever(ClientMsgSocket.getSocket(), imw.getMsgHandle());
 			result = true;
 		}catch(ClassCastException e1){
 			e1.printStackTrace();

@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface ContactsCtrlIntf extends Remote{
     public List<String> getInitContacts(String u) throws RemoteException;
-    public void addUser(User u) throws RemoteException;
+    public void addUser(String u) throws RemoteException;
 }

@@ -1,7 +1,6 @@
 package edu.tongji.reuse.teameleven.processor.impl;
 
-import edu.tongji.reuse.teameleven.codependent.model.User;
-import edu.tongji.reuse.teameleven.processor.ctrl.GroupController;
+import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
 
 import java.rmi.RemoteException;
