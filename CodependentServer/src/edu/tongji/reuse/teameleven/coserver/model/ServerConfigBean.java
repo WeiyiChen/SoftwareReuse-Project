@@ -29,6 +29,10 @@ public class ServerConfigBean {
     private String holderGetMissedMsgsRegKey;
     private int holderMissedMsgsInvokePort;
     private String holderMissedMsgsRegKey;
+    private String loggerIp;
+    private int loggerRegistryPort;
+    private int loggerMonitorCtrlInvokePort;
+    private String loggerMonitorCtrlRegKey;
 
     public int getMaxMessagesPerLogin() {
         return maxMessagesPerLogin;
@@ -230,6 +234,38 @@ public class ServerConfigBean {
         this.holderMissedMsgsRegKey = holderMissedMsgsRegKey;
     }
 
+    public String getLoggerIp() {
+        return loggerIp;
+    }
+
+    public void setLoggerIp(String loggerIp) {
+        this.loggerIp = loggerIp;
+    }
+
+    public int getLoggerRegistryPort() {
+        return loggerRegistryPort;
+    }
+
+    public void setLoggerRegistryPort(int loggerRegistryPort) {
+        this.loggerRegistryPort = loggerRegistryPort;
+    }
+
+    public int getLoggerMonitorCtrlInvokePort() {
+        return loggerMonitorCtrlInvokePort;
+    }
+
+    public void setLoggerMonitorCtrlInvokePort(int loggerMonitorCtrlInvokePort) {
+        this.loggerMonitorCtrlInvokePort = loggerMonitorCtrlInvokePort;
+    }
+
+    public String getLoggerMonitorCtrlRegKey() {
+        return loggerMonitorCtrlRegKey;
+    }
+
+    public void setLoggerMonitorCtrlRegKey(String loggerMonitorCtrlRegKey) {
+        this.loggerMonitorCtrlRegKey = loggerMonitorCtrlRegKey;
+    }
+
     @Override
     public String toString() {
         return "ServerConfigBean{" +
@@ -258,6 +294,10 @@ public class ServerConfigBean {
                 ", holderGetMissedMsgsRegKey='" + holderGetMissedMsgsRegKey + '\'' +
                 ", holderMissedMsgsInvokePort=" + holderMissedMsgsInvokePort +
                 ", holderMissedMsgsRegKey='" + holderMissedMsgsRegKey + '\'' +
+                ", loggerIp='" + loggerIp + '\'' +
+                ", loggerRegistryPort=" + loggerRegistryPort +
+                ", loggerMonitorCtrlInvokePort=" + loggerMonitorCtrlInvokePort +
+                ", loggerMonitorCtrlRegKey='" + loggerMonitorCtrlRegKey + '\'' +
                 '}';
     }
 }

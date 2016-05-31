@@ -1,10 +1,13 @@
 package edu.tongji.reuse.teameleven.processor;
 
 import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
+import edu.tongji.reuse.teameleven.holder.stub.MissedMsgsIntf;
 import edu.tongji.reuse.teameleven.processor.ctrl.LicenseCtrl;
 import edu.tongji.reuse.teameleven.processor.ctrl.StubLoader;
 import edu.tongji.reuse.teameleven.processor.ctrl.UsersInfoCtrl;
+import edu.tongji.reuse.teameleven.processor.transport.RefsInProcessor;
 
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 /**
@@ -12,7 +15,7 @@ import java.util.Scanner;
  */
 public class ProcessorEntry {
 //    UsersInfoCtrl usersInfo;
-    public static void main(String[] args){
+    public static void main(String[] args) throws RemoteException {
         UsersInfoCtrl usersInfoCtrl = new UsersInfoCtrl();
         LicenseCtrl licenseCtrl = new LicenseCtrl();
         licenseCtrl.setMaxMessagePerLogin(ConfigCtrl.getConfig().getMaxMessagesPerLogin());
@@ -21,6 +24,9 @@ public class ProcessorEntry {
         stubLoader.setUsersInfoCtrl(usersInfoCtrl);
         stubLoader.setLicenseCtrl(licenseCtrl);
         stubLoader.load();
+        // please make sure holder module start before processor module
+        MissedMsgsIntf missedMsgsref = RefsInProcessor.getMissedMsgsRef();
+        missedMsgsref.setGroupSizes(usersInfoCtrl.getGroupCounts());
         while(true){
             Scanner scanner = new Scanner(System.in);
             String str = scanner.nextLine();
