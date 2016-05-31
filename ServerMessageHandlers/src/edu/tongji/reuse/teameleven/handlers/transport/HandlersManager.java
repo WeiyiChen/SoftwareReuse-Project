@@ -31,6 +31,7 @@ public class HandlersManager extends LoopThread {
     }
 
     public void sendMsgs(List<String> tagets, String jsonMsg){
+        System.out.println("handlesManager : " + userHandlers);
         for(String user : tagets){
             try{
                 MessageHandler mhl = userHandlers.get(user);

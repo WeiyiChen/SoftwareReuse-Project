@@ -42,17 +42,19 @@ public class RefsInAuth {
             try{
                 Registry registry = LocateRegistry.getRegistry("127.0.0.1", 15840);
                 getMissedMsgs = (GetMissedMsgsIntf)registry.lookup("getMissedMsgsIntf");
+//                System.out.println(getMissedMsgs);
             }catch(RemoteException e){
-                e.printStackTrace();
+                //todo remove System.out after debug
+                e.printStackTrace(System.out);
             }catch (NotBoundException e){
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
         }
     }
 
     public static GetMissedMsgsIntf getGetMissedMsgs(){
         if(null == getMissedMsgs){
-            createContactsCtrl();
+            createGetMissedMsgs();
         }
         return getMissedMsgs;
     }

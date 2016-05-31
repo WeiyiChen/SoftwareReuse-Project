@@ -37,7 +37,7 @@ public class LoginMsgHandler extends Thread {
     @Override
     public void run(){
         if(checkpwd()){
-            // todo add init lost messages, and close loginSocket safely
+
             if(user == null){
                 return;
             }
@@ -50,10 +50,16 @@ public class LoginMsgHandler extends Thread {
                     socketWrapper.sendText(jsonString, 1000);
                 }
                 contactsCtrl.addUser(user.getUserId());
-                List<String> missedMesages = getMissedMsgs.getMissedMsgs(user);
-                if(missedMesages != null){
-                    socketWrapper.sendTexts(missedMesages, 1000);
+                //todo delete this after debug
+                if(getMissedMsgs == null){
+//                    System.err.println(getMissedMsgs);
+                    System.err.println("getMissedMsgs is null");
                 }
+                //
+//                List<String> missedMesages = getMissedMsgs.getMissedMsgs(user);
+//                if(missedMesages != null){
+//                    socketWrapper.sendTexts(missedMesages, 1000);
+//                }
 
             }catch(RemoteException e){
                 e.printStackTrace();

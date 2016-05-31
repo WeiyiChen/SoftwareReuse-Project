@@ -29,7 +29,9 @@ public class HandlersIntfImpl implements HandlersIntf {
     }
 
     @Override
-    public void sendMsgs(List<String> targets, String jsonMsg) {
+    public void sendMsgs(List<String> targets, String jsonMsg) throws RemoteException {
+        System.out.println("targets : " + targets);
+        System.out.println("msg : " + jsonMsg);
         handlersManager.sendMsgs(targets, jsonMsg);
     }
 

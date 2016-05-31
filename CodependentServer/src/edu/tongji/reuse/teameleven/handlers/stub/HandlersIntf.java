@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface HandlersIntf extends Remote {
     void remove(String userId) throws RemoteException;
-    void sendMsgs(List<String> targets, String jsonMsg);
+    void sendMsgs(List<String> targets, String jsonMsg) throws RemoteException;
     void relogin(String jsonMsg, String userId) throws RemoteException;
 }

@@ -1,7 +1,9 @@
 package edu.tongji.reuse.teameleven.processor.impl;
 
 import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
+import edu.tongji.reuse.teameleven.coserver.util.JsonBuilderServer;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
+import edu.tongji.reuse.teameleven.processor.transport.RefsInProcessor;
 
 import java.rmi.RemoteException;
 import java.util.LinkedList;
@@ -40,6 +42,7 @@ public class ContactsCtrlIntfImpl implements ContactsCtrlIntf {
         }
         contacts.add(u);
         groupOnLineUsers.put(group, contacts);
+        RefsInProcessor.getHandlersIntf().sendMsgs(contacts, JsonBuilderServer.getAddContactsJson(u));
 
         // todo delte the Sytem.out code after debug
 //        System.out.println(groupOnLineUsers);

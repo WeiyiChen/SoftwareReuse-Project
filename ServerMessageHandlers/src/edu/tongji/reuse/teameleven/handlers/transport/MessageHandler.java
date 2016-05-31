@@ -33,9 +33,15 @@ public class MessageHandler extends Thread{
                 String jsonMsg = bufferedReader.readLine();
                 if(jsonMsg == null){
                     safeQuit();
+                    if(this.user!=null){
+                        System.out.println("logout invoke!");
+                        RefsInHandlers.getProcessMsgIntfRef().logoutUser(this.user);
+                    }
                     return;
                 }
                 checkUser(jsonMsg);
+                System.out.println("process message");
+                RefsInHandlers.getProcessMsgIntfRef().processMsg(jsonMsg);
             } catch (IOException e) {
                 e.printStackTrace();
             }
