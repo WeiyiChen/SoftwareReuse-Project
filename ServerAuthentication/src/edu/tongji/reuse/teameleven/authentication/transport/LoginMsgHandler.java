@@ -50,16 +50,12 @@ public class LoginMsgHandler extends Thread {
                     socketWrapper.sendText(jsonString, 1000);
                 }
                 contactsCtrl.addUser(user.getUserId());
-                //todo delete this after debug
-                if(getMissedMsgs == null){
-//                    System.err.println(getMissedMsgs);
-                    System.err.println("getMissedMsgs is null");
+
+                List<String> missedMesages = getMissedMsgs.getMissedMsgs(user);
+                if(missedMesages != null){
+                    socketWrapper.sendTexts(missedMesages, 1000);
                 }
-                //
-//                List<String> missedMesages = getMissedMsgs.getMissedMsgs(user);
-//                if(missedMesages != null){
-//                    socketWrapper.sendTexts(missedMesages, 1000);
-//                }
+//                socketWrapper.sendText(JsonBuilderServer.getAddContactsJson(user.getUserId()));
 
             }catch(RemoteException e){
                 e.printStackTrace();

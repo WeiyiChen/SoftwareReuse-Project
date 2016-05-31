@@ -1,5 +1,6 @@
 package edu.tongji.reuse.teameleven.handlers.transport;
 
+import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.coserver.util.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.coserver.util.SocketWrapper;
 
@@ -40,6 +41,9 @@ public class MessageHandler extends Thread{
                     return;
                 }
                 checkUser(jsonMsg);
+                if(JsonAnalizerServer.getMessageType(jsonMsg).equals(JsonBuilderBase.firstMsg)){
+                    continue;
+                }
                 System.out.println("process message");
                 RefsInHandlers.getProcessMsgIntfRef().processMsg(jsonMsg);
             } catch (IOException e) {
