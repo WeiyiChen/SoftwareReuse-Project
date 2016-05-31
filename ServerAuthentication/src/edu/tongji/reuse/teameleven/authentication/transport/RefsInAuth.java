@@ -3,6 +3,7 @@ package edu.tongji.reuse.teameleven.authentication.transport;
 import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.holder.stub.GetMissedMsgsIntf;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
+import edu.tongji.reuse.teameleven.record.stub.MonitorControllerIntf;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -68,5 +69,32 @@ public class RefsInAuth {
             createGetMissedMsgs();
         }
         return getMissedMsgs;
+    }
+
+    private static MonitorControllerIntf monitorControllerRef;
+
+    public synchronized static void createMonitorControllerRef(){
+        if(null == monitorControllerRef){
+
+            try {
+                String loggerIp = ConfigCtrl.getConfig().getLoggerIp();
+                int loggerRegPort = ConfigCtrl.getConfig().getLoggerRegistryPort();
+                Registry registry = LocateRegistry.getRegistry(loggerIp, loggerRegPort);
+
+                String monotoCtrlrRegKey = ConfigCtrl.getConfig().getLoggerMonitorCtrlRegKey();
+                monitorControllerRef = (MonitorControllerIntf)registry.lookup(monotoCtrlrRegKey);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static MonitorControllerIntf getMonitorControllerRef(){
+        if(null == monitorControllerRef){
+            createMonitorControllerRef();
+        }
+        return monitorControllerRef;
     }
 }

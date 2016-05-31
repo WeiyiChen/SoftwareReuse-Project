@@ -9,6 +9,7 @@ import edu.tongji.reuse.teameleven.processor.ctrl.LicenseCtrl;
 import edu.tongji.reuse.teameleven.processor.ctrl.UsersInfoCtrl;
 import edu.tongji.reuse.teameleven.processor.stub.ProcessMsgIntf;
 import edu.tongji.reuse.teameleven.processor.transport.RefsInProcessor;
+import edu.tongji.reuse.teameleven.record.stub.MonitorControllerIntf;
 
 import java.rmi.RemoteException;
 import java.util.Date;
@@ -37,7 +38,8 @@ public class ProcessMsgIntfImpl implements ProcessMsgIntf {
     public void processMsg(String jsonString) throws RemoteException {
         String userId = JsonAnalizerServer.getUser(jsonString);
         MissedMsgsIntf missedMsgsRef = RefsInProcessor.getMissedMsgsRef();
-
+        MonitorControllerIntf monitorControllerRef = RefsInProcessor.getMonitorControllerRef();
+        monitorControllerRef.increaseReceivedNumber();
         if(!licenseCtrl.use(userId)){
             String jsonMsg = JsonBuilderServer.getReloginRequestJson();
             HandlersIntf handlersIntf = RefsInProcessor.getHandlersIntf();
@@ -48,11 +50,13 @@ public class ProcessMsgIntfImpl implements ProcessMsgIntf {
             licenseCtrl.removeUser(userId);
 
             missedMsgsRef.setLogoutTime(userId, new Date().getTime());
+            monitorControllerRef.increaseIgnoredNumber();
             return;
         }
         //
         String group = GroupController.getInstance().getGroup(userId);
         missedMsgsRef.addMissedMsg(group, jsonString, usersInfoCtrl.getOnlineUsers(group));
+        monitorControllerRef.increaseForwardedNumber();
 
         List<String> targets = usersInfoCtrl.getOnlineGroupMates(userId);
         if(targets == null || targets.size() <= 0){

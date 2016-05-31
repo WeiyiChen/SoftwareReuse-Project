@@ -23,5 +23,9 @@
     "holderGetMissedMsgsInvokePort":15841,
     "holderGetMissedMsgsRegKey":"getMissedMsgsIntf",
     "holderMissedMsgsInvokePort":15842,
-    "holderMissedMsgsRegKey":"missedMsgsIntf"
+    "holderMissedMsgsRegKey":"missedMsgsIntf",
+    "loggerIp":"127.0.0.1",
+    "loggerRegistryPort":15860,
+    "loggerMonitorCtrlInvokePort":15861,
+    "loggerMonitorCtrlRegKey":"monitorCtrl"
 }

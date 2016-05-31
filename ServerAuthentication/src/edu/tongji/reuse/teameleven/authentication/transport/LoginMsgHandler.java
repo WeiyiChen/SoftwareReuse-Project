@@ -13,6 +13,7 @@ import edu.tongji.reuse.teameleven.coserver.util.ServerConfigEnum;
 import edu.tongji.reuse.teameleven.coserver.util.SocketWrapper;
 import edu.tongji.reuse.teameleven.holder.stub.GetMissedMsgsIntf;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
+import edu.tongji.reuse.teameleven.record.stub.MonitorControllerIntf;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -94,8 +95,10 @@ public class LoginMsgHandler extends Thread {
                 String userId = JsonAnalizerServer.getUser(jsonString);
                 String password = ServerConfigEnum.encrypt
                         .decryptToTMD5(JsonAnalizerServer.getPassword(jsonString));
-
+                MonitorControllerIntf monitorControllerRef = RefsInAuth.getMonitorControllerRef();
                 if (PasswordController.getInstance().passwordCheck(userId, password)) {
+
+                    monitorControllerRef.increaseLogsucceedNumber();
 //                        user = userId;
                     user = new User();
                     user.setUserId(userId);
@@ -122,6 +125,7 @@ public class LoginMsgHandler extends Thread {
 
                     return true;
                 } else {
+                    monitorControllerRef.increaseLogfailedNumber();
                     System.out.println("send : " + JsonBuilderBase.getLoginFailedJson());
                     socketWrapper.sendText(JsonBuilderBase.getLoginFailedJson());
                 }
