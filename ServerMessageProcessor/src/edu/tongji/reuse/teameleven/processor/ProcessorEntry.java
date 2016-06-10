@@ -6,6 +6,8 @@ import edu.tongji.reuse.teameleven.processor.ctrl.LicenseCtrl;
 import edu.tongji.reuse.teameleven.processor.ctrl.StubLoader;
 import edu.tongji.reuse.teameleven.processor.ctrl.UsersInfoCtrl;
 import edu.tongji.reuse.teameleven.processor.transport.RefsInProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -15,7 +17,10 @@ import java.util.Scanner;
  */
 public class ProcessorEntry {
 //    UsersInfoCtrl usersInfo;
+
     public static void main(String[] args) throws RemoteException {
+        Logger logger  = LoggerFactory.getLogger(ProcessorEntry.class);
+        logger.info("start ProcessoerEntry");
         UsersInfoCtrl usersInfoCtrl = new UsersInfoCtrl();
         LicenseCtrl licenseCtrl = new LicenseCtrl();
         licenseCtrl.setMaxMessagePerLogin(ConfigCtrl.getConfig().getMaxMessagesPerLogin());
@@ -31,6 +36,7 @@ public class ProcessorEntry {
             Scanner scanner = new Scanner(System.in);
             String str = scanner.nextLine();
             if(str.equals("close")){
+                logger.info("quit ProcessorEntry");
                 System.out.println("bye!");
                 System.exit(0);
             }

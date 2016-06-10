@@ -14,6 +14,8 @@ import edu.tongji.reuse.teameleven.coserver.util.SocketWrapper;
 import edu.tongji.reuse.teameleven.holder.stub.GetMissedMsgsIntf;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
 import edu.tongji.reuse.teameleven.record.stub.MonitorControllerIntf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,12 +31,13 @@ public class LoginMsgHandler extends Thread {
     SocketWrapper socketWrapper;
     SocketListener socketListener;
     User user;
+    Logger logger;
 
     public LoginMsgHandler(SocketWrapper socketWrapper, SocketListener socketListener) {
         super();
         this.socketWrapper = socketWrapper;
         this.socketListener = socketListener;
-
+        logger = LoggerFactory.getLogger(this.getClass().getName());
     }
 
     @Override
@@ -53,6 +56,7 @@ public class LoginMsgHandler extends Thread {
                     String jsonString = JsonBuilderServer.getInitContactsJson(contacts);
                     socketWrapper.sendText(jsonString, 1000);
                 }
+
                 contactsCtrl.addUser(user.getUserId());
 
                 List<String> missedMesages = getMissedMsgs.getMissedMsgs(user);
@@ -91,6 +95,8 @@ public class LoginMsgHandler extends Thread {
                 safeClose();
                 break;
             }
+            logger.trace("receiving message");
+            logger.trace(jsonString);
             if (JsonAnalizerBase.getMessageType(jsonString).equals(JsonBuilderBase.password)) {
                 String userId = JsonAnalizerServer.getUser(jsonString);
                 String password = ServerConfigEnum.encrypt

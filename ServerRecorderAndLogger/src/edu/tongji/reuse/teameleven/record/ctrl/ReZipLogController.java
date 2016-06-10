@@ -3,6 +3,8 @@ package edu.tongji.reuse.teameleven.record.ctrl;
 import edu.tongji.reuse.teameleven.rls.filelimit.FileProcessUtil;
 import edu.tongji.reuse.teameleven.rls.zip.Zip2;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.util.Calendar;
 public class ReZipLogController {
 
 	private ZipRecordThread zipRecordThread;
+	private Logger logger = LoggerFactory.getLogger(ReZipLogController.class);
 
 	private class ZipRecordThread extends Thread {
 
@@ -39,7 +42,7 @@ public class ReZipLogController {
 
 		@Override
 		public void run() {
-			System.out.println("start rezip");
+			logger.info("start rezip");
 			int i = startSave;
 			do {
 				try {
@@ -50,7 +53,7 @@ public class ReZipLogController {
 					executeUnZip(System.getProperty("user.dir") + File.separator + "dayziplog");
 					executeZip();
 					i = this.saveCycle;
-					System.out.println("reZip once");
+					logger.info("reZip once");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -58,7 +61,7 @@ public class ReZipLogController {
 
 			} while (continueFlag);
 
-			System.out.println("zip thread stop");
+			logger.info("zip thread stop");
 		}
 
 		@SuppressWarnings("unused")

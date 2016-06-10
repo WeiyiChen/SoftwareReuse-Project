@@ -2,6 +2,8 @@ package edu.tongji.reuse.teameleven.record.ctrl;
 
 import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.record.stub.MonitorControllerIntf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -13,12 +15,14 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class StubLoader {
     MonitorController monitorController;
-
+    private Logger logger = LoggerFactory.getLogger(StubLoader.class);
     public MonitorController getMonitorController() {
         return monitorController;
+
     }
 
     public void load(){
+        logger.info("start stubloader");
         monitorController = new MonitorController();
         try {
             int monitorContorllerInvokePort = ConfigCtrl.getConfig().getLoggerMonitorCtrlInvokePort();

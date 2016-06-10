@@ -1,6 +1,8 @@
 package edu.tongji.reuse.teameleven.processor.ctrl;
 
 import edu.tongji.reuse.teameleven.coserver.ctrl.GroupController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,10 +15,11 @@ import java.util.Map;
 public class UsersInfoCtrl {
     private Map<String, List<String>> groupOnLineUsers;
     private Map<String, Integer> groupCounts;
-
+    private Logger logger;
     public UsersInfoCtrl(){
         groupOnLineUsers = new HashMap<>();
         updateGroupCount();
+        logger = LoggerFactory.getLogger(this.getClass());
     }
 
     public Map<String, List<String>> getGroupOnLineUsers() {
@@ -39,6 +42,7 @@ public class UsersInfoCtrl {
 
     public List<String> getOnlineGroupMates(String userId){
         String group = GroupController.getInstance().getGroup(userId);
+        logger.trace("group is " + group);
         return groupOnLineUsers.get(group);
     }
 
@@ -48,14 +52,18 @@ public class UsersInfoCtrl {
             System.err.println("onlineUsers == null!");
             return -1;
         }
+        logger.trace("getOnlineUsers");
+        logger.trace("group : " + group);
+        logger.trace("size : " + onLineUsers.size());
         return onLineUsers.size();
     }
 
     public void logoutUser(String userId){
+
         String group = GroupController.getInstance().getGroup(userId);
         List<String> onLineUsers = groupOnLineUsers.get(group);
         if(onLineUsers == null){
-            System.out.println("cannot remove this online users, because it's group doesn't exit!");
+            logger.warn("cannot remove this online users, because it's group doesn't exit!");
             return;
         }
         onLineUsers.remove(userId);

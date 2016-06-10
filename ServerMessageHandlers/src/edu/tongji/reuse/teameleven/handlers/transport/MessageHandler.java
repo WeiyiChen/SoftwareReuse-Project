@@ -3,6 +3,8 @@ package edu.tongji.reuse.teameleven.handlers.transport;
 import edu.tongji.reuse.teameleven.codependent.base.JsonBuilderBase;
 import edu.tongji.reuse.teameleven.coserver.util.JsonAnalizerServer;
 import edu.tongji.reuse.teameleven.coserver.util.SocketWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,12 +16,14 @@ public class MessageHandler extends Thread{
     private HandlersManager handlersManager;
     private SocketWrapper socketWrapper;
     private String user;
+    private Logger logger;
 //    private boolean isAddedToManager = false;
 
     public MessageHandler(HandlersManager handlersManager, SocketWrapper socketWrapper) {
         super();
         this.handlersManager = handlersManager;
         this.socketWrapper = socketWrapper;
+        this.logger = LoggerFactory.getLogger(this.getClass());
     }
 
     public String getUser() {
@@ -41,6 +45,7 @@ public class MessageHandler extends Thread{
                     return;
                 }
                 checkUser(jsonMsg);
+                logger.trace("receive : " + jsonMsg);
                 if(JsonAnalizerServer.getMessageType(jsonMsg).equals(JsonBuilderBase.firstMsg)){
                     continue;
                 }
@@ -54,6 +59,7 @@ public class MessageHandler extends Thread{
 
 
     public void safeQuit() {
+        logger.info("safeQuit");
         handlersManager.removeUserHandler(user);
         this.interrupt();
         try{
@@ -64,6 +70,7 @@ public class MessageHandler extends Thread{
     }
 
     public void sendText(String jsonMsg) {
+        logger.info("send : " + jsonMsg);
         socketWrapper.sendText(jsonMsg);
     }
 
