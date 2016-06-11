@@ -1,0 +1,27 @@
+<configuration debug="true">
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>server-logs/mylog.txt</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>server-logs/mylog-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+            <maxFileSize>200MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %-5level [%thread] %logger{0}: %msg%n</pattern>
+        </encoder>
+
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="ROLLING" />
+    </root>
+
+    <receiver class="ch.qos.logback.classic.net.server.ServerSocketReceiver">
+        <port>15869</port>
+    </receiver>
+
+</configuration>

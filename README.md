@@ -1,6 +1,6 @@
 # SoftwareReuse-Project
 ##项目说明
-+ 项目采用Intellij Idea开发，服务端与客户端之间使用Socket进行通信，服务端各模块之间采用Java RMI技术相互调用。
++ 项目采用Intellij Idea开发，服务端与客户端之间使用Socket进行通信，服务端各模块之间主要采用Java RMI技术相互调用(logger功能也用到了loggerback的SocketAppender来通信)。
 + 项目（Project) 下有9个模块(module)，其中服务端分为功能相互独立的5个模块，如下图。
 ![projectstructrue](pictures/projectstructure.png)
 	

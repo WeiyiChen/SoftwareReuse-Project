@@ -4,6 +4,8 @@ import edu.tongji.reuse.teameleven.coserver.ctrl.ConfigCtrl;
 import edu.tongji.reuse.teameleven.handlers.impl.HandlersIntfImpl;
 import edu.tongji.reuse.teameleven.handlers.stub.HandlersIntf;
 import edu.tongji.reuse.teameleven.handlers.transport.HandlersManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -14,7 +16,9 @@ import java.rmi.server.UnicastRemoteObject;
  * Created by daidongyang on 5/31/16.
  */
 public class StubLoader {
+    Logger logger = LoggerFactory.getLogger(StubLoader.class);
     public void load(HandlersManager handlersManager){
+        logger.info("start load");
         HandlersIntfImpl handlersIntfImpl = new HandlersIntfImpl(handlersManager);
         try {
             int handlersRegPort = ConfigCtrl.getConfig().getHandlersRegistryPort();

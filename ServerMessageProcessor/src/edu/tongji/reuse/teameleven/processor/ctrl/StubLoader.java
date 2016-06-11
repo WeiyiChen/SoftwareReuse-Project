@@ -5,6 +5,8 @@ import edu.tongji.reuse.teameleven.processor.impl.ContactsCtrlIntfImpl;
 import edu.tongji.reuse.teameleven.processor.impl.ProcessMsgIntfImpl;
 import edu.tongji.reuse.teameleven.processor.stub.ContactsCtrlIntf;
 import edu.tongji.reuse.teameleven.processor.stub.ProcessMsgIntf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,6 +19,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class StubLoader {
     private UsersInfoCtrl usersInfoCtrl;
     private LicenseCtrl licenseCtrl;
+    private Logger logger = LoggerFactory.getLogger(StubLoader.class);
 
     public void setUsersInfoCtrl(UsersInfoCtrl usersInfoCtrl) {
         this.usersInfoCtrl = usersInfoCtrl;
@@ -27,7 +30,7 @@ public class StubLoader {
     }
 
     public void load(){
-        // todo add other remote object
+        logger.info("start load");
         ContactsCtrlIntfImpl contactsCtrlIntfImpl =
                 new ContactsCtrlIntfImpl(usersInfoCtrl.getGroupOnLineUsers(), licenseCtrl);
         ProcessMsgIntfImpl processMsgIntfImpl =
